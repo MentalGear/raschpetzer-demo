@@ -1,0 +1,50 @@
+<script lang="ts">
+	/**
+	 * Media-specific wrapper over the generic VirtualGrid (mirrors photos' PhotoGrid /
+	 * notes' NoteGrid): supplies MediaItem data + a placeholder-gradient tile matching
+	 * `Figure.svelte`'s reader treatment (no external images — front-end only, no
+	 * network). All virtualization, sticky day headers, scrubber, and keyboard a11y
+	 * come from the domain-free `@kit/ui` grid.
+	 */
+	import { VirtualGrid } from '@kit/ui'
+	import type { Section } from '@kit/core'
+	import { cn } from '@kit/ui/shadcn-utils'
+	import type { MediaItem } from '../data/media'
+	import { toneClassForTone } from './figureVisual'
+
+	interface Props {
+		items: MediaItem[]
+		sections: Section[]
+		scrollKey?: string
+		onOpen?: (index: number) => void
+	}
+	let { items, sections, scrollKey, onOpen }: Props = $props()
+
+	function label(m: MediaItem) {
+		return `${m.alt}, from ${m.articleTitle}`
+	}
+	const aspectOf = (m: MediaItem) => m.ratio ?? 16 / 9
+</script>
+
+<VirtualGrid
+	{items}
+	{sections}
+	targetRowHeight={180}
+	gap={3}
+	aspect={aspectOf}
+	itemLabel={label}
+	ariaLabel="Media, {items.length} items"
+	{scrollKey}
+	onActivate={onOpen}
+>
+	{#snippet tile(m: MediaItem)}
+		<div
+			class={cn(
+				'flex h-full w-full flex-col items-center justify-center gap-1 bg-gradient-to-br p-2 text-center',
+				toneClassForTone(m.tone),
+			)}
+		>
+			<span class="line-clamp-3 text-xs text-foreground">{m.alt}</span>
+		</div>
+	{/snippet}
+</VirtualGrid>
