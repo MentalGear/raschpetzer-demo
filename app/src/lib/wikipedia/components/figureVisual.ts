@@ -75,3 +75,12 @@ export function toneClassForTone(tone: number): string {
 	const n = TONES.length
 	return TONES[((tone % n) + n) % n]
 }
+
+/** A `FigureBlock`/`GalleryItemRef`/`GalleryItem.image` is a real vendored image (render an
+ *  `<img>`) rather than the mock corpus's synthetic placeholder path (`/placeholders/tone-N.svg`
+ *  from `fromArticle.ts`, or `galleryPlaceholderSrc`'s own generated data URL) when it isn't
+ *  one of those two placeholder shapes. Single source of truth for this check — used by
+ *  `Figure.svelte`, `GalleryNodeView.svelte`, and the Media page/grid. */
+export function isRealImageSrc(src: string | undefined): src is string {
+	return !!src && !src.startsWith('/placeholders/') && !src.startsWith('data:')
+}

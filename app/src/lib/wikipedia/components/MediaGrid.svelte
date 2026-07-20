@@ -10,7 +10,7 @@
 	import type { Section } from '@kit/core'
 	import { cn } from '@kit/ui/shadcn-utils'
 	import type { MediaItem } from '../data/media'
-	import { toneClassForTone } from './figureVisual'
+	import { toneClassForTone, isRealImageSrc } from './figureVisual'
 
 	interface Props {
 		items: MediaItem[]
@@ -38,13 +38,24 @@
 	onActivate={onOpen}
 >
 	{#snippet tile(m: MediaItem)}
-		<div
-			class={cn(
-				'flex h-full w-full flex-col items-center justify-center gap-1 bg-gradient-to-br p-2 text-center',
-				toneClassForTone(m.tone),
-			)}
-		>
-			<span class="line-clamp-3 text-xs text-foreground">{m.alt}</span>
-		</div>
+		{#if isRealImageSrc(m.src)}
+			<img
+				src={m.src}
+				srcset={m.srcset}
+				sizes="180px"
+				alt=""
+				loading="lazy"
+				class={cn('h-full w-full object-cover', toneClassForTone(m.tone))}
+			/>
+		{:else}
+			<div
+				class={cn(
+					'flex h-full w-full flex-col items-center justify-center gap-1 bg-gradient-to-br p-2 text-center',
+					toneClassForTone(m.tone),
+				)}
+			>
+				<span class="line-clamp-3 text-xs text-foreground">{m.alt}</span>
+			</div>
+		{/if}
 	{/snippet}
 </VirtualGrid>

@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>{article ? article.title : 'Not found'} — Wikipedia</title>
+	<title>{article ? article.title : 'Not found'} — Raschpëtzer Wiki</title>
 </svelte:head>
 
 {#if article}

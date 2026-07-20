@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head
-	><title>History: {article ? article.title : 'Not found'} — Wikipedia</title></svelte:head
+	><title>History: {article ? article.title : 'Not found'} — Raschpëtzer Wiki</title></svelte:head
 >
 
 {#if article}

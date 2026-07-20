@@ -41,8 +41,8 @@ export default defineConfig({
 			base: pwaBase,
 			pwaAssets: { config: true },
 			manifest: {
-				short_name: 'Wikipedia',
-				name: 'Wikipedia — SupraAppKit',
+				short_name: 'Raschpëtzer',
+				name: 'Raschpëtzer Wiki',
 				start_url: pwaBase,
 				scope: pwaBase,
 				display: 'standalone',

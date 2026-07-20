@@ -48,6 +48,7 @@
 		toneIndex,
 		GALLERY_CARD_WIDTH,
 		GALLERY_CARD_MAX_HEIGHT,
+		isRealImageSrc,
 	} from '../../components/figureVisual'
 	import { galleryPlaceholderSrc } from '../../components/galleryPlaceholder'
 	import { normalizeGalleryItem, newPlaceholderItem, moveGalleryItem } from './galleryItems'
@@ -72,12 +73,17 @@
 	const uid = $derived(controller.uid)
 
 	// ── read-mode-shaped slider (both modes) — ported from the retired GalleryReader.svelte ──
+	// `image` carries a real src when the item is vendored content (not the mock corpus's
+	// placeholder path, see fromArticle.ts) — `isRealImageSrc` (figureVisual.ts, shared with
+	// Figure.svelte and the Media page) below gates using it directly instead of the
+	// synthetic `galleryPlaceholderSrc` gradient.
 	type LightboxItem = {
 		id: string
 		alt: string
 		caption?: string
 		aspect: number
 		tone: number
+		image: string
 	}
 	const lightboxItems: LightboxItem[] = $derived(
 		items.map((it) => ({
@@ -86,6 +92,7 @@
 			caption: it.caption,
 			aspect: it.width && it.height ? it.width / it.height : 16 / 9,
 			tone: toneIndex(it.id),
+			image: it.image,
 		})),
 	)
 	let lightboxOpen = $state(false)
@@ -272,7 +279,7 @@
 								<button
 									type="button"
 									class={cn(
-										'flex size-full items-center justify-center rounded-lg bg-gradient-to-br p-4 text-center',
+										'flex size-full items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br p-4 text-center',
 										toneClass(it.id),
 									)}
 									aria-label={editable
@@ -296,7 +303,18 @@
 										openLightboxAt(i)
 									}}
 								>
-									<span class="text-sm text-foreground">{it.alt}</span>
+									{#if isRealImageSrc(it.image)}
+										<!-- alt="": the button's own aria-label already announces this
+										     image; a repeated alt here would double-announce it. -->
+										<img
+											src={it.image}
+											alt=""
+											loading="lazy"
+											class="size-full object-cover"
+										/>
+									{:else}
+										<span class="text-sm text-foreground">{it.alt}</span>
+									{/if}
 								</button>
 								{#if editable}
 									<!-- ALWAYS-visible left arrow / remove / right arrow across the top of
@@ -398,15 +416,19 @@
 		<!-- `data-testid="lightbox-img"` + a real `alt` on the `<img>` itself (not `alt=""`) —
 		     matches Photos' own Lightbox.svelte's slide convention, both are consumer-level test
 		     hooks/a11y text MediaLightbox itself has no way to supply (it doesn't own this
-		     markup). No progressive loading here (a synchronous SVG placeholder generator has no
-		     network latency to hide behind a blur-up), so `loading` is never set. `absolute
-		     inset-0` (matching Photos' own `.img-stack` rule) — without it this wrapper collapses
-		     to zero size, since its only child is the absolutely-positioned `<img>` MediaLightbox's
-		     own `.stage :global(img)` CSS gives out-of-flow sizing (caught live: the div existed
+		     markup). A real vendored image (`isRealImageSrc`) is used directly — no progressive
+		     loading (`loading` never set) since it's already decoded from the inline card; the
+		     synthetic SVG placeholder path (`galleryPlaceholderSrc`) is the same reasoning for
+		     the mock corpus's synchronous, network-free generator. `absolute inset-0` (matching
+		     Photos' own `.img-stack` rule) — without it this wrapper collapses to zero size,
+		     since its only child is the absolutely-positioned `<img>` MediaLightbox's own
+		     `.stage :global(img)` CSS gives out-of-flow sizing (caught live: the div existed
 		     in the DOM but Playwright's `toBeVisible()` read it as hidden). -->
 		<div data-testid="lightbox-img" class="absolute inset-0">
 			<img
-				src={galleryPlaceholderSrc(item.tone, 1600, item.aspect)}
+				src={isRealImageSrc(item.image)
+					? item.image
+					: galleryPlaceholderSrc(item.tone, 1600, item.aspect)}
 				alt={lightboxAlt}
 				draggable="false"
 				style:transform={ctx.transform}

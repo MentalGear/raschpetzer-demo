@@ -5,7 +5,7 @@
 	import { Badge } from '@kit/ui/shadcn-components/ui/badge'
 </script>
 
-<svelte:head><title>Categories — Wikipedia</title></svelte:head>
+<svelte:head><title>Categories — Raschpëtzer Wiki</title></svelte:head>
 
 <div class="mx-auto w-full max-w-5xl px-4 py-6 lg:px-8">
 	<h1 class="mb-6 text-2xl font-bold tracking-tight">Categories</h1>

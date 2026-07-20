@@ -12,7 +12,8 @@
 	const articles = $derived(wikiStore.inCategory(id))
 </script>
 
-<svelte:head><title>{category ? category.label : 'Category'} — Wikipedia</title></svelte:head>
+<svelte:head><title>{category ? category.label : 'Category'} — Raschpëtzer Wiki</title></svelte:head
+>
 
 <div class="mx-auto w-full max-w-5xl px-4 py-6 lg:px-8">
 	{#if category}

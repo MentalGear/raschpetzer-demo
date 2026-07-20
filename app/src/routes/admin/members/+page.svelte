@@ -9,7 +9,7 @@
 	const current = $derived(memberStore.currentMember)
 </script>
 
-<svelte:head><title>Members — Wikipedia</title></svelte:head>
+<svelte:head><title>Members — Raschpëtzer Wiki</title></svelte:head>
 
 <div class="mx-auto w-full max-w-3xl px-4 py-6 lg:px-8">
 	<!-- "Admin" is an inert grouping label (no href — there's no /admin index route, only the

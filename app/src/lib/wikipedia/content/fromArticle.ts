@@ -105,8 +105,11 @@ function figureToGallery(fig: FigureBlock, id: string): PageGalleryBlock {
 	const item: PageGalleryBlock['items'][number] = {
 		id: `${id}-0`,
 		// placeholder repo-relative path (no URL scheme, per the schema's image guard);
-		// the demo has no real media pipeline — figures render as themed placeholders.
-		image: `/placeholders/tone-${fig.tone}.svg`,
+		// the demo has no real media pipeline for the mock corpus — those figures render
+		// as themed placeholders. A block carrying a real `src` (vendored content, e.g.
+		// the Raschpëtzer article) forwards it verbatim instead — `galleryItemSchema`
+		// already accepts any scheme-less repo-relative path.
+		image: fig.src ?? `/placeholders/tone-${fig.tone}.svg`,
 		alt: fig.alt,
 		...(fig.caption ? { caption: fig.caption } : {}),
 		...(fig.credit ? { source: fig.credit } : {}),
@@ -140,7 +143,8 @@ function galleryBlockToGallery(gal: GalleryBlock, id: string): PageGalleryBlock 
 		items: gal.items.map((item: GalleryItemRef) => {
 			const out: PageGalleryBlock['items'][number] = {
 				id: item.id,
-				image: `/placeholders/tone-${item.tone}.svg`,
+				// see figureToGallery's matching comment: real `src` forwards verbatim.
+				image: item.src ?? `/placeholders/tone-${item.tone}.svg`,
 				alt: item.alt,
 			}
 			if (item.caption) out.caption = item.caption
