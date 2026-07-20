@@ -26,13 +26,19 @@
 			independently verified, the article says so plainly rather than filling the gap in.
 		</p>
 
-		<h2 class="mt-2 text-lg font-semibold tracking-tight">An independent effort</h2>
+		<h2 class="mt-2 text-lg font-semibold tracking-tight">A work in progress</h2>
 		<p>
-			This is an independent reference project, not an official publication of any government,
-			museum, or tourism body — though it draws directly on their published material and
-			credits it throughout. If you find an error, an outdated fact, or a claim that doesn't
-			hold up against its own citation, that's worth reporting: accuracy here is a standing
-			goal, not a finished state.
+			This wiki is a work in progress by the Raschpëtzer group to document everything they
+			know about the site in one place — not an official publication of any government,
+			museum, or tourism body, though it draws directly on their published material and
+			credits it throughout. Building it out, errors are inevitable: a fact stated too
+			confidently, a citation that doesn't quite support what it's attached to, a detail
+			that's since been superseded. If you spot one, please get in touch —
+			<a
+				href="mailto:raschpetzer@tomfaber.id"
+				class="text-primary underline decoration-primary/40 underline-offset-2"
+				>raschpetzer@tomfaber.id</a
+			>.
 		</p>
 
 		<h2 class="mt-2 text-lg font-semibold tracking-tight">Scope</h2>

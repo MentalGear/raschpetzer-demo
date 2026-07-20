@@ -101,7 +101,22 @@
 	const simpleVariant = $derived(wikiStore.simpleVariantOf(article))
 	const canonicalOfSimple = $derived(wikiStore.canonicalOfSimple(article))
 
-	let wide = $state(false)
+	// Persisted the same way `scale` below is (guarded localStorage read/write) — previously
+	// session-only, reported as annoying to have to re-toggle on every article/reload.
+	const WIDE_STORAGE_KEY = 'wiki:wide'
+	function readWide(): boolean {
+		if (typeof localStorage === 'undefined') return false
+		return localStorage.getItem(WIDE_STORAGE_KEY) === '1'
+	}
+	let wide = $state(readWide())
+	function setWide(next: boolean) {
+		wide = next
+		try {
+			localStorage.setItem(WIDE_STORAGE_KEY, next ? '1' : '0')
+		} catch {
+			// localStorage may be blocked; the in-memory value still applies this session
+		}
+	}
 	// `scale` is a MULTIPLIER (not a Tailwind class key): applied as the `--wiki-scale` CSS custom
 	// property on a shared ancestor (below) so it reaches every scale-aware element via normal CSS
 	// cascade — the article body, headings (ArticleBody.svelte), Quick Facts, and the ToC
@@ -119,8 +134,7 @@
 		{ value: 'xl', label: 'Extra-large text', scale: 1.25 },
 		{ value: 'xxl', label: 'Largest text', scale: 1.375 },
 	]
-	// Reading preference, persisted across reloads (unlike `wide`, which stays session-only —
-	// only the text scale was asked to be remembered). Guarded the same way
+	// Reading preference, persisted across reloads (same as `wide` above). Guarded the same way
 	// MediaLightboxFilmstrip.svelte's thumb-size persistence is (localStorage may be
 	// unavailable/blocked; fall back to the in-memory default rather than throwing).
 	const SCALE_STORAGE_KEY = 'wiki:text-scale'
@@ -469,7 +483,7 @@
 						class="hidden size-8 sm:inline-flex"
 						aria-label="Wide layout"
 						aria-pressed={wide}
-						onclick={() => (wide = !wide)}
+						onclick={() => setWide(!wide)}
 					>
 						<UnfoldHorizontal />
 					</Button>
@@ -619,8 +633,9 @@
 		     left border) and Callout (colored border + icon) — sharing Quote's exact border-l-4
 		     border-primary/40 treatment made the summary read as just another pull-quote. Identical
 		     wrapper in both branches (only the inner paragraph swaps contenteditable↔static) so
-		     read↔edit stays zero-shift. -->
-		<div class="mt-4 rounded-lg bg-muted/30 p-4">
+		     read↔edit stays zero-shift. bg-muted/50 (up from /30) + p-6 (up from p-4): reported
+		     live as reading too close to plain body text at the lighter tint/tighter padding. -->
+		<div class="mt-4 rounded-lg bg-muted/50 p-6">
 			<p class="mb-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
 				Summary
 			</p>
@@ -801,6 +816,14 @@
 						     sticky header to clear (the edit affordances float — A.4 no longer needed). -->
 						<li id="ref-{i + 1}" class="flex scroll-mt-24 gap-2">
 							<span class="font-medium text-foreground">[{i + 1}]</span>
+							<a
+								href="#cite-ref-{i + 1}"
+								class="text-primary no-underline hover:underline"
+								aria-label={`Jump back to where reference ${i + 1} is cited in the text`}
+								title="Jump back to citation"
+							>
+								↑
+							</a>
 							<span>
 								{#if c.url}
 									<a
@@ -900,7 +923,7 @@
 					class="size-8"
 					aria-label="Wide layout"
 					aria-pressed={wide}
-					onclick={() => (wide = !wide)}
+					onclick={() => setWide(!wide)}
 				>
 					<UnfoldHorizontal />
 				</Button>

@@ -877,6 +877,7 @@ export function citeNoteMarkerDecoration(getCitations: () => readonly Citation[]
 				number: number
 				citation?: Citation
 				noteText?: string
+				isFirst?: boolean
 			}) => {
 				const el = document.createElement('span')
 				const instance = mount(CiteNoteMarker, { target: el, props })
@@ -888,6 +889,11 @@ export function citeNoteMarkerDecoration(getCitations: () => readonly Citation[]
 				const citations = getCitations()
 				const decos: Decoration[] = []
 				let noteN = 0
+				// The SAME citation can be cited more than once in an article; only the first
+				// occurrence gets the `cite-ref-N` id the References list backlinks to (a
+				// duplicate id per repeat occurrence would be invalid HTML, and a hand-picked
+				// jump target has to be exactly one element anyway).
+				const citeFirstSeen = new Set<number>()
 				doc.descendants((node, pos) => {
 					if (!node.isText) return
 					const cite = node.marks.find((m) => m.type.name === 'cite')
@@ -896,10 +902,12 @@ export function citeNoteMarkerDecoration(getCitations: () => readonly Citation[]
 						const n = citations.findIndex((c) => c.id === id) + 1
 						const citation = citations.find((c) => c.id === id)
 						if (citation && n > 0) {
+							const isFirst = !citeFirstSeen.has(n)
+							citeFirstSeen.add(n)
 							const at = pos + node.nodeSize
 							decos.push(
 								Decoration.widget(at, () =>
-									mountMarker({ kind: 'cite', number: n, citation }),
+									mountMarker({ kind: 'cite', number: n, citation, isFirst }),
 								),
 							)
 						}

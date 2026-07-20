@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css'
-	import { goto, beforeNavigate } from '$app/navigation'
+	import { goto, beforeNavigate, afterNavigate } from '$app/navigation'
 	import { page } from '$app/state'
 	import { ModeWatcher, toggleMode } from 'mode-watcher'
 	import { wikiStore } from '$lib/wikipedia/state/wikiStore.svelte'
@@ -45,6 +45,18 @@
 		}
 		wikiStore.locale = 'en'
 		if (wikiEdit.editing) wikiEdit.close()
+	})
+
+	// This app owns its own scroll (a full-height `overflow-y-auto` div below, not `window` —
+	// see that div's doc comment), so SvelteKit's built-in scroll management (which only
+	// resets `window`'s scroll position) never resets THIS container: navigating from deep in
+	// one article to another lands the new page already scrolled to the old position (worst
+	// on mobile, where that's most of the viewport). Reset it ourselves on every real route
+	// change — but not a same-page hash jump (e.g. a citation anchor), which never fires this
+	// (SvelteKit's navigation lifecycle only runs for an actual pathname change).
+	let scrollContainer: HTMLDivElement | undefined
+	afterNavigate(({ from, to }) => {
+		if (from?.url?.pathname !== to?.url?.pathname) scrollContainer?.scrollTo(0, 0)
 	})
 
 	// ── a11y live region: announces route/search changes (WCAG 4.1.3) ──────────
@@ -156,7 +168,7 @@
 	     vertical scroller (otherwise a tall article is clipped and the page can't
 	     scroll). The reader's ToC scroll-spy (viewport-rooted IntersectionObserver) and
 	     `#id` anchors work unchanged inside this scroller. -->
-	<div class="h-full overflow-y-auto">
+	<div bind:this={scrollContainer} class="h-full overflow-y-auto">
 		{@render children()}
 	</div>
 </AppShell>

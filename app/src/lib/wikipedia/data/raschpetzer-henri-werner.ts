@@ -53,7 +53,7 @@ export const henriWernerArticle: Article = {
 	title: 'Henri Werner',
 	summary:
 		'Henri Werner is a co-author of the 2018 Raschpëtzer brochure, separately credited with helping build the site’s 3D model.',
-	categories: ['archaeology', 'history'],
+	categories: ['archaeology', 'history', 'people'],
 	blocks: [
 		{
 			id: 'p-intro',
@@ -78,7 +78,11 @@ export const henriWernerArticle: Article = {
 					'c-werner-chronicle-lu',
 				),
 				t(
-					'. As with Sonja Faber, no further independently verifiable biography was found; his documented contribution here rests on the three co-authorship credits and the 3D-model credit above.',
+					". He later served as president of the Syndicat d'Initiative et de Tourisme (SIT) of Walferdange for several years, succeeding ",
+				),
+				link('Georges Faber', 'georges-faber'),
+				t(
+					' in the role (editorial note: stated per project/site knowledge, not backed by a citable public source, unlike the co-authorship and 3D-model credits above). Beyond these facts, no further independently verifiable biography was found.',
 				),
 			),
 		},

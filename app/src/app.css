@@ -213,6 +213,26 @@ input:-webkit-autofill:active {
 	border-radius: 0.375rem;
 }
 
+/* Smooth in-page jumps — citation/footnote markers and the ToC both link to `#ref-N`/`#h-*`
+   anchors within the same route (a plain <a href="#…">, not a SvelteKit navigation), which the
+   browser otherwise snaps to instantly. Overridden back to `auto` below for reduced-motion. */
+html {
+	scroll-behavior: smooth;
+}
+
+/* Override @kit/ui VirtualGrid's default hover treatment for the Media page's tiles (the only
+   VirtualGrid user in this app): a hover-grow (`scale: 1.05`) reads as too showy for a plain
+   media library grid — swap it for a subtle opacity dim instead. `.tile` is a real (unscoped
+   from outside) class name on the rendered tile, not a Svelte-internal one, so it's reachable
+   here; `!important` only on the property actually being overridden (`scale`), since the
+   component's own rule carries its own scoping-hash specificity. */
+@media (hover: hover) {
+	.tile:hover {
+		scale: 1 !important;
+		opacity: 0.85;
+	}
+}
+
 /* Honor the OS reduced-motion setting everywhere (scrubber, lightbox, buttons, …). */
 @media (prefers-reduced-motion: reduce) {
 	*,

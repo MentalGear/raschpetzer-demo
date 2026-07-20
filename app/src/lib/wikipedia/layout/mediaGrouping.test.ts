@@ -17,7 +17,7 @@ describe('groupMedia', () => {
 
 	it('groups by day with one section per distinct calendar day', () => {
 		const sections = groupMedia(items)
-		const distinctDays = new Set(items.map((m) => new Date(m.updatedAt).toDateString()))
+		const distinctDays = new Set(items.map((m) => new Date(m.mediaDate).toDateString()))
 		expect(sections.length).toBe(distinctDays.size)
 	})
 

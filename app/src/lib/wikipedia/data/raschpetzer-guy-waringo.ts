@@ -73,7 +73,7 @@ export const guyWaringoArticle: Article = {
 	title: 'Guy Waringo',
 	summary:
 		'Guy Waringo is a researcher who has studied the Raschpëtzer since the 1960s and co-authored the site’s three published works, including the 2018 brochure.',
-	categories: ['archaeology', 'history'],
+	categories: ['archaeology', 'history', 'people'],
 	blocks: [
 		{
 			id: 'p-intro',

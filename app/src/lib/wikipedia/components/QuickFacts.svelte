@@ -80,7 +80,10 @@
 				)}
 			>
 				<dt class="text-muted-foreground">{field.label}</dt>
-				<dd class="text-right font-medium">{field.value}</dd>
+				<!-- 0.9em, not a fixed size: stays proportional to the `dl`'s own scale-aware
+				     calc() above (so --wiki-scale keeps working), just a touch smaller than the
+				     label — labels read as the box's structure, values as the data inside it. -->
+				<dd class="text-right font-medium" style="font-size: 0.9em">{field.value}</dd>
 			</div>
 		{/each}
 	</dl>
@@ -88,7 +91,7 @@
 
 {#snippet header()}
 	<div class="mb-2 flex items-center justify-between gap-2">
-		<p class="text-sm font-semibold text-foreground">Quick facts</p>
+		<p class="text-base font-semibold text-foreground">Quick facts</p>
 		{#if editable}
 			<Button
 				type="button"

@@ -16,9 +16,9 @@ import type { Section } from '@kit/core'
 // Section is a domain-free kit type (apps may import @kit/core directly).
 export type { Section }
 
-// UTC accessors throughout, matching the photos app's grouping — `updatedAt` epochs are
-// UTC-anchored (see data/mock.ts's REF_NOW), and local accessors would bucket the same
-// item into a different day per viewer timezone, breaking the reproducible VRT baseline.
+// UTC accessors throughout, matching the photos app's grouping — `mediaDate` epochs are
+// UTC-anchored (Date.UTC throughout figureMeta.ts/media.ts), and local accessors would bucket
+// the same item into a different day per viewer timezone, breaking the reproducible VRT baseline.
 function dayKey(d: Date): string {
 	const y = d.getUTCFullYear()
 	const m = `${d.getUTCMonth() + 1}`.padStart(2, '0')
@@ -60,12 +60,12 @@ export function groupMedia(items: readonly MediaItem[]): Section[] {
 	if (items.length === 0) return []
 	const sections: Section[] = []
 	let start = 0
-	let curKey = dayKey(new Date(items[0].updatedAt))
+	let curKey = dayKey(new Date(items[0].mediaDate))
 
 	const flush = (end: number) => {
 		sections.push({
 			key: curKey,
-			title: dayTitle(new Date(items[start].updatedAt)),
+			title: dayTitle(new Date(items[start].mediaDate)),
 			subtitle: articleSubtitle(items, start, end),
 			startIndex: start,
 			endIndex: end,
@@ -74,7 +74,7 @@ export function groupMedia(items: readonly MediaItem[]): Section[] {
 	}
 
 	for (let i = 1; i < items.length; i++) {
-		const k = dayKey(new Date(items[i].updatedAt))
+		const k = dayKey(new Date(items[i].mediaDate))
 		if (k !== curKey) {
 			flush(i)
 			start = i

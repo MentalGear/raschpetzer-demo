@@ -107,10 +107,23 @@
 	infoLabel="Source article"
 >
 	{#snippet info(item: (typeof wikiStore.media)[number])}
-		<div class="flex flex-col gap-2 text-sm">
+		<!-- MediaLightbox's info slot is `display:contents` by design (docs/kit/components/
+		     media-lightbox.md's "layered, not stacked" layout) — it contributes no box of its
+		     own, so THIS root element must supply its own position/background, same as the
+		     component's own reference story (MediaLightbox.stories.svelte's `info` snippet).
+		     Without that, the panel toggles on (button `aria-pressed` flips, content mounts)
+		     but renders as an unstyled, unpositioned flow div with no background — invisible
+		     against the dark stage, reading as "nothing happens" (found live: the info button
+		     appeared to do nothing at all). -->
+		<div class="info-panel flex flex-col gap-2 text-sm">
 			{#if item.caption}<p>{item.caption}</p>{/if}
 			<p class="text-muted-foreground">{item.alt}</p>
 			{#if item.credit}<p class="text-muted-foreground italic">{item.credit}</p>{/if}
+			{#if item.figureLabel}
+				<p class="text-muted-foreground">{item.figureLabel} — 2018 brochure</p>
+			{:else if item.mediaDateInferred}
+				<p class="text-muted-foreground">{new Date(item.mediaDate).getUTCFullYear()}</p>
+			{/if}
 			<p class="text-muted-foreground">Edited {editedLabel(item.updatedAt, REF_NOW)}</p>
 			<a href={href(`/${item.articleSlug}`)} class="underline underline-offset-2">
 				View article: {item.articleTitle}
@@ -140,5 +153,36 @@
 		padding: 0 0.5rem;
 		flex: 1;
 		min-height: 0;
+	}
+
+	/* The lightbox's info slot is `display:contents` (see the snippet's own comment) — this
+	   root element supplies its own right-side-panel position and background, matching
+	   MediaLightbox's reference story. Same overlay tokens as the lightbox chrome itself
+	   (falls back to --background/--foreground), not a hardcoded color, so it stays
+	   theme-correct. Bottom sheet on narrow viewports instead of a cramped side panel — this
+	   page never passes a filmstrip, so there's no bottom chrome to leave room for. */
+	.info-panel {
+		position: absolute;
+		top: 3.25rem;
+		right: 0;
+		bottom: 0;
+		width: min(320px, 100vw);
+		overflow-y: auto;
+		padding: 1rem;
+		background: var(--media-lightbox-overlay-bg, var(--background));
+		color: var(--media-lightbox-overlay-fg, var(--foreground));
+		border-left: 1px solid var(--border);
+	}
+	@media (max-width: 640px) {
+		.info-panel {
+			top: auto;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: auto;
+			max-height: 40vh;
+			border-left: none;
+			border-top: 1px solid var(--border);
+		}
 	}
 </style>
