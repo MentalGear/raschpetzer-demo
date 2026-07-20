@@ -1,0 +1,10 @@
+{
+  "name": "raschpetzer-demo",
+  "private": true,
+  "scripts": {
+    "generate:responsive": "node scripts/generate-responsive-images.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.0"
+  }
+}
