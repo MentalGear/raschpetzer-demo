@@ -102,6 +102,20 @@
 		lightboxOpen = true
 	}
 
+	// Fly-in/out animation origin: this inline slider isn't virtualized (unlike the
+	// Media page's grid), so every card's DOM node already exists — no reveal/scroll
+	// step needed, just look up the current item's own tile div (id set on the
+	// `.relative` box above, in the template) and read its current rect. Mirrors
+	// Photos' own PhotoBrowser.svelte `flyRect` in spirit, simplified for a
+	// non-virtualized list.
+	function flyRect(): DOMRect | null {
+		const it = items[lightboxIndex]
+		if (!it) return null
+		return (
+			document.getElementById(`gallery-tile-${uid}-${it.id}`)?.getBoundingClientRect() ?? null
+		)
+	}
+
 	// MediaLightbox takes a single reactive `alt`/`title` for the CURRENT item (not a
 	// per-item callback) — recompute off `lightboxIndex`, same pattern Photos' own
 	// Lightbox.svelte and the retired GalleryReader.svelte both use.
@@ -273,6 +287,7 @@
 							     the arrows off to the side of the actually-visible image. `mx-auto`
 							     centers it within the figure once it's narrower than the card. -->
 							<div
+								id="gallery-tile-{uid}-{it.id}"
 								class="relative mx-auto"
 								style="aspect-ratio: {ratio}; max-height: {GALLERY_CARD_MAX_HEIGHT}; width: min(100%, calc({GALLERY_CARD_MAX_HEIGHT} * {ratio}))"
 							>
@@ -448,6 +463,8 @@
 		nextLabel="Next image"
 		onClose={() => (lightboxOpen = false)}
 		onIndex={(i) => (lightboxIndex = i)}
+		{flyRect}
+		openAnimation="fly"
 		{slide}
 	/>
 

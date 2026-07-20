@@ -23,8 +23,7 @@
 </script>
 
 <svelte:head
-	><title>Translations: {source ? source.title : 'Not found'} — Raschpëtzer Wiki</title
-	></svelte:head
+	><title>Translations: {source ? source.title : 'Not found'} — Raschpëtzer</title></svelte:head
 >
 
 {#if source}

@@ -5,7 +5,7 @@
 	import { PathBar } from '@kit/ui'
 </script>
 
-<svelte:head><title>Settings — Raschpëtzer Wiki</title></svelte:head>
+<svelte:head><title>Settings — Raschpëtzer</title></svelte:head>
 
 <div class="mx-auto w-full max-w-3xl px-4 py-6 lg:px-8">
 	<PathBar

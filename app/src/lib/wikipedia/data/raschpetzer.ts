@@ -120,9 +120,7 @@ const findsGalleryItems: GalleryItemRef[] = [
 		credit: 'Photo: Tom Lucas & Ben Muller, MNHA, 2022',
 		tone: 4,
 		ratio: 1920 / 1280,
-		src: asset(
-			'/img/raschpetzer/a-shovel-P9-FOTO-Tom-Lucas-Ben-Muller-MNHA-2022-fallback.jpg',
-		),
+		src: asset('/img/raschpetzer/a-shovel-P9-FOTO-Tom-Lucas-Ben-Muller-MNHA-2022-fallback.jpg'),
 	},
 	{
 		id: 'shovel-b',
@@ -131,9 +129,7 @@ const findsGalleryItems: GalleryItemRef[] = [
 		credit: 'Photo: Tom Lucas & Ben Muller, MNHA, 2022',
 		tone: 4,
 		ratio: 1920 / 1280,
-		src: asset(
-			'/img/raschpetzer/b-shovel-P9-FOTO-Tom-Lucas-Ben-Muller-MNHA-2022-fallback.jpg',
-		),
+		src: asset('/img/raschpetzer/b-shovel-P9-FOTO-Tom-Lucas-Ben-Muller-MNHA-2022-fallback.jpg'),
 	},
 ]
 

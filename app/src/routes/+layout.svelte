@@ -142,7 +142,7 @@
 
 <span role="status" aria-live="polite" aria-atomic="true" class="sr-only">{statusMsg}</span>
 
-<AppShell title="Raschpëtzer Wiki" {nav} {isActive}>
+<AppShell title="Raschpëtzer" {nav} {isActive}>
 	{#snippet footer()}
 		<!-- Session chrome (member/login menu + the per-article language switcher) sticks to the
 		     bottom of the docked sidebar via Sidebar.Footer itself — no bespoke positioning needed

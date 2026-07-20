@@ -6,7 +6,7 @@
 	 * network). All virtualization, sticky day headers, scrubber, and keyboard a11y
 	 * come from the domain-free `@kit/ui` grid.
 	 */
-	import { VirtualGrid } from '@kit/ui'
+	import { VirtualGrid, type RevealItemOptions } from '@kit/ui'
 	import type { Section } from '@kit/core'
 	import { cn } from '@kit/ui/shadcn-utils'
 	import type { MediaItem } from '../data/media'
@@ -24,9 +24,18 @@
 		return `${m.alt}, from ${m.articleTitle}`
 	}
 	const aspectOf = (m: MediaItem) => m.ratio ?? 16 / 9
+
+	// Forwards to VirtualGrid's own `revealItem` (mirrors Photos' PhotoGrid.svelte's
+	// `reveal`) — the parent page's `flyRect` uses this + the tile's `id="tile-<i>"`
+	// (set by VirtualGrid itself) to resolve the fly-in/out animation's origin rect.
+	let grid = $state<{ revealItem: (i: number, opts?: RevealItemOptions) => void }>()
+	export function reveal(i: number, opts?: RevealItemOptions) {
+		grid?.revealItem(i, opts)
+	}
 </script>
 
 <VirtualGrid
+	bind:this={grid}
 	{items}
 	{sections}
 	targetRowHeight={180}

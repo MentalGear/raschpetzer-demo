@@ -42,7 +42,7 @@ export default defineConfig({
 			pwaAssets: { config: true },
 			manifest: {
 				short_name: 'Raschpëtzer',
-				name: 'Raschpëtzer Wiki',
+				name: 'Raschpëtzer',
 				start_url: pwaBase,
 				scope: pwaBase,
 				display: 'standalone',
