@@ -228,8 +228,9 @@ export const galleryArticle: Article = {
 					'That diverted flow stays underground as a lateral drain near the channel level and resurfaces downslope of the weir rather than at any visible daylight structure',
 					'c-gallery-survey-outlet',
 				),
-				t(
+				cite(
 					'; the resurgence outlet has since been field-surveyed at 6.147987° E, 49.666272° N (WGS84) — LUREF 78546 E / 81300 N, UTM32N 294207 / 5505432.',
+					'c-gallery-survey-outlet',
 				),
 			),
 		},

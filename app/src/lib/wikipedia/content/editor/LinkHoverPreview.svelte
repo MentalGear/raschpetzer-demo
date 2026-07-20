@@ -35,6 +35,10 @@
 	let anchorEl = $state<HTMLElement | null>(null)
 	let slug = $state<string | null>(null)
 	const entity = $derived(slug ? wikiStore.entityBySlug(slug) : undefined)
+	// An Entity stub and a full Article can share a slug (a stub written before its full page
+	// existed, e.g. raschpetzer-helmsange.ts's header comment) — prefer the article's own
+	// title/summary once it exists rather than showing the shorter stub blurb forever.
+	const article = $derived(slug ? wikiStore.bySlug(slug) : undefined)
 	const exists = $derived(slug ? articleExists(slug) : true)
 
 	let openTimer: ReturnType<typeof setTimeout> | undefined
@@ -110,7 +114,12 @@
 		onpointerenter={cancelClose}
 		onpointerleave={scheduleClose}
 	>
-		{#if entity}
+		{#if article}
+			<div class="flex flex-col gap-1">
+				<span class="text-sm font-semibold">{article.title}</span>
+				<span class="text-sm text-muted-foreground">{article.summary}</span>
+			</div>
+		{:else if entity}
 			<div class="flex flex-col gap-1">
 				<span class="text-sm font-semibold">{entity.title}</span>
 				<span class="text-sm text-muted-foreground">{entity.blurb}</span>

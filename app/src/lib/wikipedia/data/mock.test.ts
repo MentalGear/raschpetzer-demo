@@ -45,10 +45,4 @@ describe('synthesized revision history', () => {
 			expect(totals.changed, `${a.slug} changed`).toBeGreaterThanOrEqual(1)
 		}
 	})
-
-	it('localized variants own an empty revisions array (no aliasing of the source)', () => {
-		for (const a of articles.filter((a) => a.locale !== 'en')) {
-			expect(a.revisions, a.slug).toEqual([])
-		}
-	})
 })

@@ -70,11 +70,11 @@ export const sonjaFaberArticle: Article = {
 			type: 'paragraph',
 			runs: p(
 				t(
-					'Web search for this page turned up no further independently verifiable biographical detail about her — no affiliation, credentials, or other bylined work distinct from the three co-authored Raschpëtzer publications above could be confirmed. She is not the same person as ',
+					'Web search for this page turned up no further independently verifiable biographical detail about her — no affiliation, credentials, or other bylined work distinct from the three co-authored Raschpëtzer publications above could be confirmed. She is the daughter of ',
 				),
 				link('Georges Faber', 'georges-faber'),
 				t(
-					', a private individual credited elsewhere in the brochure’s acknowledgements as one of the founders of the Raschpëtzer investigations in the 1960s. Her documented role here rests on the co-authorship credits alone.',
+					', a private individual credited elsewhere in the brochure’s acknowledgements as one of the founders of the Raschpëtzer investigations in the 1960s (editorial note: the family relationship is stated per project/site knowledge, not backed by a citable public source, unlike the co-authorship facts above). Her documented public role here otherwise rests on the co-authorship credits alone.',
 				),
 			),
 		},

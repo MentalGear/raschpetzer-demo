@@ -108,15 +108,25 @@ export const nicolasKohlArticle: Article = {
 			id: 'p-intro',
 			type: 'paragraph',
 			runs: p(
-				t(
-					'Nicolas Kohl (1921–2020) was a Luxembourgish civil servant and amateur archaeologist who, with ',
+				cite(
+					'Nicolas Kohl (1921–2020) was a Luxembourgish civil servant and amateur archaeologist',
+					'c-nicolas-kohl-wikipedia-lb',
 				),
+				t(' who, with '),
 				link('Georges Faber', 'georges-faber'),
-				t(', initiated and for two decades personally led the investigation of the '),
+				cite(
+					', initiated and for two decades personally led the investigation of the ',
+					'c-nicolas-kohl-brochure-p37',
+				),
 				link('Raschpëtzer', 'raschpetzer-qanat'),
 				t(
-					', the Roman-era underground water gallery in Helmsange Forest near Walferdange. He was, by the site brochure’s own account, present at both ends of the discovery: the 1966 meeting that started the research, and the October 1986 breakthrough into the gallery itself, which he was the first person to enter in nearly two thousand years.',
+					', the Roman-era underground water gallery in Helmsange Forest near Walferdange. He was, by the site brochure’s own account, present at both ends of the discovery: the 1966 meeting that started the research, and ',
 				),
+				cite(
+					'the October 1986 breakthrough into the gallery itself, which he was the first person to enter in nearly two thousand years',
+					'c-nicolas-kohl-brochure-p9',
+				),
+				t('.'),
 			),
 		},
 		{

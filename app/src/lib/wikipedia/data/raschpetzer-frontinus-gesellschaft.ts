@@ -88,12 +88,12 @@ export const frontinusGesellschaftArticle: Article = {
 				t('The society takes its name from '),
 				b('Sextus Julius Frontinus'),
 				cite(
-					' (c. AD 40 – 103), a Roman senator, general and three-time consul who, in AD 97, was appointed curator aquarum — superintendent of the ',
+					' (AD 35 – c. 103), a Roman senator, general and three-time consul who, in AD 97, was appointed curator aquarum — superintendent of the ',
 					'c-frontinus-namesake',
 				),
 				link('aqueducts', 'roman-aqueducts'),
 				cite(
-					' supplying Rome. In that role he oversaw the channels, distribution basins, fountains and legal water grants of the city, and wrote De aquaeductu urbis Romae, the first surviving technical treatise on a water-supply system',
+					' supplying Rome. In that role he oversaw the channels, distribution basins, fountains and legal water grants of the city, and wrote De aquis urbis Romae, the first surviving technical treatise on a water-supply system',
 					'c-frontinus-namesake',
 				),
 				t('.'),

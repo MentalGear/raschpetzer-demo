@@ -96,7 +96,7 @@ export const shaftP5Article: Article = {
 				t(
 					', a Gallo-Roman qanat near Walferdange, Luxembourg. Sunk at the eastern edge of the Pëtschend plateau, it is ',
 				),
-				cite('the deepest of the qanat’s shafts at 36 metres', 'c-shaft-p5-depth'),
+				cite("the deepest of the qanat's shafts at 36 metres", 'c-shaft-p5-depth'),
 				t(
 					', and reaching its floor in 1986 was also the moment excavators rediscovered the qanat gallery itself. It is one of eighteen shaft records catalogued along the route — see ',
 				),
@@ -115,9 +115,7 @@ export const shaftP5Article: Article = {
 					', the highest and easternmost stretch of the main shaft line before the ground drops toward the Haedchen depression. It is ',
 				),
 				cite('quoted at 36 metres deep', 'c-shaft-p5-depth'),
-				t(
-					', though roughly 35 metres of that is measured down to the gallery floor itself — the figure most often cited for the shaft is the rounder, quoted 36 m.',
-				),
+				t('.'),
 			),
 		},
 		{ id: 'h-construction', type: 'heading', level: 2, text: 'Torus-bulge construction' },
@@ -126,7 +124,7 @@ export const shaftP5Article: Article = {
 			type: 'paragraph',
 			runs: p(
 				t(
-					'Unlike a shaft of constant diameter, P5’s wall steps inward in a series of rings as it descends — what the excavation record calls ',
+					"Unlike a shaft of constant diameter, P5's wall steps inward in a series of rings as it descends — what the excavation record calls ",
 				),
 				b('torus bulges'),
 				t('. '),
@@ -139,7 +137,7 @@ export const shaftP5Article: Article = {
 					'c-shaft-p5-diameter',
 				),
 				t(
-					' — a detail that distinguishes P5’s profile from the more uniform bore of the shallower shafts along the route.',
+					" — a detail that distinguishes P5's profile from the more uniform bore of the shallower shafts along the route.",
 				),
 			),
 		},
@@ -153,7 +151,7 @@ export const shaftP5Article: Article = {
 					', during an initial, inconclusive excavation attempt at the site. Its floor was not reached until decades later, when systematic excavation resumed: ',
 				),
 				cite(
-					'P5’s base was finally cleared on 3 October 1986 — the same day the qanat gallery itself was rediscovered',
+					"P5's base was finally cleared on 3 October 1986 — the same day the qanat gallery itself was rediscovered",
 					'c-shaft-p5-cleared',
 				),
 				t(
@@ -183,7 +181,7 @@ export const shaftP5Article: Article = {
 				t(', forcing '),
 				cite('that stretch of channel to be rebuilt in concrete', 'c-shaft-p5-accident'),
 				t(
-					' rather than repaired in the original dry-masonry technique. P5 and P-5 are distinct shafts in the site record — P5 is the 36-metre shaft described above; P-5 is its western neighbour, where the accident occurred — but the two are close enough along the route, and similar enough in name, that the accident is often discussed alongside P5’s own history. See ',
+					" rather than repaired in the original dry-masonry technique. P5 and P-5 are distinct shafts in the site record — P5 is the 36-metre shaft described above; P-5 is its western neighbour, where the accident occurred — but the two are close enough along the route, and similar enough in name, that the accident is often discussed alongside P5's own history. See ",
 				),
 				link('Shafts of the Raschpëtzer', 'raschpetzer-shafts'),
 				t(' for the rest of the shaft line, including P-5’s own entry.'),

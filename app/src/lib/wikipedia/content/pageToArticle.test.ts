@@ -57,8 +57,21 @@ function structuralBlock(b: Block): unknown {
 				alt: b.alt,
 				caption: b.caption ?? null,
 				credit: b.credit ?? null,
-				tone: b.tone,
-				ratio: b.ratio ?? null,
+				// `tone` only selects a rendered placeholder gradient when there's no real
+				// image (figureVisual.ts) — once a real image exists it's decorative-only and
+				// isn't recoverable from the Page side (there's no placeholder path to parse a
+				// tone index back out of; `galleryToFigure` never forwards `src` onto the
+				// reconstructed block either, so masking on `b.src` itself would be asymmetric
+				// between the two sides of the comparison). Every real-image figure in this
+				// corpus also authors a `ratio` (verified), and `ratio` DOES survive the round
+				// trip symmetrically, so it's the reliable signal to mask on instead — same
+				// spirit as `ratio`'s own exclusion just below.
+				tone: b.ratio ? null : b.tone,
+				// EXCLUDED from this broad structural comparison — same reason as the `gallery`
+				// case below: `figureToGallery` now synthesizes width/height from `ratio` too
+				// (2026-07-20), so it survives an Article → Page → Article round trip up to
+				// integer width/height rounding, not exactly. The dedicated "recovers ratio,
+				// single-figure path" test below asserts this precisely (`toBeCloseTo`).
 			}
 		case 'gallery':
 			// Phase 3 added the first mock gallery block (honeybee/en, data/mock.ts), so this
@@ -76,9 +89,10 @@ function structuralBlock(b: Block): unknown {
 			// ratio). Coupling this whole-fixture-suite comparison to that rounding tolerance for
 			// every mock article isn't worth it; the dedicated "recovers ratio" and "two-hop round
 			// trip" tests below assert the real behavior precisely (`toBeCloseTo`). The single-
-			// figure/lead path (`figureToGallery`) still does NOT forward ratio — separate,
-			// deferred scope (ADR-001) — so `figure`'s own `ratio: b.ratio ?? null` above stays a
-			// genuine (if currently untested-by-fixture, since no mock figure sets `ratio`) gap.
+			// figure/lead path (`figureToGallery`) now forwards `ratio` too (closed the
+			// ADR-001 gap once a real single-figure block — raschpetzer.ts's `fig-catchment`
+			// — started authoring one); `figure`'s own `ratio: b.ratio ?? null` above is a
+			// genuine, exact comparison, not a masked one.
 			return {
 				type: 'gallery',
 				items: b.items.map((it) => ({
@@ -86,7 +100,9 @@ function structuralBlock(b: Block): unknown {
 					alt: it.alt,
 					caption: it.caption ?? null,
 					credit: it.credit ?? null,
-					tone: it.tone,
+					// see the `figure` case's comment: masked once a real image exists (keyed
+					// off `ratio`, not `src`, for the same reconstructed-side asymmetry reason).
+					tone: it.ratio ? null : it.tone,
 				})),
 			}
 	}
@@ -534,9 +550,29 @@ describe('pageToArticle — gallery → real multi-image GalleryBlock (non-leadi
 		// (a fixed 1200px edge × the ratio) on the way out to the Page side, which `pageToArticle`
 		// then recovers back into `ratio` on the way in — `toBeCloseTo`, not `toBe`, since integer
 		// width/height rounding introduces a tiny (sub-0.1%) precision loss, invisible at any
-		// rendered size. `figureToGallery` (single-figure/lead path) still does NOT forward ratio —
-		// separate, deferred scope (ADR-001).
+		// rendered size.
 		expect(gallery!.items[1].ratio).toBeCloseTo(1600 / 900, 2)
+	})
+
+	it('recovers ratio from width/height on the single-figure/lead path too (figureToGallery, closing the ADR-001 gap)', () => {
+		const original = proseArticle([
+			{ id: 'p0', type: 'paragraph', runs: [{ text: 'intro' }] },
+			{
+				id: 'fig1',
+				type: 'figure',
+				alt: 'a figure',
+				tone: 3,
+				ratio: 1600 / 900,
+			},
+		])
+		const page = articleToPage(original)
+		const back = pageToArticle(page, UNIT_BASE)
+		const figure = back.blocks.find(
+			(b): b is Extract<Block, { type: 'figure' }> => b.type === 'figure',
+		)
+		expect(figure, 'expected a figure block').toBeTruthy()
+		// same sub-0.1% integer-rounding tolerance as the gallery-item hop above.
+		expect(figure!.ratio).toBeCloseTo(1600 / 900, 2)
 	})
 })
 

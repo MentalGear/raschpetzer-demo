@@ -95,7 +95,7 @@ export const shaftPMinus4Article: Article = {
 		{ label: 'Floor elevation', value: '355.4 m a.s.l.' },
 		{ label: 'Lining', value: 'Dry-stone, 0.8 m wall, 3 concentric rows' },
 		{ label: 'Base', value: 'Widened to a 1.4 m cone' },
-		{ label: 'Excavated', value: '1992 (western continuation campaign, 1992–2000)' },
+		{ label: 'Excavated', value: 'Western continuation campaign, 1992–2000' },
 		{ label: 'Surface today', value: 'Windowed viewing cover, over the overflow bifurcation' },
 	],
 	blocks: [
@@ -114,7 +114,7 @@ export const shaftPMinus4Article: Article = {
 					'c-shaft-pminus4-depth',
 				),
 				t(
-					', and is one of the ten excavated shafts along the route capped today with a modern surface structure — in this case a windowed cover, so visitors can look down into the channel without entering it.',
+					', capped today with a modern surface structure — in this case a windowed cover, so visitors can look down into the channel without entering it.',
 				),
 			),
 		},

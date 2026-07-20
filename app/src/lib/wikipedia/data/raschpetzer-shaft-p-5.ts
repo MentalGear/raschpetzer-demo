@@ -95,7 +95,7 @@ export const shaftPMinus5Article: Article = {
 		{ label: 'Fill', value: 'Yellow sand' },
 		{ label: 'Channel found at', value: '10 m' },
 		{ label: 'Notable for', value: 'The dig\'s "geological accident" and its concrete repair' },
-		{ label: 'Excavated', value: '1993 (western continuation campaign, 1992–2000)' },
+		{ label: 'Excavated', value: 'Western continuation campaign, 1992–2000' },
 		{ label: 'Surface today', value: 'Metal lid' },
 	],
 	blocks: [
@@ -180,7 +180,7 @@ export const shaftPMinus5Article: Article = {
 					'c-shaft-pminus5-dating',
 				),
 				t(
-					' extending the excavated gallery further west from the shafts already opened in the 1986 rediscovery. Today its head is capped with a metal lid, one of the ten excavated shafts along the route with a modern surface cover.',
+					' extending the excavated gallery further west from the shafts already opened in the 1986 rediscovery. Today its head is capped with a metal lid, a modern surface cover shared by several of the excavated shafts along the route.',
 				),
 			),
 		},

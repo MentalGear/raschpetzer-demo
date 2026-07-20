@@ -100,67 +100,80 @@ async function main() {
 	const server = await startServer(BASE)
 	const ORIGIN = `http://127.0.0.1:${PORT}`
 
-	const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' })
-	const context = await browser.newContext()
-
+	// Prefer Playwright's own install resolution (same as `test:e2e`/`playwright.config.ts`
+	// elsewhere in this repo) so this works unmodified in CI/on any other machine, as long as
+	// `bunx playwright install chromium` has run there. This repo's own dev sandbox pre-installs
+	// a fixed Chromium build at a path that ISN'T version-matched to whatever `playwright` npm
+	// version is pinned (so normal resolution 404s here specifically) — fall back to that known
+	// path only when it actually exists on disk, rather than hardcoding it unconditionally.
+	const SANDBOX_CHROMIUM = '/opt/pw-browsers/chromium'
+	const browser = await chromium.launch(
+		fs.existsSync(SANDBOX_CHROMIUM) ? { executablePath: SANDBOX_CHROMIUM } : undefined,
+	)
 	const seen = new Set()
 	const queue = [`${BASE}/`]
 	const pages = []
 	const brokenAssets = []
 
-	while (queue.length) {
-		const url = queue.shift()
-		if (seen.has(url)) continue
-		seen.add(url)
+	try {
+		const context = await browser.newContext()
+		while (queue.length) {
+			const url = queue.shift()
+			if (seen.has(url)) continue
+			seen.add(url)
 
-		const page = await context.newPage()
-		const consoleErrors = []
-		page.on('pageerror', (e) => consoleErrors.push(`pageerror: ${e.message}`))
-		page.on('console', (m) => {
-			if (m.type() === 'error') consoleErrors.push(`console: ${m.text()}`)
-		})
-		page.on('response', (res) => {
-			if (res.status() >= 400)
-				brokenAssets.push({ page: url, url: res.url(), status: res.status() })
-		})
+			const page = await context.newPage()
+			const consoleErrors = []
+			page.on('pageerror', (e) => consoleErrors.push(`pageerror: ${e.message}`))
+			page.on('console', (m) => {
+				if (m.type() === 'error') consoleErrors.push(`console: ${m.text()}`)
+			})
+			page.on('response', (res) => {
+				if (res.status() >= 400)
+					brokenAssets.push({ page: url, url: res.url(), status: res.status() })
+			})
 
-		let navError = null
-		try {
-			await page.goto(ORIGIN + url, { waitUntil: 'networkidle', timeout: 20000 })
-			await page.waitForTimeout(300)
-		} catch (e) {
-			navError = e.message
-		}
-
-		const bodyText = (await page.textContent('body').catch(() => '')) ?? ''
-		const isDeadArticle = bodyText.includes('Article not found')
-
-		let hrefs = []
-		try {
-			hrefs = await page.$$eval('a[href]', (as) => as.map((a) => a.getAttribute('href')))
-		} catch {
-			// page may have failed to render at all — leave hrefs empty, already flagged via navError
-		}
-		for (const href of hrefs) {
-			if (!href || href.startsWith('#') || href.startsWith('mailto:')) continue
-			let abs
+			let navError = null
 			try {
-				abs = new URL(href, ORIGIN + url)
-			} catch {
-				continue
+				await page.goto(ORIGIN + url, { waitUntil: 'networkidle', timeout: 20000 })
+				await page.waitForTimeout(300)
+			} catch (e) {
+				navError = e.message
 			}
-			if (abs.origin !== ORIGIN) continue // external link — not crawled, not checked here
-			const p = abs.pathname
-			if (BASE && !p.startsWith(BASE)) continue
-			if (!seen.has(p)) queue.push(p)
+
+			const bodyText = (await page.textContent('body').catch(() => '')) ?? ''
+			const isDeadArticle = bodyText.includes('Article not found')
+
+			let hrefs = []
+			try {
+				hrefs = await page.$$eval('a[href]', (as) => as.map((a) => a.getAttribute('href')))
+			} catch {
+				// page may have failed to render at all — leave hrefs empty, already flagged via navError
+			}
+			for (const href of hrefs) {
+				if (!href || href.startsWith('#') || href.startsWith('mailto:')) continue
+				let abs
+				try {
+					abs = new URL(href, ORIGIN + url)
+				} catch {
+					continue
+				}
+				if (abs.origin !== ORIGIN) continue // external link — not crawled, not checked here
+				const p = abs.pathname
+				if (BASE && !p.startsWith(BASE)) continue
+				if (!seen.has(p)) queue.push(p)
+			}
+
+			pages.push({ url, navError, consoleErrors, isDeadArticle })
+			await page.close()
 		}
-
-		pages.push({ url, navError, consoleErrors, isDeadArticle })
-		await page.close()
+	} finally {
+		// An unexpected throw mid-crawl (browser crash, etc.) must not orphan the chromium
+		// subprocess or leave the HTTP server holding the port — especially in CI, where that
+		// becomes a hung job instead of a clean non-zero exit.
+		await browser.close()
+		server.close()
 	}
-
-	await browser.close()
-	server.close()
 
 	// Cross-reference: which registered article slugs were never reached by the crawl?
 	const reachedPaths = new Set(pages.map((p) => p.url))

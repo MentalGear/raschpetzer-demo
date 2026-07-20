@@ -48,6 +48,18 @@ const c = {
 		publisher: 'Encyclopædia Britannica',
 		url: 'https://www.britannica.com/place/Alzette-River',
 	},
+	fortress: {
+		id: 'c-alzette-wikipedia-fortress',
+		title: 'Fortress of Luxembourg',
+		publisher: 'Wikipedia',
+		url: 'https://en.wikipedia.org/wiki/Fortress_of_Luxembourg',
+	},
+	eschSurAlzette: {
+		id: 'c-alzette-wikipedia-esch',
+		title: 'Esch-sur-Alzette',
+		publisher: 'Wikipedia',
+		url: 'https://en.wikipedia.org/wiki/Esch-sur-Alzette',
+	},
 	minett: {
 		id: 'c-alzette-visitluxembourg-minett',
 		title: 'Minett: the Land of the Red Rocks',
@@ -112,8 +124,8 @@ export const alzetteArticle: Article = {
 					'c-alzette-wikipedia-alzette',
 				),
 				cite(
-					' In Luxembourg City it cuts deep ravines into the sandstone plateau the old town sits on; within a loop of the river stands the Bock, a rocky promontory the Romans and later the Franks fortified, and which gave its name to the Casemates du Bock tunnel network built as part of the Fortress of Luxembourg (dismantled from 1867).',
-					'c-alzette-britannica',
+					' In Luxembourg City it cuts deep ravines into the sandstone plateau the old town sits on; within a loop of the river stands the Bock, a rocky promontory the Romans and later the Franks fortified, and which gave its name to the Casemates du Bock tunnel network built as part of the Fortress of Luxembourg (dismantled 1867–1883 under the 1867 Treaty of London).',
+					'c-alzette-wikipedia-fortress',
 				),
 				cite(
 					' The river valley forms a central axis for much of the country’s settlement and economic activity.',
@@ -144,8 +156,8 @@ export const alzetteArticle: Article = {
 				t('On the upper river, '),
 				b('Esch-sur-Alzette'),
 				cite(
-					' grew from a village of about 1,400 people in 1842 into a town of over 30,000 by 1930 as the centre of the country’s iron and steel industry, drawing on the phosphoric iron ore of the surrounding region.',
-					'c-alzette-britannica',
+					' grew from about 1,500 people in 1851 to nearly 30,000 by 1930 — a roughly tenfold increase in under a century — as the centre of the country’s iron and steel industry, drawing on the phosphoric iron ore of the surrounding region.',
+					'c-alzette-wikipedia-esch',
 				),
 				cite(
 					' That mining region — the Minett, named for its red, iron-rich soil — was one of the cradles of the European steel industry; its former mining areas are now recognised as the Minett UNESCO Biosphere.',
@@ -178,7 +190,7 @@ export const alzetteArticle: Article = {
 			),
 		},
 	],
-	citations: [c.wikipedia, c.britannica, c.minett, c.brochureFlow],
+	citations: [c.wikipedia, c.britannica, c.fortress, c.eschSurAlzette, c.minett, c.brochureFlow],
 	revisions: [
 		{
 			id: 'r1',

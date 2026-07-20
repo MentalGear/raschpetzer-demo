@@ -9,9 +9,9 @@
  * claim is sourced: brochure-derived facts deep-link into the vendored PDF (`#page=N`, verified
  * by extracting pages 7–10, 37–38 directly), and the Nicolas Kohl connection — see the sibling
  * `raschpetzer-nicolas-kohl.ts` article — is independently corroborated by a live web source
- * (Luxembourgish Wikipedia's Nicolas Kohl article), not just the brochure alone. No relationship
- * to Sonja Faber could be verified — that is stated plainly rather than assumed from the shared
- * surname.
+ * (Luxembourgish Wikipedia's Nicolas Kohl article), not just the brochure alone. Sonja Faber is
+ * his daughter — an editorial correction (2026-07-20): stated per project/site knowledge, not
+ * backed by a citable public source, unlike every other biographical claim in this file.
  */
 import { base } from '$app/paths'
 import type { Article, Citation, Inline, TextRun } from './types'
@@ -124,7 +124,7 @@ export const georgesFaberArticle: Article = {
 				t('. He is not the same person as '),
 				link('Sonja Faber', 'sonja-faber'),
 				t(
-					", one of the brochure's three named co-authors — that article already notes the distinction, and no relationship between the two Fabers could be verified for this page either (see below).",
+					", one of the brochure's three named co-authors — that article already notes the distinction. Sonja Faber is his daughter (editorial note: stated per project/site knowledge, not backed by a citable public source).",
 				),
 			),
 		},
@@ -206,7 +206,7 @@ export const georgesFaberArticle: Article = {
 					'c-georges-faber-nicolaskohl-wp',
 				),
 				t(
-					'. Beyond his Raschpëtzer-related work, no independently verifiable biographical detail — birth or death dates, profession, or a confirmed family connection to Sonja Faber — could be found; web search turned up only unrelated people sharing the name. This page states that limit plainly rather than filling it in.',
+					'. Beyond his Raschpëtzer-related work and his daughter Sonja Faber (see above), no independently verifiable biographical detail — birth or death dates, or profession — could be found; web search turned up only unrelated people sharing the name. This page states that limit plainly rather than filling it in.',
 				),
 			),
 		},
