@@ -156,12 +156,12 @@ class WikiStore {
 		return this.sourceArticles.find((a) => a.id === article.simpleOfId)
 	}
 
-	/** Every figure/gallery image across the source articles, newest-article-first — the
+	/** Every figure/gallery image across the source articles, grouped by category — the
 	 *  Media page's data source. */
 	media = $derived.by<MediaItem[]>(() => collectMedia(this.sourceArticles))
 
-	/** `media` grouped into day sections for the Media page's sticky headers. */
-	mediaSections = $derived.by<Section[]>(() => groupMedia(this.media))
+	/** `media` grouped into category sections for the Media page's sticky headers. */
+	mediaSections = $derived.by<Section[]>(() => groupMedia(this.media, this.categories))
 
 	/** Token-AND search over title + summary + category labels, in browse order. */
 	search(query: string): Article[] {

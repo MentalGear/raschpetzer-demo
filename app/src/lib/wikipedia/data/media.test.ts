@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { collectMedia } from './media'
+import { collectMedia, primaryCategory } from './media'
 import { articles } from './mock'
 
 const sourceArticles = articles.filter((a) => a.locale === 'en')
@@ -22,11 +22,42 @@ describe('collectMedia', () => {
 		expect(new Set(items.map((m) => m.id)).size).toBe(items.length)
 	})
 
-	it('returns items newest-media-first', () => {
+	it('groups by category (same category contiguous) then sorts newest-media-first within each', () => {
 		const items = collectMedia(sourceArticles)
-		for (let i = 1; i < items.length; i++) {
-			expect(items[i - 1].mediaDate).toBeGreaterThanOrEqual(items[i].mediaDate)
+		const seenCategories = new Set<string>()
+		let prevCategory: string | null = null
+		for (const m of items) {
+			if (m.category !== prevCategory) {
+				// A category can only "restart" if we've never seen it before — otherwise the
+				// same category is split across two non-contiguous runs, which groupMedia
+				// (mediaGrouping.ts) requires never happens.
+				expect(seenCategories.has(m.category)).toBe(false)
+				seenCategories.add(m.category)
+				prevCategory = m.category
+			}
 		}
+		// within each contiguous category run, newest-media-first
+		for (let i = 1; i < items.length; i++) {
+			if (items[i].category === items[i - 1].category) {
+				expect(items[i - 1].mediaDate).toBeGreaterThanOrEqual(items[i].mediaDate)
+			}
+		}
+	})
+
+	it("assigns each item its owning article's primaryCategory", () => {
+		const items = collectMedia(sourceArticles)
+		for (const m of items) {
+			const article = sourceArticles.find((a) => a.slug === m.articleSlug)!
+			expect(m.category).toBe(primaryCategory(article.categories))
+		}
+	})
+
+	it('primaryCategory prefers people, then technology, then history, over the generic archaeology catch-all', () => {
+		expect(primaryCategory(['archaeology', 'history', 'people'])).toBe('people')
+		expect(primaryCategory(['archaeology', 'technology'])).toBe('technology')
+		expect(primaryCategory(['archaeology', 'history'])).toBe('history')
+		expect(primaryCategory(['archaeology'])).toBe('archaeology')
+		expect(primaryCategory(['some-unregistered-category'])).toBe('some-unregistered-category')
 	})
 
 	it("every item's updatedAt is exactly its owning article's (wiki-edit tracking, not the media date)", () => {
