@@ -1,0 +1,19 @@
+{
+	"name": "@kit/core",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"description": "Framework-agnostic pure TS shared by the kit and apps (no Svelte/DOM).",
+	"exports": {
+		".": "./src/index.ts",
+		"./layout": "./src/layout/index.ts",
+		"./layout/*": "./src/layout/*",
+		"./menu": "./src/menu/index.ts",
+		"./menu/*": "./src/menu/*",
+		"./content": "./src/content/index.ts",
+		"./content/*": "./src/content/*",
+		"./graph": "./src/graph/index.ts",
+		"./graph/*": "./src/graph/*"
+	},
+	"sideEffects": false
+}

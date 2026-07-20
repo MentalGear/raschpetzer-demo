@@ -1,0 +1,149 @@
+/**
+ * `@kit/tokens` — the kit's design-token *contract* (semantic token names +
+ * their Tailwind 4 wiring), shared by apps. This is the seam: the token *names*
+ * (`--color-background`, `--color-sidebar-*`, `--radius-*`, the `dark` variant)
+ * are the kit contract; the *values* are per-app overrides (each app sets
+ * `:root`/`.dark` — see the consuming app's `app.css`). The kit must never
+ * reference an app's `--ph-*` convenience aliases.
+ *
+ * Import after `@import "tailwindcss"` so Tailwind sees these theme tokens.
+ */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
+	/* Selected-segment color for `SegmentedControl` (@kit/ui). No stock token above
+	   reliably reads as "elevated over --secondary" in BOTH themes — light's lightest
+	   token is --background, but dark's elevation ladder inverts: there, --background
+	   is the darkest (base) token, so a naive --background default looks recessed,
+	   not selected, in dark mode. Every app already defines this per-theme (same
+	   pattern as every other token above), so it's promoted into the contract rather
+	   than left as a bespoke one-app CSS variable `SegmentedControl` couldn't depend
+	   on directly. */
+	--color-segment-selected: var(--segment-selected);
+}
+
+/* Bumps a control's minimum touch-target size under coarse-pointer (touch) input
+   only — mouse/trackpad users (pointer: fine) see no change, and there's no
+   viewport-width heuristic involved (a touch-capable laptop at a wide viewport
+   still gets it; a mouse-driven narrow window doesn't). Kept as an explicit
+   utility class rather than a blanket base-layer rule on `button`/`[role=...]`,
+   so it only touches controls actually audited as under the 44px comfortable-
+   touch guideline (docs/backlog.md "Mobile & responsive"), not every interactive
+   element repo-wide. Verified: `matchMedia('(pointer: coarse)').matches` is
+   `true` under a real touch device / Playwright's `mobile` project and `false`
+   on desktop mouse/trackpad input.
+
+   `!important` on both properties is deliberate, not a lint-ignore-and-move-on:
+   Tailwind v4 emits `@utility` rules in source-registration order, not by
+   selector count, so a same-specificity `min-w-*` utility already baked into a
+   component (e.g. shadcn Toggle's own `min-w-7`/`min-w-8`/`min-w-9`) can land
+   LATER in the generated stylesheet and silently win the cascade — confirmed
+   live: `SegmentedControl`/`GridViewOptions`' ToggleGroup items measured
+   `min-width: 28px` under touch emulation despite carrying this class, because
+   Toggle's own `min-w-8` was one line further down `document.styleSheets`.
+   `!important` makes this genuinely a floor no sibling utility can undercut,
+   matching this repo's own precedent for the same problem (grep `size-8!`,
+   `p-2!` in `sidebar-menu-button.svelte` — Tailwind's postfix-`!` important
+   syntax used for exactly this "this must win regardless of source order"
+   case). min-height had no such collision (no co-located `min-h-*` utility
+   competes with it today), but is marked `!important` too so the two
+   properties can't silently drift apart if that ever changes. */
+@utility touch-target {
+	@media (pointer: coarse) {
+		min-height: 2.75rem !important; /* 44px */
+		min-width: 2.75rem !important;
+	}
+}
+
+/**
+ * Tactile press feedback (a gentle press-down, no hover lift) for the kit's
+ * clickable primitives, keyed off each primitive's own `data-slot`.
+ *
+ * Full contract — what's covered, why each exclusion, the primitive-local
+ * `transition-all` additions this depends on, the `select-trigger`
+ * exclusion, and the composite-local (no-`data-slot`) tier — is documented
+ * in one place: `docs/kit/components/press-feedback.md`. Read that before
+ * adding a new `data-slot` here or touching a primitive's transition for
+ * this reason; don't re-derive the reasoning from git blame.
+ *
+ * `select-trigger` is deliberately NOT given any `:active` treatment at all
+ * (not even a non-transform substitute) — its popover (bits-ui
+ * `Select.Content`) tracks the trigger's LIVE rendered box via native CSS
+ * Anchor Positioning, so touching it risks the same class of bug even with a
+ * "safe" property. Left as plain, unmodified upstream shadcn behavior.
+ */
+[data-slot='button']:active,
+[data-slot='toggle']:active,
+[data-slot='toggle-group-item']:active,
+[data-slot='sidebar-menu-button']:active,
+[data-slot='sidebar-menu-sub-button']:active,
+[data-slot='sidebar-trigger']:active,
+[data-slot='dropdown-menu-trigger']:active,
+[data-slot='popover-trigger']:active,
+[data-slot='dialog-trigger']:active,
+[data-slot='dialog-close']:active,
+[data-slot='alert-dialog-trigger']:active,
+[data-slot='sheet-trigger']:active,
+[data-slot='drawer-trigger']:active,
+[data-slot='accordion-trigger']:active,
+[data-slot='collapsible-trigger']:active,
+[data-slot='tabs-trigger']:active,
+[data-slot='breadcrumb-link']:active {
+	transform: translateY(1px);
+	transition-duration: 0.1s;
+}
+
+/**
+ * Fixed, theme-INDEPENDENT overlay chrome for MediaCropStage (@kit/ui). These draw over
+ * arbitrary BYO photo content, not app UI chrome — conventionally always white/black
+ * high-contrast regardless of light/dark mode (same category as a MapLibre marker's
+ * fixed white border) — so unlike every semantic token above, these have ONE fixed
+ * value here, not a per-app override. Declaring them here (not as literals in
+ * MediaCropStage.svelte) keeps packages/ui/src/composites/*.svelte itself free of raw
+ * color literals, per the composite contract's rule 8 (enforced by
+ * scripts/check-token-purity.mjs). MediaLightbox itself is NOT in this category — its
+ * chrome is theme-adaptive by default (see docs/kit/components/media-lightbox.md).
+ */
+:root {
+	--crop-scrim: rgba(8, 8, 9, 0.6);
+	--crop-stencil-border: rgba(255, 255, 255, 0.9);
+	--crop-grid-line: rgba(255, 255, 255, 0.35);
+	--crop-handle-fill: #fff;
+	--crop-handle-shadow: rgba(0, 0, 0, 0.4);
+}

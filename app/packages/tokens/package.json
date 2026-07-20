@@ -1,0 +1,10 @@
+{
+	"name": "@kit/tokens",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"description": "The kit's design-token contract (semantic token names + Tailwind 4 wiring). Values are per-app.",
+	"exports": {
+		"./theme.css": "./src/theme.css"
+	}
+}

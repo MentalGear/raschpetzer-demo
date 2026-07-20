@@ -1,0 +1,226 @@
+@import 'tailwindcss';
+
+/* The kit's component source lives outside this app's Vite root, so Tailwind's
+   automatic content detection doesn't reach it — name it explicitly. (The app's
+   own src IS auto-detected from the Vite root, so it needs no @source.) */
+@source '../../../packages/ui/src';
+
+@import 'tw-animate-css';
+
+/* Kit design-token contract (semantic names + Tailwind wiring + dark variant).
+   Values below in :root/.dark are this app's overrides of that contract. */
+@import '@kit/tokens/theme.css';
+
+/* Self-hosted Inter (latin) — the open-source stand-in for the Apple SF Pro /
+   system-ui look. Bundled (not CDN) so the UI renders identically on every OS,
+   independent of which system fonts happen to be installed. This is also what
+   makes VRT deterministic: without it, Linux CI has no -apple-system/SF Pro and
+   falls back to an arbitrary local face, drifting every glyph + tile border.
+   See docs/debugging-findings.md §9 and docs/backlog.md (VRT env/font pinning). */
+@font-face {
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('/fonts/inter-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url('/fonts/inter-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url('/fonts/inter-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url('/fonts/inter-latin-700-normal.woff2') format('woff2');
+}
+
+:root {
+	--radius: 0.625rem;
+	/* Shared kit theme (Apple-style) — light. Kept identical across apps (one palette). */
+	--background: #ffffff;
+	--foreground: #1d1d1f;
+	--card: #ffffff;
+	--card-foreground: #1d1d1f;
+	--popover: #ffffff;
+	--popover-foreground: #1d1d1f;
+	--primary: #0a84ff;
+	--primary-foreground: #ffffff;
+	--secondary: #f5f5f7;
+	--secondary-foreground: #1d1d1f;
+	--muted: #f0f0f3;
+	--muted-foreground: #6e6e73;
+	--accent: #e8e8ed;
+	--accent-foreground: #1d1d1f;
+	--destructive: oklch(0.577 0.245 27.325);
+	--border: #e3e3e6;
+	--input: #e3e3e6;
+	--ring: #0a84ff;
+	--chart-1: oklch(0.646 0.222 41.116);
+	--chart-2: oklch(0.6 0.118 184.704);
+	--chart-3: oklch(0.398 0.07 227.392);
+	--chart-4: oklch(0.828 0.189 84.429);
+	--chart-5: oklch(0.769 0.188 70.08);
+	--sidebar: #f5f5f7;
+	--sidebar-foreground: #1d1d1f;
+	--sidebar-primary: #0a84ff;
+	--sidebar-primary-foreground: #ffffff;
+	--sidebar-accent: #e3e3e8;
+	--sidebar-accent-foreground: #1d1d1f;
+	--sidebar-border: #e3e3e6;
+	--sidebar-ring: #0a84ff;
+
+	/* Selected-segment color for @kit/ui SegmentedControl — a @kit/tokens
+     contract token (see packages/tokens/src/theme.css), not a bespoke one.
+     No stock shadcn token reads as elevated over the toolbar in *both*
+     themes — in dark, --card ≈ --secondary, so dark gets its own tuned
+     value below. Light can reuse --card. (Formerly a legacy `--ph-*`
+     alias; renamed to a semantic name so none remain — the token-purity
+     guard now allows zero such aliases.) */
+	--segment-selected: var(--card);
+}
+
+.dark {
+	/* Shared kit theme (Apple-style) — dark. Kept identical across apps (one palette). */
+	--background: #1c1c1e;
+	--foreground: #f2f2f7;
+	--card: #2a2a2c;
+	--card-foreground: #f2f2f7;
+	--popover: #2a2a2c;
+	--popover-foreground: #f2f2f7;
+	--primary: #0a84ff;
+	--primary-foreground: #ffffff;
+	/* muted/secondary sit one recessed step BELOW card/popover (#2a2a2c) so a
+	   `bg-muted` chip/row/skeleton is visible on a `bg-card` surface in dark (they
+	   used to collapse to the same #2a2a2c → invisible). Darker (not lighter) keeps
+	   `--muted-foreground` contrast on `--muted` from regressing and avoids colliding
+	   with `--accent` (#313133, the hover step). Ladder: bg #1c1c1e < muted #242426
+	   < card #2a2a2c < accent #313133 < border #38383a < segment #48484a. */
+	--secondary: #242426;
+	--secondary-foreground: #f2f2f7;
+	--muted: #242426;
+	--muted-foreground: #a1a1a6;
+	--accent: #313133;
+	--accent-foreground: #f2f2f7;
+	--destructive: oklch(0.704 0.191 22.216);
+	--border: #38383a;
+	--input: #38383a;
+	--ring: #0a84ff;
+	--chart-1: oklch(0.488 0.243 264.376);
+	--chart-2: oklch(0.696 0.17 162.48);
+	--chart-3: oklch(0.769 0.188 70.08);
+	--chart-4: oklch(0.627 0.265 303.9);
+	--chart-5: oklch(0.645 0.246 16.439);
+	--sidebar: #232325;
+	--sidebar-foreground: #f2f2f7;
+	--sidebar-primary: #0a84ff;
+	--sidebar-primary-foreground: #ffffff;
+	--sidebar-accent: #313133;
+	--sidebar-accent-foreground: #f2f2f7;
+	--sidebar-border: #38383a;
+	--sidebar-ring: #0a84ff;
+	/* Selected segment needs to read as elevated over --secondary (#242426),
+     the SegmentedControl's own unselected track — --card (#2a2a2c) is too
+     close in value to read as selected there, so dark gets its own tuned
+     value, the lightest step in this ladder: bg #1c1c1e < muted #242426 <
+     card #2a2a2c < accent #313133 < border #38383a < segment #48484a. */
+	--segment-selected: #48484a;
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+	body {
+		@apply bg-background text-foreground;
+		/* Inter first so rendering is deterministic across OSes (see @font-face
+		   above); system faces remain as graceful fallback if the webfont fails. */
+		font-family:
+			'Inter',
+			-apple-system,
+			BlinkMacSystemFont,
+			'SF Pro Text',
+			'Segoe UI',
+			system-ui,
+			sans-serif;
+	}
+	button,
+	[data-slot='button'] {
+		@apply transition-all duration-200 ease-out;
+		@apply cursor-pointer;
+	}
+}
+
+/* Suppress browser autofill yellow: box-shadow paints over the browser-enforced
+   autofill background-color (setting background-color: transparent is ignored by
+   browsers for autofilled inputs — only box-shadow can override it). */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	-webkit-box-shadow: 0 0 0 1000px var(--background) inset !important;
+	-webkit-text-fill-color: var(--foreground) !important;
+}
+
+/* Brief highlight flash on a heading jumped to from the Table of Contents
+   (TableOfContents.svelte's `jumpTo`) — a token-driven background-color animation so it
+   reads correctly in both themes (the previous state only re-styled the ToC's OWN link,
+   never the target heading in the body). Global (not component-scoped): the class is
+   toggled imperatively via `classList` from a different component's script
+   (TableOfContents.svelte doesn't own the heading's DOM — ArticleBody.svelte does), so a
+   Svelte-scoped class hash wouldn't apply. The reduced-motion block below already
+   collapses this to near-instant when the OS prefers it — no separate JS gate needed. */
+@keyframes wiki-toc-highlight {
+	0% {
+		background-color: color-mix(in srgb, var(--primary) 18%, transparent);
+	}
+	100% {
+		background-color: transparent;
+	}
+}
+/* A short, separate animation (not folded into the color fade above) so the transform's
+   overshoot-y easing never has to share a timeline with the color interpolation — keeps the
+   bounce "small [and] subtle" per the reader-facing request, distinct from the longer fade. */
+@keyframes wiki-toc-bounce {
+	0% {
+		transform: translateY(0);
+	}
+	35% {
+		transform: translateY(-4px);
+	}
+	65% {
+		transform: translateY(1px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+.wiki-toc-highlight {
+	animation:
+		wiki-toc-highlight 1.1s ease-out,
+		wiki-toc-bounce 0.5s ease-out;
+	border-radius: 0.375rem;
+}
+
+/* Honor the OS reduced-motion setting everywhere (scrubber, lightbox, buttons, …). */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
