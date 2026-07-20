@@ -249,7 +249,7 @@ export const raschpetzer: Article = {
 				t(
 					' is a Gallo-Roman qanat — a gently sloping underground gallery fed by a chain of vertical access shafts — cut into the sandstone of the Pëtschend plateau northeast of ',
 				),
-				link('Helmsange', 'raschpetzer-qanat'),
+				link('Helmsange', 'helmsange'),
 				t(', in the municipality of '),
 				b('Walferdange'),
 				t(', Luxembourg.'),

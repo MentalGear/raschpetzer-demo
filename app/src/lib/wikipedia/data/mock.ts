@@ -22,6 +22,32 @@ import { helmsangeArticle } from './raschpetzer-helmsange'
 import { alzetteArticle } from './raschpetzer-alzette'
 import { petschendArticle } from './raschpetzer-petschend'
 import { qanatArticle } from './raschpetzer-qanat-concept'
+import { shovelArticle } from './raschpetzer-shovel'
+import { villaArticle } from './raschpetzer-villa'
+import { villaRomaineHelmsangeArticle } from './raschpetzer-villa-romaine-helmsange'
+import { aquiferArticle } from './raschpetzer-aquifer'
+import { mnhaArticle } from './raschpetzer-mnha'
+import { sitWalferdangeArticle } from './raschpetzer-sit-walferdange'
+import { romanAqueductsArticle } from './raschpetzer-roman-aqueducts'
+import { dendrochronologyArticle } from './raschpetzer-dendrochronology'
+import { frontinusGesellschaftArticle } from './raschpetzer-frontinus-gesellschaft'
+import { pierreWernerCricketGroundArticle } from './raschpetzer-pierre-werner-cricket-ground'
+import { excavation1986Article } from './raschpetzer-1986-excavation'
+import { springsGeierbiergOpderrellArticle } from './raschpetzer-springs-geierbierg-opderrell'
+import { springsDauveburHeisdorfArticle } from './raschpetzer-springs-dauvebur-heisdorf'
+import { shaftP5Article } from './raschpetzer-shaft-p5'
+import { shaftP9Article } from './raschpetzer-shaft-p9'
+import { shaftP8Article } from './raschpetzer-shaft-p8'
+import { shaftPMinus4Article } from './raschpetzer-shaft-p-4'
+import { shaftP1Article } from './raschpetzer-shaft-p1'
+import { shaftP6Article } from './raschpetzer-shaft-p6'
+import { shaftP3Article } from './raschpetzer-shaft-p3'
+import { auxiliaryShaftsArticle } from './raschpetzer-auxiliary-shafts'
+import { shaftP2Article } from './raschpetzer-shaft-p2'
+import { postulatedShaftsArticle } from './raschpetzer-postulated-shafts'
+import { shaftPMinus5Article } from './raschpetzer-shaft-p-5'
+import { shaftPMinus1P0Article } from './raschpetzer-shaft-p-1-p0'
+import { shaftP4P7Article } from './raschpetzer-shaft-p4-p7'
 
 /** fixed "now" so relative dates + buckets are reproducible (matches Photos/Notes). */
 export const REF_NOW = Date.UTC(2026, 5, 1)
@@ -53,6 +79,32 @@ export const articles: Article[] = [
 	alzetteArticle,
 	petschendArticle,
 	qanatArticle,
+	shovelArticle,
+	villaArticle,
+	villaRomaineHelmsangeArticle,
+	aquiferArticle,
+	mnhaArticle,
+	sitWalferdangeArticle,
+	romanAqueductsArticle,
+	dendrochronologyArticle,
+	frontinusGesellschaftArticle,
+	pierreWernerCricketGroundArticle,
+	excavation1986Article,
+	springsGeierbiergOpderrellArticle,
+	springsDauveburHeisdorfArticle,
+	shaftP5Article,
+	shaftP9Article,
+	shaftP8Article,
+	shaftPMinus4Article,
+	shaftP1Article,
+	shaftP6Article,
+	shaftP3Article,
+	auxiliaryShaftsArticle,
+	shaftP2Article,
+	postulatedShaftsArticle,
+	shaftPMinus5Article,
+	shaftPMinus1P0Article,
+	shaftP4P7Article,
 ]
 
 /**

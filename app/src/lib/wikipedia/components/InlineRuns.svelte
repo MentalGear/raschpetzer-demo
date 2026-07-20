@@ -64,11 +64,15 @@
 				href={href(`/${m.link.slug}`)}
 				title={exists ? undefined : 'This article does not exist yet'}
 				class={cn(
-					// persistent underline so links aren't distinguished by colour alone (WCAG 1.4.1);
-					// red-links (missing target) get a dotted underline — a non-colour cue.
+					// A faint, thin underline still satisfies WCAG 1.4.1 (links distinguishable by
+					// more than colour alone) without visually overwhelming prose that's now dense
+					// with wikilinks — dialed back from a solid decoration-primary/40 (reported live
+					// as making article text "unreadable" once a paragraph carries several links).
+					// Missing-target red-links keep a dotted underline — still a non-colour cue, but
+					// distinct from the faint solid one so a broken link doesn't read as just "quiet".
 					'underline decoration-1 underline-offset-2',
 					exists
-						? 'text-primary decoration-primary/40'
+						? 'text-primary decoration-primary/25'
 						: 'text-destructive decoration-dotted',
 					m.bold && 'font-semibold',
 					m.italic && 'italic',
