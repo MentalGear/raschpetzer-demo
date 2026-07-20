@@ -1,1 +1,0 @@
-import"./DsnmJJEf.js";import{s as t,r as p}from"./DDJi5L-K.js";import{a}from"./CRXysbzb.js";var c=new Set(["$$slots","$$events","$$legacy"]);function $(e,o){let r=p(o,c);const s=[["path",{d:"M20 6 9 17l-5-5"}]];a(e,t({name:"check"},()=>r,{get iconNode(){return s}}))}export{$ as C};

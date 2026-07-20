@@ -127,7 +127,7 @@
 	// path has its own matching nav link, so 'category' stays in SECTIONS here.
 	// 'admin' is listed so the member-only /admin/* pages (Members, Settings) — which
 	// have no sidebar nav link — don't fall through and falsely light "All Articles".
-	const SECTIONS = ['categories', 'category', 'recent', 'media', 'search', 'admin']
+	const SECTIONS = ['categories', 'category', 'recent', 'media', 'search', 'admin', 'about']
 	const isArticleRead = $derived(path !== '/' && !SECTIONS.includes(path.split('/')[1] ?? ''))
 	const isActive = makeIsActive((h) => {
 		if (h === '/') return path === '/' || isArticleRead
