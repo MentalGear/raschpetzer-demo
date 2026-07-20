@@ -1,71 +1,66 @@
 /**
- * Groups a newest-first MediaItem array into Day sections for the Media page's sticky
- * headers — lifted from the photos app's day/month/year grouping
- * (apps/photos/src/lib/photos/layout/grouping.ts), scoped to the single day granularity
- * the media page needs. Pure: returns index ranges + display strings; `@kit/ui`'s
+ * Groups a category-sorted MediaItem array (see `collectMedia`) into Category sections for the
+ * Media page's sticky headers. Pure: returns index ranges + display strings; `@kit/ui`'s
  * VirtualGrid turns each Section into a header row + justified rows.
  *
- * Items are assumed pre-sorted (newest-first, same precondition as `groupPhotos`) so every
- * item from the same UTC day is contiguous — `groupMedia` does no defensive sort/check, and
- * a caller that violates this gets the same day split across two same-keyed Sections instead
- * of one.
+ * Previously grouped by day (edit date) — changed on request: a fixed-corpus demo's `updatedAt`
+ * isn't a meaningful axis to browse real archaeological content by, whereas the site's own
+ * categories (Archaeology, History, People, Technology) are.
+ *
+ * Items are assumed pre-sorted (`collectMedia`'s own category-priority sort) so every item in
+ * the same category is contiguous — `groupMedia` does no defensive sort/check, and a caller
+ * that violates this gets the same category split across two same-keyed Sections instead of one.
  */
 import type { MediaItem } from '../data/media'
+import type { Category } from '../data/types'
 import type { Section } from '@kit/core'
 
 // Section is a domain-free kit type (apps may import @kit/core directly).
 export type { Section }
 
-// UTC accessors throughout, matching the photos app's grouping — `mediaDate` epochs are
-// UTC-anchored (Date.UTC throughout figureMeta.ts/media.ts), and local accessors would bucket
-// the same item into a different day per viewer timezone, breaking the reproducible VRT baseline.
-function dayKey(d: Date): string {
-	const y = d.getUTCFullYear()
-	const m = `${d.getUTCMonth() + 1}`.padStart(2, '0')
-	const day = `${d.getUTCDate()}`.padStart(2, '0')
-	return `${y}-${m}-${day}`
-}
-
-const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-const MONTHS = [
-	'January',
-	'February',
-	'March',
-	'April',
-	'May',
-	'June',
-	'July',
-	'August',
-	'September',
-	'October',
-	'November',
-	'December',
-]
-
-function dayTitle(d: Date): string {
-	return `${WEEKDAYS[d.getUTCDay()]}, ${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`
-}
-
-/** Distinct source-article titles within an index range, in first-seen order. */
+/** Distinct source-article titles within an index range, in first-seen order — capped, since a
+ *  category section (unlike the old day-based ones) can now span dozens of articles; an
+ *  uncapped comma list for e.g. all 19 Archaeology-only articles would be an unreadable wall of
+ *  text in the header. */
+const SUBTITLE_TITLE_CAP = 4
 function articleSubtitle(items: readonly MediaItem[], start: number, end: number): string {
 	const titles: string[] = []
-	for (let i = start; i < end; i++) {
+	for (let i = start; i < end && titles.length < SUBTITLE_TITLE_CAP + 1; i++) {
 		const t = items[i].articleTitle
 		if (!titles.includes(t)) titles.push(t)
 	}
-	return titles.join(', ')
+	if (titles.length <= SUBTITLE_TITLE_CAP) return titles.join(', ')
+	const shown = titles.slice(0, SUBTITLE_TITLE_CAP)
+	// Recount properly (the loop above stopped early once it saw one title too many, so this
+	// undercounts) — walk the full range once more for the real distinct count.
+	const allTitles = new Set<string>()
+	for (let i = start; i < end; i++) allTitles.add(items[i].articleTitle)
+	return `${shown.join(', ')}, and ${allTitles.size - SUBTITLE_TITLE_CAP} more`
 }
 
-export function groupMedia(items: readonly MediaItem[]): Section[] {
+/** `categories` supplies real display labels/descriptions (mock.ts's `categories` export) —
+ *  falls back to the raw category id, title-cased, for a `primaryCategory` fallback id that
+ *  isn't a registered category (shouldn't happen for real content, but keeps this from ever
+ *  rendering an empty header). */
+function categoryLabel(id: string, categories: readonly Category[]): string {
+	const found = categories.find((c) => c.id === id)
+	if (found) return found.label
+	return id.length > 0 ? id[0].toUpperCase() + id.slice(1) : id
+}
+
+export function groupMedia(
+	items: readonly MediaItem[],
+	categories: readonly Category[],
+): Section[] {
 	if (items.length === 0) return []
 	const sections: Section[] = []
 	let start = 0
-	let curKey = dayKey(new Date(items[0].mediaDate))
+	let curKey = items[0].category
 
 	const flush = (end: number) => {
 		sections.push({
 			key: curKey,
-			title: dayTitle(new Date(items[start].mediaDate)),
+			title: categoryLabel(curKey, categories),
 			subtitle: articleSubtitle(items, start, end),
 			startIndex: start,
 			endIndex: end,
@@ -74,7 +69,7 @@ export function groupMedia(items: readonly MediaItem[]): Section[] {
 	}
 
 	for (let i = 1; i < items.length; i++) {
-		const k = dayKey(new Date(items[i].mediaDate))
+		const k = items[i].category
 		if (k !== curKey) {
 			flush(i)
 			start = i

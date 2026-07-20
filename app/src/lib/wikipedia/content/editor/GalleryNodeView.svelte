@@ -53,6 +53,8 @@
 	import { galleryPlaceholderSrc } from '../../components/galleryPlaceholder'
 	import { normalizeGalleryItem, newPlaceholderItem, moveGalleryItem } from './galleryItems'
 	import type { GalleryItem } from '../schema'
+	import { inferFigureMeta } from '../../data/figureMeta'
+	import MediaInfoPanel from '../../components/MediaInfoPanel.svelte'
 
 	/** The reactive bridge from the ProseMirror NodeView (see galleryNodeView.svelte.ts). */
 	interface Controller {
@@ -81,6 +83,7 @@
 		id: string
 		alt: string
 		caption?: string
+		credit?: string
 		aspect: number
 		tone: number
 		image: string
@@ -90,6 +93,7 @@
 			id: it.id,
 			alt: it.alt,
 			caption: it.caption,
+			credit: it.source,
 			aspect: it.width && it.height ? it.width / it.height : 16 / 9,
 			tone: toneIndex(it.id),
 			image: it.image,
@@ -126,6 +130,14 @@
 			: '',
 	)
 	const lightboxTitle = $derived(currentLightboxItem?.caption ?? currentLightboxItem?.alt ?? '')
+
+	// Same `figureMeta.ts` inference the Media page's `MediaItem`s use (media.ts) — unified
+	// metadata source, not a second hand-rolled derivation: an image's figure label/date is a
+	// pure function of its filename, so calling that same function here (rather than looking up
+	// a value "set once" somewhere reactive) is the correct way to keep the two lightboxes'
+	// info panels showing identical data for the same image, without threading a shared cache
+	// through props neither call site otherwise needs.
+	const currentFigureMeta = $derived(inferFigureMeta(currentLightboxItem?.image))
 
 	// ── edit modal (editable instances only) ──────────────────────────────────────────────
 	let dialogOpen = $state(false)
@@ -466,7 +478,24 @@
 		{flyRect}
 		openAnimation="fly"
 		{slide}
-	/>
+		infoLabel="Image details"
+	>
+		{#snippet info(item: LightboxItem)}
+			<!-- No `editedLabel`/article link — you're already reading the article this gallery
+			     lives in, unlike the Media page's cross-article info panel. -->
+			<MediaInfoPanel
+				alt={item.alt}
+				caption={item.caption}
+				credit={item.credit}
+				figureLabel={currentFigureMeta.figureLabel}
+				sourceYear={currentFigureMeta.figureLabel
+					? undefined
+					: currentFigureMeta.sourceDate
+						? new Date(currentFigureMeta.sourceDate).getUTCFullYear()
+						: undefined}
+			/>
+		{/snippet}
+	</MediaLightbox>
 
 	{#if editable}
 		<Dialog.Root bind:open={dialogOpen}>
