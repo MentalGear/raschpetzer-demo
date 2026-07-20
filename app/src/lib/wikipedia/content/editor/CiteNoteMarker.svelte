@@ -17,6 +17,7 @@
 		number,
 		citation,
 		noteText,
+		isFirst,
 	}: {
 		kind: 'cite' | 'note'
 		number: number
@@ -24,12 +25,17 @@
 		citation?: Citation
 		/** required when `kind === 'note'`. */
 		noteText?: string
+		/** only the first occurrence of a (possibly repeated) citation number gets the
+		 *  `cite-ref-N` id the References list's backlink jumps to — see extensions.ts's
+		 *  `citeFirstSeen` tracking for why. */
+		isFirst?: boolean
 	} = $props()
 </script>
 
 {#if kind === 'cite' && citation}
 	<HoverCard.Root>
 		<HoverCard.Trigger
+			id={isFirst ? `cite-ref-${number}` : undefined}
 			href={`#ref-${number}`}
 			class="align-super text-xs font-medium text-primary no-underline hover:underline"
 			aria-label={`Jump to reference ${number}`}>[{number}]</HoverCard.Trigger

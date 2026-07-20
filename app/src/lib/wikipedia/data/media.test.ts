@@ -22,39 +22,58 @@ describe('collectMedia', () => {
 		expect(new Set(items.map((m) => m.id)).size).toBe(items.length)
 	})
 
-	it('returns items newest-first, never dated after their owning article', () => {
+	it('returns items newest-media-first', () => {
 		const items = collectMedia(sourceArticles)
 		for (let i = 1; i < items.length; i++) {
-			expect(items[i - 1].updatedAt).toBeGreaterThanOrEqual(items[i].updatedAt)
-		}
-		for (const m of items) {
-			const article = sourceArticles.find((a) => a.slug === m.articleSlug)!
-			expect(m.updatedAt).toBeLessThanOrEqual(article.updatedAt)
+			expect(items[i - 1].mediaDate).toBeGreaterThanOrEqual(items[i].mediaDate)
 		}
 	})
 
-	it('dates a lead or standalone figure exactly by its article', () => {
+	it("every item's updatedAt is exactly its owning article's (wiki-edit tracking, not the media date)", () => {
+		const items = collectMedia(sourceArticles)
+		for (const m of items) {
+			const article = sourceArticles.find((a) => a.slug === m.articleSlug)!
+			expect(m.updatedAt).toBe(article.updatedAt)
+		}
+	})
+
+	it('dates a lead or standalone figure exactly by its article when no real date is inferable', () => {
 		const items = collectMedia(sourceArticles)
 		for (const a of sourceArticles) {
 			if (a.lead) {
-				expect(items.find((m) => m.id === `${a.id}:${a.lead!.id}`)!.updatedAt).toBe(
-					a.updatedAt,
-				)
+				const item = items.find((m) => m.id === `${a.id}:${a.lead!.id}`)!
+				if (!item.mediaDateInferred) expect(item.mediaDate).toBe(a.updatedAt)
 			}
 		}
 	})
 
-	it("spreads a multi-image gallery's items one day apart so they don't collapse into one day-section", () => {
+	it("spreads a multi-image gallery's non-inferred items one day apart so they don't collapse into one day-section", () => {
 		const items = collectMedia(sourceArticles)
 		for (const a of sourceArticles) {
 			for (const block of a.blocks) {
 				if (block.type !== 'gallery') continue
-				const dates = block.items.map(
-					(item) =>
-						items.find((m) => m.id === `${a.id}:${block.id}:${item.id}`)!.updatedAt,
+				const galleryItems = block.items.map((item) =>
+					items.find((m) => m.id === `${a.id}:${block.id}:${item.id}`)!,
 				)
-				expect(new Set(dates).size).toBe(dates.length)
-				expect(Math.max(...dates)).toBe(a.updatedAt)
+				// A real inferred date (e.g. several images sharing one brochure publication
+				// date) is allowed — indeed expected — to collapse; only the fallback
+				// (no-real-date) case needs artificial spreading to stay distinguishable.
+				const fallbackDates = galleryItems
+					.filter((m) => !m.mediaDateInferred)
+					.map((m) => m.mediaDate)
+				expect(new Set(fallbackDates).size).toBe(fallbackDates.length)
+				for (const d of fallbackDates) expect(d).toBeLessThanOrEqual(a.updatedAt)
+			}
+		}
+	})
+
+	it('marks every real-image item mediaDateInferred, with a figure label for a brochure scan', () => {
+		const items = collectMedia(sourceArticles)
+		for (const m of items) {
+			if (!m.src) continue
+			if (/Fig\d+-\d+-/.test(m.src)) {
+				expect(m.mediaDateInferred).toBe(true)
+				expect(m.figureLabel).toMatch(/^Fig\. \d+-\d+$/)
 			}
 		}
 	})

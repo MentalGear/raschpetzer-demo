@@ -57,6 +57,11 @@ export const categories: Category[] = [
 	{ id: 'history', label: 'History', description: 'People, places, and events of the past.' },
 	{ id: 'technology', label: 'Technology', description: 'Engineering, tools, and techniques.' },
 	archaeologyCategory,
+	{
+		id: 'people',
+		label: 'People',
+		description: 'Researchers, excavators, and photographers connected to the site.',
+	},
 ]
 
 // ── entities (hover-preview cards + wikilink autocomplete) ────────────────────────

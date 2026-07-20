@@ -45,7 +45,7 @@ export const photographersArticle: Article = {
 	title: 'Tom Lucas and Ben Muller',
 	summary:
 		'Tom Lucas and Ben Muller are the MNHA/MNAHA photographers credited on the 2022 photographs of the finds recovered near shaft P9.',
-	categories: ['archaeology', 'history'],
+	categories: ['archaeology', 'history', 'people'],
 	blocks: [
 		{
 			id: 'p-intro',

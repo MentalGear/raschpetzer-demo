@@ -269,6 +269,34 @@ export function blockNoteCount(block: Block): number {
 	}
 }
 
+/**
+ * Every `Citation.id` actually referenced by a `cite`-marked run somewhere in the article body
+ * — NOT the same as `article.citations`, which can also list "further reading" sources with no
+ * inline `cite()` anywhere (a deliberate pattern, e.g. `raschpetzer-geology.ts`'s further-reading
+ * entries). The References list's per-entry backlink only makes sense for the former: a link
+ * back to "#cite-ref-N" for a citation nobody actually cited inline has no jump target (no
+ * `CiteNoteMarker` ever mounts a `cite-ref-N` id for it) and would be a dead "↑".
+ */
+export function citedCitationIds(article: Article): Set<string> {
+	const ids = new Set<string>()
+	const scan = (runs: Inline) => {
+		for (const r of runs) if (r.marks?.cite) ids.add(r.marks.cite)
+	}
+	for (const block of article.blocks) {
+		switch (block.type) {
+			case 'paragraph':
+			case 'quote':
+			case 'callout':
+				scan(block.runs)
+				break
+			case 'list':
+				block.items.forEach(scan)
+				break
+		}
+	}
+	return ids
+}
+
 const DATEF = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' })
 const RELATIVE = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
 

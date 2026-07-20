@@ -102,7 +102,7 @@ export const georgesFaberArticle: Article = {
 	title: 'Georges Faber',
 	summary:
 		'Georges Faber was, together with Nicolas Kohl, one of the two private individuals credited in the 2018 site brochure with starting the Raschpëtzer investigations in the mid-1960s. As an amateur researcher he drafted the first manuscript on the site, then spent two decades leading fieldwork with Kohl that culminated in the October 1986 discovery of the qanat gallery itself.',
-	categories: ['archaeology', 'history'],
+	categories: ['archaeology', 'history', 'people'],
 	blocks: [
 		{
 			id: 'p-intro',
@@ -206,7 +206,11 @@ export const georgesFaberArticle: Article = {
 					'c-georges-faber-nicolaskohl-wp',
 				),
 				t(
-					'. Beyond his Raschpëtzer-related work and his daughter Sonja Faber (see above), no independently verifiable biographical detail — birth or death dates, or profession — could be found; web search turned up only unrelated people sharing the name. This page states that limit plainly rather than filling it in.',
+					". He also served as president of the Syndicat d'Initiative et de Tourisme (SIT) of Walferdange for twenty years, later succeeded in the role by ",
+				),
+				link('Henri Werner', 'henri-werner'),
+				t(
+					' (editorial note: the presidency detail is stated per project/site knowledge, not backed by a citable public source, unlike the citations above). Beyond his Raschpëtzer-related work, his daughter Sonja Faber (see above), and that presidency, no independently verifiable biographical detail — birth or death dates, or profession — could be found; web search turned up only unrelated people sharing the name. This page states that limit plainly rather than filling it in.',
 				),
 			),
 		},

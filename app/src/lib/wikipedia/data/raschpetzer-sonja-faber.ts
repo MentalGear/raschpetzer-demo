@@ -46,7 +46,7 @@ export const sonjaFaberArticle: Article = {
 	title: 'Sonja Faber',
 	summary:
 		'Sonja Faber is a co-author of the 2018 Raschpëtzer brochure and its 2015 and 2017 predecessors.',
-	categories: ['archaeology', 'history'],
+	categories: ['archaeology', 'history', 'people'],
 	blocks: [
 		{
 			id: 'p-intro',
@@ -70,11 +70,11 @@ export const sonjaFaberArticle: Article = {
 			type: 'paragraph',
 			runs: p(
 				t(
-					'Web search for this page turned up no further independently verifiable biographical detail about her — no affiliation, credentials, or other bylined work distinct from the three co-authored Raschpëtzer publications above could be confirmed. She is the daughter of ',
+					'Web search for this page turned up no further independently verifiable biographical detail about her — no affiliation, credentials, or other bylined work distinct from the three co-authored Raschpëtzer publications above could be confirmed. She is a Luxembourgish geophysicist with a PhD, and is the daughter of ',
 				),
 				link('Georges Faber', 'georges-faber'),
 				t(
-					', a private individual credited elsewhere in the brochure’s acknowledgements as one of the founders of the Raschpëtzer investigations in the 1960s (editorial note: the family relationship is stated per project/site knowledge, not backed by a citable public source, unlike the co-authorship facts above). Her documented public role here otherwise rests on the co-authorship credits alone.',
+					', a private individual credited elsewhere in the brochure’s acknowledgements as one of the founders of the Raschpëtzer investigations in the 1960s (editorial note: the profession, qualification, and family relationship are stated per project/site knowledge, not backed by a citable public source, unlike the co-authorship facts above). Her documented public role here otherwise rests on the co-authorship credits alone.',
 				),
 			),
 		},

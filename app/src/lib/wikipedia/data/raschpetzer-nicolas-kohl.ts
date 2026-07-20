@@ -102,7 +102,7 @@ export const nicolasKohlArticle: Article = {
 	title: 'Nicolas Kohl',
 	summary:
 		'Nicolas Kohl (1921–2020) was a Luxembourgish civil servant and amateur archaeologist who, together with Georges Faber, launched and for two decades led the investigation of the Raschpëtzer — the discovery this wiki’s main article covers.',
-	categories: ['archaeology', 'history'],
+	categories: ['archaeology', 'history', 'people'],
 	blocks: [
 		{
 			id: 'p-intro',
