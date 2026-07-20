@@ -7,7 +7,7 @@
  * the first item (cross-cutting sidebar best practice).
  */
 import type { NavConfig } from '@kit/ui'
-import { Search, BookOpen, LayoutGrid, Shuffle, History, Tag, Image } from '@lucide/svelte'
+import { Search, BookOpen, LayoutGrid, Shuffle, History, Tag, Image, Info } from '@lucide/svelte'
 import type { Category } from '../data/types'
 
 export function wikiNav(categories: Category[]): NavConfig {
@@ -19,6 +19,12 @@ export function wikiNav(categories: Category[]): NavConfig {
 					href: '/search',
 					label: 'Search',
 					icon: Search,
+				},
+				{
+					id: '/about',
+					href: '/about',
+					label: 'About',
+					icon: Info,
 				},
 			],
 		},
