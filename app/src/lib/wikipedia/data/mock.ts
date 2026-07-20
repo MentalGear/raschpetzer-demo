@@ -11,8 +11,16 @@ import { raschpetzer, archaeologyCategory } from './raschpetzer'
 import { shafts } from './raschpetzer-shafts'
 import { galleryArticle } from './raschpetzer-gallery'
 import { geologyArticle } from './raschpetzer-geology'
-import { peopleArticle } from './raschpetzer-people'
+import { guyWaringoArticle } from './raschpetzer-guy-waringo'
+import { sonjaFaberArticle } from './raschpetzer-sonja-faber'
+import { henriWernerArticle } from './raschpetzer-henri-werner'
+import { photographersArticle } from './raschpetzer-photographers'
+import { nicolasKohlArticle } from './raschpetzer-nicolas-kohl'
+import { georgesFaberArticle } from './raschpetzer-georges-faber'
 import { walferdangeArticle, walferdangeEntities } from './raschpetzer-walferdange'
+import { helmsangeArticle } from './raschpetzer-helmsange'
+import { alzetteArticle } from './raschpetzer-alzette'
+import { petschendArticle } from './raschpetzer-petschend'
 import { qanatArticle } from './raschpetzer-qanat-concept'
 
 /** fixed "now" so relative dates + buckets are reproducible (matches Photos/Notes). */
@@ -34,8 +42,16 @@ export const articles: Article[] = [
 	shafts,
 	galleryArticle,
 	geologyArticle,
-	peopleArticle,
+	guyWaringoArticle,
+	sonjaFaberArticle,
+	henriWernerArticle,
+	photographersArticle,
+	nicolasKohlArticle,
+	georgesFaberArticle,
 	walferdangeArticle,
+	helmsangeArticle,
+	alzetteArticle,
+	petschendArticle,
 	qanatArticle,
 ]
 

@@ -103,6 +103,14 @@ const c = {
 		publisher: 'Visit Luxembourg (official tourism board)',
 		url: 'https://www.visitluxembourg.com/place/gallo-roman-site-raschpetzer-walferdange',
 	},
+	brochureMoreViews: {
+		id: 'c-raschpetzer-more-fig2',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (pp. 6–10, excavation photographs)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=8`,
+	},
 } satisfies Record<string, Citation>
 
 export const raschpetzerCitations = c
@@ -130,6 +138,69 @@ const findsGalleryItems: GalleryItemRef[] = [
 		tone: 4,
 		ratio: 1920 / 1280,
 		src: asset('/img/raschpetzer/b-shovel-P9-FOTO-Tom-Lucas-Ben-Muller-MNHA-2022-fallback.jpg'),
+	},
+]
+
+/** Four brochure photographs of the excavation campaigns (fig. 2 series) not otherwise used
+ *  in the article — the pre-excavation surface trace of a shaft, fieldwork inside an open
+ *  pit, shaft-lining installation, and the hoist used to haul spoil out of the gallery — for
+ *  an "Additional views" closing gallery. */
+const moreViewsGalleryItems: GalleryItemRef[] = [
+	{
+		id: 'excav-depression',
+		alt: 'Black-and-white photograph of a shallow, leaf-covered depression in the forest floor, marking the surface trace of an unexcavated shaft',
+		caption:
+			'A shallow depression in the forest floor marks the buried top of a shaft before excavation.',
+		credit: 'Faber, Waringo & Werner, 2018',
+		tone: 2,
+		ratio: 1341 / 891,
+		src: asset('/img/raschpetzer/Fig2-02-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig2-02-480w.webp', '480w'],
+			['/img/raschpetzer/Fig2-02-960w.webp', '960w'],
+		]),
+	},
+	{
+		id: 'excav-pit',
+		alt: 'Two people examine the sides of an open excavation pit, autumn leaves scattered across the churned earth',
+		caption: 'Archaeologists documenting the walls of an excavated shaft pit during fieldwork.',
+		credit: 'Faber, Waringo & Werner, 2018',
+		tone: 2,
+		ratio: 1920 / 1248,
+		src: asset('/img/raschpetzer/Fig2-04-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig2-04-480w.webp', '480w'],
+			['/img/raschpetzer/Fig2-04-960w.webp', '960w'],
+			['/img/raschpetzer/Fig2-04-1920w.webp', '1920w'],
+		]),
+	},
+	{
+		id: 'shaft-lining',
+		alt: 'A crane lowers a precast concrete ring into a shored excavation pit in the forest, with stacked rings waiting nearby',
+		caption: 'A crane lowers precast concrete rings into place to line and stabilize a shaft.',
+		credit: 'Faber, Waringo & Werner, 2018',
+		tone: 2,
+		ratio: 1020 / 576,
+		src: asset('/img/raschpetzer/Fig2-11-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig2-11-480w.webp', '480w'],
+			['/img/raschpetzer/Fig2-11-960w.webp', '960w'],
+		]),
+	},
+	{
+		id: 'gallery-hoist',
+		alt: 'A chain hoist lowers a bucket to haul excavated sediment out through the narrow gallery passage',
+		caption:
+			'A chain hoist and bucket used to remove spoil from the gallery during excavation.',
+		credit: 'Faber, Waringo & Werner, 2018',
+		tone: 2,
+		ratio: 1920 / 2962,
+		src: asset('/img/raschpetzer/Fig2-14-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig2-14-480w.webp', '480w'],
+			['/img/raschpetzer/Fig2-14-960w.webp', '960w'],
+			['/img/raschpetzer/Fig2-14-1920w.webp', '1920w'],
+		]),
 	},
 ]
 
@@ -277,6 +348,18 @@ export const raschpetzer: Article = {
 				),
 			),
 		},
+		{ id: 'h-more-views', type: 'heading', level: 2, text: 'Additional views' },
+		{
+			id: 'p-more-views',
+			type: 'paragraph',
+			runs: p(
+				cite(
+					'Further photographs from the excavation campaigns — the surface trace of a shaft before digging, fieldwork inside an open pit, shaft-lining installation, and the hoist used to haul spoil out of the gallery — round out the record of how the qanat was uncovered.',
+					'c-raschpetzer-more-fig2',
+				),
+			),
+		},
+		{ id: 'gal-more-views', type: 'gallery', items: moreViewsGalleryItems },
 	],
 	citations: [
 		c.brochureOverview,
@@ -287,6 +370,7 @@ export const raschpetzer: Article = {
 		c.geoportail,
 		c.wikipediaEn,
 		c.visitLuxembourg,
+		c.brochureMoreViews,
 	],
 	revisions: [
 		{

@@ -13,7 +13,7 @@
  * 'raschpetzer-qanat')` in the intro paragraph below.
  */
 import { base } from '$app/paths'
-import type { Article, Citation, Inline, TextRun } from './types'
+import type { Article, Citation, GalleryItemRef, Inline, TextRun } from './types'
 
 // Local copies of mock.ts's tiny inline-run authoring helpers — kept separate (not
 // imported from ./mock, nor from ./raschpetzer) so this module has no circular
@@ -33,6 +33,9 @@ const p = (...runs: Inline): Inline => runs
  *  the GitHub Pages project-subpath base prefixed by hand, or it 404s under a non-root
  *  `BASE_PATH` deploy (works locally where `base` is `''`, breaks in prod otherwise). */
 const asset = (path: string): string => `${base}${path}`
+/** Build a `srcset` attribute string from `[path, widthDescriptor]` pairs, base-prefixed. */
+const srcsetOf = (entries: [string, string][]): string =>
+	entries.map(([path, w]) => `${asset(path)} ${w}`).join(', ')
 
 // Page locators per data/geology.json's / data/hydrology.json's `_prov` maps and
 // data/sources.json (`fig-4-2`/`fig-4-3` both `loc: "fig.4-2/4-3, p.15"`) in the
@@ -112,9 +115,63 @@ const c = {
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=6`,
 	},
+	shaftLog: {
+		id: 'c-geology-more-1',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (chapter 4 illustrations, c. p. 15 — as-built shaft section through the Grès/Marne sequence)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=15`,
+	},
+	overflowDiagram: {
+		id: 'c-geology-more-2',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 20, 30; fig. 5-11/5-14 — the P-4 overflow weir, plan and cross-section)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=30`,
+	},
 } satisfies Record<string, Citation>
 
 export const geologyCitations = c
+
+/** Two further chapter-4 illustrations from the brochure, supplementing the lead
+ *  cross-section: an as-built shaft log showing the actual Grès/Marne (sandstone/marl)
+ *  sequence encountered during excavation, and the P-4 overflow weir diagram referenced
+ *  by the hydrology paragraph above (`c-geology-deviation`). A real multi-image gallery
+ *  (not two single-figure blocks), same reasoning as `raschpetzer.ts`'s `findsGalleryItems`. */
+const moreFiguresGalleryItems: GalleryItemRef[] = [
+	{
+		id: 'shaft-stratigraphy',
+		alt: 'Detailed as-built cross-section of a Raschpëtzer shaft, showing the concrete-ringed access shaft passing through alternating Grès (sandstone) and Marne (marl) beds, with surveyed diameters and elevations down to the qanat channel at the base',
+		caption:
+			'As-built section through one of the qanat’s shafts: the boring passes through alternating sandstone (Grès) and marl (Marne) beds — the same layered sequence described above — down to the channel at its base.',
+		credit: 'Faber, Waringo & Werner, 2018',
+		tone: 1,
+		ratio: 972 / 2580,
+		src: asset('/img/raschpetzer/Fig4-11-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig4-11-480w.webp', '480w'],
+			['/img/raschpetzer/Fig4-11-960w.webp', '960w'],
+		]),
+		sizes: '(min-width: 768px) 640px, 100vw',
+	},
+	{
+		id: 'weir-p4-diagram',
+		alt: 'Diagram of the P-4 overflow weir: a plan view of the circular shaft chamber showing the main channel, lateral channel, and overflow weir, alongside two cross-sections labelled "Normal drainage in the main channel" and "Damming up: water flowing over the weir is drained to the lateral channel"',
+		caption:
+			'The P-4 overflow weir in plan and cross-section: once water in the main channel dams up over the weir, it spills into a separate lateral channel.',
+		credit: 'Waringo & Werner, 2000, in Faber, Waringo & Werner, 2018',
+		tone: 3,
+		ratio: 1766 / 747,
+		src: asset('/img/raschpetzer/Fig4-06-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig4-06-480w.webp', '480w'],
+			['/img/raschpetzer/Fig4-06-960w.webp', '960w'],
+		]),
+		sizes: '(min-width: 768px) 640px, 100vw',
+	},
+]
 
 export const geologyArticle: Article = {
 	id: 'a-raschpetzer-geology',
@@ -292,6 +349,7 @@ export const geologyArticle: Article = {
 				['Heisdorf spring', '800'],
 			],
 		},
+		{ id: 'gal-more-figures', type: 'gallery', items: moreFiguresGalleryItems },
 	],
 	citations: [
 		c.structure,
@@ -303,6 +361,8 @@ export const geologyArticle: Article = {
 		c.springInflux,
 		c.chemistry,
 		c.catchment,
+		c.shaftLog,
+		c.overflowDiagram,
 	],
 	revisions: [
 		{
