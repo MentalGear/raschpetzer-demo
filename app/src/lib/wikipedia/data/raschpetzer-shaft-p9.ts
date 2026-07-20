@@ -105,7 +105,7 @@ export const shaftP9Article: Article = {
 				t(
 					' — so, for practical purposes, P9 marks the upstream source end of the conduit as currently explored. Numbering along the route runs west to east from the auxiliary drop-shaft ',
 				),
-				link('P-7A', 'raschpetzer-shafts'),
+				link('P-7A', 'auxiliary-shafts'),
 				t(' to P9, and P9 sits at the far, uphill end of that line — hence the epithet '),
 				cite("'mother shaft'", 'c-shaft-p9-p10'),
 				t('.'),

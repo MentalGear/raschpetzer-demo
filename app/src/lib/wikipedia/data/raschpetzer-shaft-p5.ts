@@ -111,7 +111,9 @@ export const shaftP5Article: Article = {
 			runs: p(
 				t('P5 sits at the '),
 				b('eastern edge of the Pëtschend plateau'),
-				t(', the highest and easternmost stretch of the main shaft line before the ground drops toward the Haedchen depression. It is '),
+				t(
+					', the highest and easternmost stretch of the main shaft line before the ground drops toward the Haedchen depression. It is ',
+				),
 				cite('quoted at 36 metres deep', 'c-shaft-p5-depth'),
 				t(
 					', though roughly 35 metres of that is measured down to the gallery floor itself — the figure most often cited for the shaft is the rounder, quoted 36 m.',
@@ -179,10 +181,7 @@ export const shaftP5Article: Article = {
 					'c-shaft-p5-accident',
 				),
 				t(', forcing '),
-				cite(
-					'that stretch of channel to be rebuilt in concrete',
-					'c-shaft-p5-accident',
-				),
+				cite('that stretch of channel to be rebuilt in concrete', 'c-shaft-p5-accident'),
 				t(
 					' rather than repaired in the original dry-masonry technique. P5 and P-5 are distinct shafts in the site record — P5 is the 36-metre shaft described above; P-5 is its western neighbour, where the accident occurred — but the two are close enough along the route, and similar enough in name, that the accident is often discussed alongside P5’s own history. See ',
 				),
@@ -197,7 +196,8 @@ export const shaftP5Article: Article = {
 			id: 'r1',
 			author: 'raschpetzer-model-digital-3d SSOT',
 			ts: Date.UTC(2026, 6, 1),
-			summary: 'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
+			summary:
+				'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
 			blocks: [],
 		},
 	],

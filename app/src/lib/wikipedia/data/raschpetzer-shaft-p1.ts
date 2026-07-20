@@ -34,8 +34,7 @@ const BROCHURE_PDF = asset('/sources/raschpetzer-brochure-2018-en.pdf')
 const c = {
 	depthAndPosition: {
 		id: 'c-shaft-p1-p16-depth',
-		title:
-			'The Raschpëtzer — A Roman Underground Water Supply System (p. 16 — shaft P1 depth, position, and sounding gallery)',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 16 — shaft P1 depth, position, and sounding gallery)',
 		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
@@ -43,8 +42,7 @@ const c = {
 	},
 	firstAttempt: {
 		id: 'c-shaft-p1-p11',
-		title:
-			'The Raschpëtzer — A Roman Underground Water Supply System (p. 11 — 1913 initial excavation attempt)',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 11 — 1913 initial excavation attempt)',
 		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
@@ -52,8 +50,7 @@ const c = {
 	},
 	p2Proximity: {
 		id: 'c-shaft-p1-p17',
-		title:
-			'The Raschpëtzer — A Roman Underground Water Supply System (p. 17 — shaft P2, unusually close to P1)',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 17 — shaft P2, unusually close to P1)',
 		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
@@ -90,20 +87,20 @@ export const shaftP1Article: Article = {
 				),
 			),
 		},
-		{ id: 'h-position', type: 'heading', level: 2, text: 'Position: the bend and the depression' },
+		{
+			id: 'h-position',
+			type: 'heading',
+			level: 2,
+			text: 'Position: the bend and the depression',
+		},
 		{
 			id: 'p-position',
 			type: 'paragraph',
 			runs: p(
 				t('P1 marks the point where the qanat route changes direction — '),
 				cite('the bend in the line', 'c-shaft-p1-p16-depth'),
-				t(
-					' — and its head sits in a natural depression in the ground surface, its mouth ',
-				),
-				cite(
-					'6 metres below the edge of the Pëtschend plateau,',
-					'c-shaft-p1-p16-depth',
-				),
+				t(' — and its head sits in a natural depression in the ground surface, its mouth '),
+				cite('6 metres below the edge of the Pëtschend plateau,', 'c-shaft-p1-p16-depth'),
 				t(
 					' rather than flush with the plateau surface itself. That depression would have made the shaft head easier to locate and dig into from the surface than a spot on level, undisturbed ground — a plausible practical reason a builder scouting the route might have chosen to start there.',
 				),
@@ -119,7 +116,7 @@ export const shaftP1Article: Article = {
 					'c-shaft-p1-p16-depth',
 				),
 				t(
-					' along the route — a working hypothesis drawn from its position at the bend and the natural depression that would have marked out the spot, rather than from a dated find at the shaft itself (the dendrochronology that anchors the qanat\'s construction date instead comes from an oak beam at shaft P8; see the ',
+					" along the route — a working hypothesis drawn from its position at the bend and the natural depression that would have marked out the spot, rather than from a dated find at the shaft itself (the dendrochronology that anchors the qanat's construction date instead comes from an oak beam at shaft P8; see the ",
 				),
 				link('Raschpëtzer', 'raschpetzer-qanat'),
 				t(" article's Dating section)."),
@@ -141,7 +138,12 @@ export const shaftP1Article: Article = {
 				),
 			),
 		},
-		{ id: 'h-sounding', type: 'heading', level: 2, text: "The intermediate 'sounding' gallery" },
+		{
+			id: 'h-sounding',
+			type: 'heading',
+			level: 2,
+			text: "The intermediate 'sounding' gallery",
+		},
 		{
 			id: 'p-sounding',
 			type: 'paragraph',
@@ -151,7 +153,7 @@ export const shaftP1Article: Article = {
 					'c-shaft-p1-p16-depth',
 				),
 				t(
-					' distinct from the finished water channel that runs along the floor of the qanat\'s main gallery, 10 metres further down at the shaft\'s full 30-metre depth.',
+					" distinct from the finished water channel that runs along the floor of the qanat's main gallery, 10 metres further down at the shaft's full 30-metre depth.",
 				),
 			),
 		},
@@ -162,7 +164,7 @@ export const shaftP1Article: Article = {
 			title: "What is a 'sounding' gallery?",
 			runs: p(
 				t(
-					'A sounding gallery is an exploratory dig, not part of the finished qanat. Roman surveyors could set a shaft\'s planned depth and a gallery\'s intended gradient from the surface, but they could not see the rock and soil in between. A short side-gallery driven out partway down a shaft let diggers test the ground — checking the strata, feeling for water, gauging how workable the rock was — before committing to the final depth and line. If the sounding didn\'t hit what the builders needed, the shaft continued deeper (as P1\'s did, another 10 m past the 20 m sounding) rather than following the exploratory cut. That is why a sounding gallery, unlike the main channel, carries no water conduit: it was never meant to.',
+					"A sounding gallery is an exploratory dig, not part of the finished qanat. Roman surveyors could set a shaft's planned depth and a gallery's intended gradient from the surface, but they could not see the rock and soil in between. A short side-gallery driven out partway down a shaft let diggers test the ground — checking the strata, feeling for water, gauging how workable the rock was — before committing to the final depth and line. If the sounding didn't hit what the builders needed, the shaft continued deeper (as P1's did, another 10 m past the 20 m sounding) rather than following the exploratory cut. That is why a sounding gallery, unlike the main channel, carries no water conduit: it was never meant to.",
 				),
 			),
 		},
@@ -173,11 +175,10 @@ export const shaftP1Article: Article = {
 			runs: p(
 				t('For the qanat as a whole, see the '),
 				link('Raschpëtzer Qanat', 'raschpetzer-qanat'),
-				t(' article; for the full shaft-by-shaft inventory, including P1\'s neighbours P0 and '),
-				cite(
-					"P2 — unusually close to P1, for survey reasons —",
-					'c-shaft-p1-p17',
+				t(
+					" article; for the full shaft-by-shaft inventory, including P1's neighbours P0 and ",
 				),
+				cite('P2 — unusually close to P1, for survey reasons —', 'c-shaft-p1-p17'),
 				t(', see '),
 				link('Shafts of the Raschpëtzer', 'raschpetzer-shafts'),
 				t('.'),
@@ -190,7 +191,8 @@ export const shaftP1Article: Article = {
 			id: 'r1',
 			author: 'raschpetzer-model-digital-3d SSOT',
 			ts: Date.UTC(2026, 6, 1),
-			summary: 'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
+			summary:
+				'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
 			blocks: [],
 		},
 	],

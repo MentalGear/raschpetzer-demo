@@ -77,12 +77,10 @@ export const shaftP4P7Article: Article = {
 		"P4 and P7 are two of the main-line access shafts of the Raschpëtzer qanat's eastern leg: P4 was later tunnelled through at its base to link the P5–P3 stretch of gallery, while P7 was located from below ground and connected to P8 by counter-excavation.",
 	categories: ['archaeology'],
 	infobox: [
-		{ label: 'Shaft', value: 'P4' },
-		{ label: 'Role', value: 'Main-line' },
-		{ label: 'Surface treatment', value: 'Concrete rings and slab cap' },
-		{ label: 'Shaft', value: 'P7' },
-		{ label: 'Role', value: 'Main-line' },
-		{ label: 'Surface treatment', value: 'Metal lid' },
+		{ label: 'P4 role', value: 'Main-line' },
+		{ label: 'P4 surface treatment', value: 'Concrete rings and slab cap' },
+		{ label: 'P7 role', value: 'Main-line' },
+		{ label: 'P7 surface treatment', value: 'Metal lid' },
 	],
 	blocks: [
 		{

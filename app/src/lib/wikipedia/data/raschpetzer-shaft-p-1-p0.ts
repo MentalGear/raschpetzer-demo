@@ -34,8 +34,7 @@ const BROCHURE_PDF = asset('/sources/raschpetzer-brochure-2018-en.pdf')
 const c = {
 	construction: {
 		id: 'c-shaft-p-1-p0-construction',
-		title:
-			'The Raschpëtzer — A Roman Underground Water Supply System (p. 20 — shaft P-1: marl, sand-filled, concrete segments)',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 20 — shaft P-1: marl, sand-filled, concrete segments)',
 		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
@@ -43,8 +42,7 @@ const c = {
 	},
 	status: {
 		id: 'c-shaft-p-1-p0-status',
-		title:
-			'The Raschpëtzer — A Roman Underground Water Supply System (p. 20 — shaft P0: surface panel only, not excavated)',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 20 — shaft P0: surface panel only, not excavated)',
 		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
@@ -67,7 +65,9 @@ export const shaftPMinus1P0Article: Article = {
 			id: 'p-intro',
 			type: 'paragraph',
 			runs: p(
-				t('P-1 and P0 are two adjacent, lightly documented shafts on the western leg of the '),
+				t(
+					'P-1 and P0 are two adjacent, lightly documented shafts on the western leg of the ',
+				),
 				link('Raschpëtzer', 'raschpetzer-qanat'),
 				t(
 					" qanat's route, between shaft P-4 and shaft P1. Unlike most of the route's shafts, neither is a normal open access point today: P-1 was closed off after excavation, and P0 has never been dug at all. This is a companion sub-article to ",
@@ -109,7 +109,9 @@ export const shaftPMinus1P0Article: Article = {
 					' — so, unlike P-1, nothing is recorded of its depth, profile, or lining. A known shaft position can be left unexcavated for reasons that have nothing to do with doubt about its existence: digging out a shaft is expensive and disruptive to the site, and a location that is already confidently placed — here, from the regular spacing of the shafts on either side of it — can be recorded and protected at the surface without disturbing what lies underneath. A panel marking the spot lets the position stand as documented ',
 				),
 				link('for future fieldwork', 'raschpetzer-shafts'),
-				t(', the same logic that leaves the route’s postulated shafts further west unexcavated.'),
+				t(
+					', the same logic that leaves the route’s postulated shafts further west unexcavated.',
+				),
 			),
 		},
 	],
@@ -119,7 +121,8 @@ export const shaftPMinus1P0Article: Article = {
 			id: 'r1',
 			author: 'raschpetzer-model-digital-3d SSOT',
 			ts: Date.UTC(2026, 6, 1),
-			summary: 'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
+			summary:
+				'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
 			blocks: [],
 		},
 	],

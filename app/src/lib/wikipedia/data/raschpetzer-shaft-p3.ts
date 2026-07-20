@@ -42,8 +42,7 @@ const c = {
 	},
 	alignment: {
 		id: 'c-shaft-p3-alignment',
-		title:
-			'The Raschpëtzer — A Roman Underground Water Supply System (p. 17, P3 on the P1–P5 line, 28 m from P2)',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 17, P3 on the P1–P5 line, 28 m from P2)',
 		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
@@ -51,8 +50,7 @@ const c = {
 	},
 	routeChoice: {
 		id: 'c-shaft-p3-route-choice',
-		title:
-			'The Raschpëtzer — A Roman Underground Water Supply System (p. 17, plateau narrowest point / minimising >30 m shafts)',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 17, plateau narrowest point / minimising >30 m shafts)',
 		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
@@ -60,8 +58,7 @@ const c = {
 	},
 	backfilled: {
 		id: 'c-shaft-p3-backfilled',
-		title:
-			'The Raschpëtzer — A Roman Underground Water Supply System (p. 17, P3 still in original state)',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 17, P3 still in original state)',
 		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
@@ -85,8 +82,7 @@ const c = {
 	},
 	overview: {
 		id: 'c-shaft-p3-overview',
-		title:
-			'The Raschpëtzer — A Roman Underground Water Supply System (p. 4, shaft count and depth range)',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 4, shaft count and depth range)',
 		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
@@ -102,7 +98,7 @@ export const shaftP3Article: Article = {
 	locale: 'en',
 	title: 'Shaft P3',
 	summary:
-		"A deep-dive on shaft P3 of the Raschpëtzer qanat: a 35-metre shaft sunk exactly on the P1–P5 alignment where the route crosses the Pëtschend plateau at its narrowest, still in its original backfilled state and unexcavated to this day.",
+		'A deep-dive on shaft P3 of the Raschpëtzer qanat: a 35-metre shaft sunk exactly on the P1–P5 alignment where the route crosses the Pëtschend plateau at its narrowest, still in its original backfilled state and unexcavated to this day.',
 	categories: ['archaeology'],
 	infobox: [
 		{ label: 'Route position', value: 'On the main line, between P2 and P4' },
@@ -138,10 +134,10 @@ export const shaftP3Article: Article = {
 				t('At '),
 				cite('35 m', 'c-shaft-p3-depth'),
 				t(', P3 is deeper than every other documented shaft on the route except '),
-				link('P5', 'raschpetzer-shafts'),
+				link('P5', 'shaft-p5'),
 				t(', which reaches '),
 				cite('36 m at the eastern edge of the plateau', 'c-shaft-p3-p5-depth'),
-				t('. Overall, the route\'s '),
+				t(". Overall, the route's "),
 				cite('thirteen known shafts range from 6 to 36 metres deep', 'c-shaft-p3-overview'),
 				t(
 					', so P3 sits near the top of that range — well past the 30 m mark that, as discussed below, the builders otherwise tried to avoid.',
@@ -153,11 +149,14 @@ export const shaftP3Article: Article = {
 			id: 'p-alignment',
 			type: 'paragraph',
 			runs: p(
-				cite('P3 lies exactly on the straight line running from shaft P1 to shaft P5', 'c-shaft-p3-alignment'),
+				cite(
+					'P3 lies exactly on the straight line running from shaft P1 to shaft P5',
+					'c-shaft-p3-alignment',
+				),
 				t(', and it is set '),
 				cite('28 metres from its western neighbour, P2', 'c-shaft-p3-alignment'),
 				t(
-					'. A qanat gallery has to fall gently and continuously toward its outlet — even a small kink or grade error can pond water or run the channel dry — so keeping a chain of shafts sunk from the surface on a single straight bearing is itself a check on the surveying that produced them: each shaft head has to be set out from a bearing carried across the surface, independent of what the diggers below could see or correct for once underground. That P3\'s position falls exactly on the line already fixed by P1 and P5, rather than drifting to one side, is a concrete measure of how tightly the Roman surveyors controlled that bearing over this stretch of the plateau.',
+					". A qanat gallery has to fall gently and continuously toward its outlet — even a small kink or grade error can pond water or run the channel dry — so keeping a chain of shafts sunk from the surface on a single straight bearing is itself a check on the surveying that produced them: each shaft head has to be set out from a bearing carried across the surface, independent of what the diggers below could see or correct for once underground. That P3's position falls exactly on the line already fixed by P1 and P5, rather than drifting to one side, is a concrete measure of how tightly the Roman surveyors controlled that bearing over this stretch of the plateau.",
 				),
 			),
 		},
@@ -168,18 +167,20 @@ export const shaftP3Article: Article = {
 			runs: p(
 				t('The route was carried across the '),
 				b('Pëtschend plateau'),
-				t(' at its narrowest point specifically at P3, and the brochure records this as a deliberate choice: '),
+				t(
+					' at its narrowest point specifically at P3, and the brochure records this as a deliberate choice: ',
+				),
 				cite(
-					"crossing the plateau at its narrowest was meant to minimise the number of shafts deeper than 30 metres",
+					'crossing the plateau at its narrowest was meant to minimise the number of shafts deeper than 30 metres',
 					'c-shaft-p3-route-choice',
 				),
 				t(
 					'. A wider crossing elsewhere on the plateau would have meant a longer stretch of gallery running under greater overburden, which would in turn have forced more of the shafts along it past the 30 m mark — each extra metre of shaft meant more spoil to haul to the surface, more risk to the diggers, and more time. Routing through the narrowest point traded a still-considerable 35 m shaft at P3 (and 30 m at ',
 				),
-				link('P1', 'raschpetzer-shafts'),
+				link('P1', 'shaft-p1'),
 				cite(', which the brochure separately records at 30 m', 'c-shaft-p3-p1-depth'),
 				t(
-					') against having to sink even more shafts that deep or deeper across a longer plateau crossing — an engineering trade-off between minimising each individual shaft\'s depth and minimising how many shafts had to be that deep at all.',
+					") against having to sink even more shafts that deep or deeper across a longer plateau crossing — an engineering trade-off between minimising each individual shaft's depth and minimising how many shafts had to be that deep at all.",
 				),
 			),
 		},
@@ -191,12 +192,17 @@ export const shaftP3Article: Article = {
 				t('Unlike the shafts open to visitors along the '),
 				link('Raschpëtzer', 'raschpetzer-qanat'),
 				t(' trail, P3 has '),
-				cite('never been re-excavated and remains backfilled in its original state', 'c-shaft-p3-backfilled'),
+				cite(
+					'never been re-excavated and remains backfilled in its original state',
+					'c-shaft-p3-backfilled',
+				),
 				t(
 					', with no surface cover marking it today. Its documented depth and position on the P1–P5 line come from the original excavation records rather than from a shaft that can currently be inspected at the surface. See ',
 				),
 				link('Shafts of the Raschpëtzer', 'raschpetzer-shafts'),
-				t(' for the full inventory of all eighteen known and postulated shafts along the route.'),
+				t(
+					' for the full inventory of all eighteen known and postulated shafts along the route.',
+				),
 			),
 		},
 	],
@@ -214,7 +220,8 @@ export const shaftP3Article: Article = {
 			id: 'r1',
 			author: 'raschpetzer-model-digital-3d SSOT',
 			ts: Date.UTC(2026, 6, 1),
-			summary: 'Initial draft from the site SSOT dataset (data/shafts.json, "P3") and the 2018 brochure',
+			summary:
+				'Initial draft from the site SSOT dataset (data/shafts.json, "P3") and the 2018 brochure',
 			blocks: [],
 		},
 	],

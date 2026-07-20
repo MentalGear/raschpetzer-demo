@@ -86,7 +86,7 @@ export const shaftPMinus4Article: Article = {
 	locale: 'en',
 	title: 'Shaft P-4',
 	summary:
-		"Shaft P-4 is one of the vertical access shafts of the Raschpëtzer qanat, notable for its dry-stone lining — a 0.8 m wall built up in three concentric, mortar-free rows — and for the overflow weir fitted into the channel beside it, which diverts excess water into a separate lateral channel.",
+		'Shaft P-4 is one of the vertical access shafts of the Raschpëtzer qanat, notable for its dry-stone lining — a 0.8 m wall built up in three concentric, mortar-free rows — and for the overflow weir fitted into the channel beside it, which diverts excess water into a separate lateral channel.',
 	categories: ['archaeology'],
 	infobox: [
 		{ label: 'Site', value: 'Raschpëtzer qanat, Helmsange Forest, Walferdange, Luxembourg' },
@@ -96,7 +96,7 @@ export const shaftPMinus4Article: Article = {
 		{ label: 'Lining', value: 'Dry-stone, 0.8 m wall, 3 concentric rows' },
 		{ label: 'Base', value: 'Widened to a 1.4 m cone' },
 		{ label: 'Excavated', value: '1992 (western continuation campaign, 1992–2000)' },
-		{ label: 'Surface today', value: "Windowed viewing cover, over the overflow bifurcation" },
+		{ label: 'Surface today', value: 'Windowed viewing cover, over the overflow bifurcation' },
 	],
 	blocks: [
 		{
@@ -109,7 +109,10 @@ export const shaftPMinus4Article: Article = {
 				t(', roughly halfway along the western leg of the route (see the full '),
 				link('shaft inventory', 'raschpetzer-shafts'),
 				t(' for its neighbours). It reaches '),
-				cite('12 metres down to a gallery floor at 355.4 metres above sea level', 'c-shaft-pminus4-depth'),
+				cite(
+					'12 metres down to a gallery floor at 355.4 metres above sea level',
+					'c-shaft-pminus4-depth',
+				),
 				t(
 					', and is one of the ten excavated shafts along the route capped today with a modern surface structure — in this case a windowed cover, so visitors can look down into the channel without entering it.',
 				),
@@ -121,7 +124,10 @@ export const shaftPMinus4Article: Article = {
 			type: 'paragraph',
 			runs: p(
 				t('P-4 is '),
-				cite('dry-stone lined: its wall is 0.8 metres thick, built up in three concentric rows', 'c-shaft-pminus4-lining'),
+				cite(
+					'dry-stone lined: its wall is 0.8 metres thick, built up in three concentric rows',
+					'c-shaft-pminus4-lining',
+				),
 				t(
 					' of stone laid course on course without mortar, each row facing the shaft wall and bearing against the row outside it. Building the lining as three separate concentric rings, rather than one thick wall, let the masons work in courses they could actually lift and place by hand while still giving the lining enough total thickness to resist the lateral earth pressure of the surrounding sandstone — a masonry technique also seen, in reduced form, at other shafts along the route.',
 				),
@@ -140,13 +146,16 @@ export const shaftPMinus4Article: Article = {
 			type: 'paragraph',
 			runs: p(
 				t('Immediately beside the shaft, the main channel is fitted with an '),
-				cite('overflow weir that diverts water into a separate lateral channel', 'c-shaft-pminus4-overflow-pointer'),
+				cite(
+					'overflow weir that diverts water into a separate lateral channel',
+					'c-shaft-pminus4-overflow-pointer',
+				),
 				t(
 					' whenever the level in the main conduit rises too high — the reason the shaft head above it carries a windowed cover rather than a plain lid. The weir and its lateral channel are a piece of channel engineering distinct from the shaft itself; see ',
 				),
 				link('Gallery and Channel Construction', 'raschpetzer-gallery'),
 				t(
-					"'s \"The P-4 overflow weir\" section for the trigger level, diversion capacity, and the surveyed location of its resurgence outlet.",
+					'\'s "The P-4 overflow weir" section for the trigger level, diversion capacity, and the surveyed location of its resurgence outlet.',
 				),
 			),
 		},
@@ -171,7 +180,8 @@ export const shaftPMinus4Article: Article = {
 			id: 'r1',
 			author: 'raschpetzer-model-digital-3d SSOT',
 			ts: Date.UTC(2026, 6, 1),
-			summary: 'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
+			summary:
+				'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
 			blocks: [],
 		},
 	],

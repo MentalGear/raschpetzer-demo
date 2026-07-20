@@ -87,7 +87,7 @@ export const auxiliaryShaftsArticle: Article = {
 	locale: 'en',
 	title: 'The Auxiliary Shafts (P-5A and P-7A)',
 	summary:
-		"P-5A and P-7A are two shafts west of the main Raschpëtzer qanat line that reach a separate, higher, dry channel — never connected to the aquiferous main conduit — with P-7A additionally notable for its debris-filled drop-shaft excavation technique.",
+		'P-5A and P-7A are two shafts west of the main Raschpëtzer qanat line that reach a separate, higher, dry channel — never connected to the aquiferous main conduit — with P-7A additionally notable for its debris-filled drop-shaft excavation technique.',
 	categories: ['archaeology'],
 	blocks: [
 		{
@@ -96,9 +96,7 @@ export const auxiliaryShaftsArticle: Article = {
 			runs: p(
 				t('Two shafts on the '),
 				link('Raschpëtzer', 'raschpetzer-qanat'),
-				t(
-					" qanat's western leg, ",
-				),
+				t(" qanat's western leg, "),
 				b('P-5A'),
 				t(' and '),
 				b('P-7A'),
@@ -108,9 +106,7 @@ export const auxiliaryShaftsArticle: Article = {
 					': they reach not the main aquiferous conduit but a second, separate channel that runs higher and stayed dry, because it was never connected to the primary water-carrying channel',
 					'c-aux-shafts-relation',
 				),
-				t(
-					'. The main article on the ',
-				),
+				t('. The main article on the '),
 				link('gallery and channel', 'raschpetzer-gallery'),
 				t(
 					' mentions this auxiliary channel briefly; this article covers it and its two shafts in full.',
@@ -129,9 +125,7 @@ export const auxiliaryShaftsArticle: Article = {
 					' P-5A and P-7A are the two shafts that reach this auxiliary channel',
 					'c-aux-shafts-relation',
 				),
-				t(
-					', sitting north of and above the main line rather than along it.',
-				),
+				t(', sitting north of and above the main line rather than along it.'),
 			),
 		},
 		{
@@ -139,8 +133,20 @@ export const auxiliaryShaftsArticle: Article = {
 			type: 'table',
 			headers: ['Shaft', 'Depth (m)', 'Floor elevation (m a.s.l.)', 'Position', 'Notes'],
 			rows: [
-				['P-5A', '8', '357.5', '~30 m N of P-4', 'Dry channel, 2 m above the main channel; dug in marl, sand-filled'],
-				['P-7A', '6', '354.3', '~25 m NW of P-5', 'Debris-filled drop-shaft; restored to original state'],
+				[
+					'P-5A',
+					'8',
+					'357.5',
+					'~30 m N of P-4',
+					'Dry channel, 2 m above the main channel; dug in marl, sand-filled',
+				],
+				[
+					'P-7A',
+					'6',
+					'354.3',
+					'~25 m NW of P-5',
+					'Debris-filled drop-shaft; restored to original state',
+				],
 			],
 		},
 		{ id: 'h-why', type: 'heading', level: 2, text: 'Why a separate, unconnected system?' },
@@ -148,9 +154,7 @@ export const auxiliaryShaftsArticle: Article = {
 			id: 'p-why',
 			type: 'paragraph',
 			runs: p(
-				t(
-					'The engineering logic follows directly from the elevations: ',
-				),
+				t('The engineering logic follows directly from the elevations: '),
 				cite(
 					"P-5A's dry channel floor sits about 2 metres higher than the main channel it runs alongside",
 					'c-aux-shafts-p5a',
@@ -165,7 +169,7 @@ export const auxiliaryShaftsArticle: Article = {
 			type: 'paragraph',
 			runs: p(
 				t(
-					'What the auxiliary branch represents is necessarily somewhat inferential, since the brochure documents its physical relationship to the main line without recording its builders\' intent. A separate, higher channel reached by its own shafts is consistent with an earlier survey or exploratory heading — a branch driven west from the main workings before the final, lower route to the Alzette valley was fixed, then left in place once superseded rather than backfilled and erased. It is also consistent with a short-lived side gallery serving a purpose distinct from bulk water transport. Either way, the shafts were ',
+					"What the auxiliary branch represents is necessarily somewhat inferential, since the brochure documents its physical relationship to the main line without recording its builders' intent. A separate, higher channel reached by its own shafts is consistent with an earlier survey or exploratory heading — a branch driven west from the main workings before the final, lower route to the Alzette valley was fixed, then left in place once superseded rather than backfilled and erased. It is also consistent with a short-lived side gallery serving a purpose distinct from bulk water transport. Either way, the shafts were ",
 				),
 				cite(
 					'excavated during the same 1992–2000 western-continuation campaign that opened up the rest of the western leg',
@@ -187,14 +191,11 @@ export const auxiliaryShaftsArticle: Article = {
 					'c-aux-shafts-p5a',
 				),
 				t(' on the main line (see '),
-				link('P-4', 'raschpetzer-shafts'),
+				link('P-4', 'shaft-p-4'),
 				t(
 					" in the shaft inventory for that shaft's own dry-stone lining and overflow weir). ",
 				),
-				cite(
-					'It was dug through marl and is today sand-filled',
-					'c-aux-shafts-p5a',
-				),
+				cite('It was dug through marl and is today sand-filled', 'c-aux-shafts-p5a'),
 				t(
 					', and its channel — dry, since it was never connected to the main conduit — sits about 2 metres above the aquiferous channel at this point on the route.',
 				),
@@ -210,14 +211,11 @@ export const auxiliaryShaftsArticle: Article = {
 					' is 6 metres deep, with a floor at 354.3 metres above sea level',
 					'c-aux-shafts-p7a',
 				),
-				cite(
-					', located roughly 25 metres northwest of shaft P-5',
-					'c-aux-shafts-distance',
-				),
+				cite(', located roughly 25 metres northwest of shaft P-5', 'c-aux-shafts-distance'),
 				t(' — the deepest shaft on the main line (see '),
-				link('P5', 'raschpetzer-shafts'),
+				link('P5', 'shaft-p5'),
 				t(
-					" in the shaft inventory). Of the two auxiliary shafts, P-7A is the westernmost and lowest point on the entire Raschpëtzer shaft record, and it is also the one excavated using a distinct technique, described below.",
+					' in the shaft inventory). Of the two auxiliary shafts, P-7A is the westernmost and lowest point on the entire Raschpëtzer shaft record, and it is also the one excavated using a distinct technique, described below.',
 				),
 			),
 		},

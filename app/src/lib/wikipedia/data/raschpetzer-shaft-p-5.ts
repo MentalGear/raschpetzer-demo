@@ -86,7 +86,7 @@ export const shaftPMinus5Article: Article = {
 	locale: 'en',
 	title: 'Shaft P-5',
 	summary:
-		"Shaft P-5 is one of the vertical access shafts of the Raschpëtzer qanat, on the western leg of the route between the auxiliary shaft P-5A and shaft P-4. Excavators found its channel backfilled with yellow sand, and a stretch of gallery near it as the site of the dig's \"geological accident,\" where the channel floor was breached and water was lost into limestone fissures below — repaired by rebuilding that section of channel in concrete rather than the original dry-masonry technique.",
+		'Shaft P-5 is one of the vertical access shafts of the Raschpëtzer qanat, on the western leg of the route between the auxiliary shaft P-5A and shaft P-4. Excavators found its channel backfilled with yellow sand, and a stretch of gallery near it as the site of the dig\'s "geological accident," where the channel floor was breached and water was lost into limestone fissures below — repaired by rebuilding that section of channel in concrete rather than the original dry-masonry technique.',
 	categories: ['archaeology'],
 	infobox: [
 		{ label: 'Site', value: 'Raschpëtzer qanat, Helmsange Forest, Walferdange, Luxembourg' },
@@ -94,7 +94,7 @@ export const shaftPMinus5Article: Article = {
 		{ label: 'Position', value: 'Western leg, between P-5A and P-4' },
 		{ label: 'Fill', value: 'Yellow sand' },
 		{ label: 'Channel found at', value: '10 m' },
-		{ label: 'Notable for', value: "The dig's \"geological accident\" and its concrete repair" },
+		{ label: 'Notable for', value: 'The dig\'s "geological accident" and its concrete repair' },
 		{ label: 'Excavated', value: '1993 (western continuation campaign, 1992–2000)' },
 		{ label: 'Surface today', value: 'Metal lid' },
 	],
@@ -111,7 +111,7 @@ export const shaftPMinus5Article: Article = {
 				),
 				link('shaft inventory', 'raschpetzer-shafts'),
 				t(
-					' for its neighbours). Excavators found its channel backfilled with yellow sand, and it is best known as the site of the dig\'s ',
+					" for its neighbours). Excavators found its channel backfilled with yellow sand, and it is best known as the site of the dig's ",
 				),
 				b('"geological accident"'),
 				t(
@@ -124,12 +124,15 @@ export const shaftPMinus5Article: Article = {
 			id: 'p-fill',
 			type: 'paragraph',
 			runs: p(
-				t('Like several of the qanat\'s shafts, P-5 was found '),
+				t("Like several of the qanat's shafts, P-5 was found "),
 				cite('backfilled with yellow sand', 'c-shaft-pminus5-fill'),
 				t(
 					' rather than the natural rubble and soil that filled other shafts along the route — sediment that had to be cleared out before excavators could reach the gallery floor. ',
 				),
-				cite('The channel itself was found at a depth of 10 metres', 'c-shaft-pminus5-fill'),
+				cite(
+					'The channel itself was found at a depth of 10 metres',
+					'c-shaft-pminus5-fill',
+				),
 				t(', below the sand fill.'),
 			),
 		},
@@ -138,7 +141,7 @@ export const shaftPMinus5Article: Article = {
 			id: 'p-accident',
 			type: 'paragraph',
 			runs: p(
-				t('P-5 is the site of what the excavation record calls the dig\'s '),
+				t("P-5 is the site of what the excavation record calls the dig's "),
 				b('"geological accident"'),
 				t(': at this stretch of the channel, '),
 				cite(
@@ -156,14 +159,14 @@ export const shaftPMinus5Article: Article = {
 			type: 'paragraph',
 			runs: p(
 				t(
-					'Everywhere else along its route, the qanat channel is lined and floored in dry masonry, without mortar. At P-5, that technique could not be made watertight against the fissured rock beneath the breach, so '
+					'Everywhere else along its route, the qanat channel is lined and floored in dry masonry, without mortar. At P-5, that technique could not be made watertight against the fissured rock beneath the breach, so ',
 				),
 				cite(
 					'the affected stretch of channel was rebuilt in concrete instead',
 					'c-shaft-pminus5-repair',
 				),
 				t(
-					', sealing the floor against the fissures and restoring the gallery\'s gravity flow past the accident site. The concrete repair remains a visibly distinct patch in an otherwise uniformly dry-stone conduit — physical evidence, still in place, of a construction problem the original Roman builders had to solve on-site.',
+					", sealing the floor against the fissures and restoring the gallery's gravity flow past the accident site. The concrete repair remains a visibly distinct patch in an otherwise uniformly dry-stone conduit — physical evidence, still in place, of a construction problem the original Roman builders had to solve on-site.",
 				),
 			),
 		},
@@ -188,7 +191,8 @@ export const shaftPMinus5Article: Article = {
 			id: 'r1',
 			author: 'raschpetzer-model-digital-3d SSOT',
 			ts: Date.UTC(2026, 6, 1),
-			summary: 'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
+			summary:
+				'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
 			blocks: [],
 		},
 	],
