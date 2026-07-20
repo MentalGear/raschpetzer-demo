@@ -18,7 +18,7 @@
 	)
 </script>
 
-<svelte:head><title>Search — Raschpëtzer Wiki</title></svelte:head>
+<svelte:head><title>Search — Raschpëtzer</title></svelte:head>
 
 <div class="mx-auto w-full max-w-5xl px-4 py-6 lg:px-8">
 	<h1 class="mb-4 text-2xl font-bold tracking-tight">Search articles</h1>
