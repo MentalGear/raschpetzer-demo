@@ -7,7 +7,7 @@
 	const recent = $derived([...wikiStore.sourceArticles].sort((a, b) => b.updatedAt - a.updatedAt))
 </script>
 
-<svelte:head><title>Recently edited — Wikipedia</title></svelte:head>
+<svelte:head><title>Recently edited — Raschpëtzer Wiki</title></svelte:head>
 
 <div class="mx-auto w-full max-w-3xl px-4 py-6 lg:px-8">
 	<h1 class="mb-6 text-2xl font-bold tracking-tight">Recently edited</h1>

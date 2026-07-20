@@ -1,13 +1,15 @@
 /**
  * Real content: the Raschpëtzer Roman qanat (Walferdange, Luxembourg). Sourced from the
- * companion data repo `raschpetzer-model-digital-3d` (`data/site.json`, `data/sources.json`)
- * and the primary-source brochure it cites (vendored at `static/sources/`), plus external
- * corroborating sources found via web search. Every fact carries a citation; every citation
+ * companion data repo `raschpetzer-model-digital-3d` (`data/site.json`, `data/shafts.json`,
+ * `data/sources.json`, `docs/RASCHPETZER_DATA.md`) and the primary-source brochure it
+ * cites (vendored at `static/sources/`), plus external corroborating sources found via web
+ * search. Every specific fact/number carries its own adjacent citation (not just one
+ * somewhere in the paragraph) — see the per-clause `cite()` calls below. Every citation
  * that has a real URL/page locator is deep-linked (`Citation.url`, opened in a new tab by
- * `ArticleReader`'s references list) — see `c.brochure`'s `#page=N` fragments.
+ * `ArticleReader`'s references list) — see `c.brochure*`'s `#page=N` fragments.
  */
 import { base } from '$app/paths'
-import type { Article, Category, Citation, Inline, TextRun } from './types'
+import type { Article, Category, Citation, GalleryItemRef, Inline, TextRun } from './types'
 
 // Local copies of mock.ts's tiny inline-run authoring helpers — kept separate (not
 // imported from ./mock) so this module has no circular dependency on it; mock.ts is the
@@ -36,7 +38,9 @@ const asset = (path: string): string => `${base}${path}`
 const srcsetOf = (entries: [string, string][]): string =>
 	entries.map(([path, w]) => `${asset(path)} ${w}`).join(', ')
 
-// Page locators per data/sources.json's `_prov` map in the raschpetzer-model-digital-3d repo.
+// Page locators per data/sources.json's `_prov` map / docs/RASCHPETZER_DATA.md in the
+// raschpetzer-model-digital-3d repo — kept as plain page/#page anchors (not a search/
+// highlight viewer): opens the vendored PDF directly at the cited page, new tab.
 const BROCHURE_PDF = asset('/sources/raschpetzer-brochure-2018-en.pdf')
 const c = {
 	brochureOverview: {
@@ -47,13 +51,21 @@ const c = {
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=4`,
 	},
-	brochureDating: {
-		id: 'c-raschpetzer-brochure-p29',
-		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 29, dendrochronology)',
+	brochureFlow: {
+		id: 'c-raschpetzer-brochure-p9',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 9, flow direction)',
 		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
-		url: `${BROCHURE_PDF}#page=29`,
+		url: `${BROCHURE_PDF}#page=9`,
+	},
+	brochureFinds: {
+		id: 'c-raschpetzer-brochure-p10',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 10, 19; fig. 5-7 — shaft P9 finds)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=10`,
 	},
 	brochureExcavation: {
 		id: 'c-raschpetzer-brochure-p11',
@@ -62,6 +74,14 @@ const c = {
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=11`,
+	},
+	brochureDating: {
+		id: 'c-raschpetzer-brochure-p29',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 29, dendrochronology)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=29`,
 	},
 	geoportail: {
 		id: 'c-geoportail-lu',
@@ -87,6 +107,36 @@ const c = {
 
 export const raschpetzerCitations = c
 
+/** The two MNHA photos of the oak shovel found near shaft P9 (docs/RASCHPETZER_DATA.md: "a
+ *  portal niche with a seepage gutter; oak shovels were found in the mud nearby" — Brochure
+ *  2018 p.10, p.19, fig.5-7) — front/back views of the same artifact, a real multi-item
+ *  gallery (not two separate single-figure blocks) so it renders through the app's actual
+ *  gallery slider + lightbox (GalleryNodeView.svelte), not two static figures. */
+const findsGalleryItems: GalleryItemRef[] = [
+	{
+		id: 'shovel-a',
+		alt: 'Wooden shovel found near shaft P9, front view, with a 30 cm scale bar',
+		caption: 'Oak shovel recovered from the mud near shaft P9.',
+		credit: 'Photo: Tom Lucas & Ben Muller, MNHA, 2022',
+		tone: 4,
+		ratio: 1920 / 1280,
+		src: asset(
+			'/img/raschpetzer/a-shovel-P9-FOTO-Tom-Lucas-Ben-Muller-MNHA-2022-fallback.jpg',
+		),
+	},
+	{
+		id: 'shovel-b',
+		alt: 'Wooden shovel found near shaft P9, reverse view, with a 30 cm scale bar',
+		caption: 'The same shovel, reverse side.',
+		credit: 'Photo: Tom Lucas & Ben Muller, MNHA, 2022',
+		tone: 4,
+		ratio: 1920 / 1280,
+		src: asset(
+			'/img/raschpetzer/b-shovel-P9-FOTO-Tom-Lucas-Ben-Muller-MNHA-2022-fallback.jpg',
+		),
+	},
+]
+
 export const raschpetzer: Article = {
 	id: 'a-raschpetzer',
 	slug: 'raschpetzer-qanat',
@@ -103,11 +153,11 @@ export const raschpetzer: Article = {
 		caption:
 			'The Raschpëtzer qanat (site 3) lies in the Alzette valley near Walferdange, Grand Duchy of Luxembourg.',
 		credit: 'Faber, Waringo & Werner, 2018',
-		src: asset('/media/raschpetzer/Fig1-01-fallback.jpg'),
+		src: asset('/img/raschpetzer/Fig1-01-fallback.jpg'),
 		srcset: srcsetOf([
-			['/media/raschpetzer/Fig1-01-480w.webp', '480w'],
-			['/media/raschpetzer/Fig1-01-960w.webp', '960w'],
-			['/media/raschpetzer/Fig1-01-1920w.webp', '1920w'],
+			['/img/raschpetzer/Fig1-01-480w.webp', '480w'],
+			['/img/raschpetzer/Fig1-01-960w.webp', '960w'],
+			['/img/raschpetzer/Fig1-01-1920w.webp', '1920w'],
 		]),
 		sizes: '(min-width: 768px) 640px, 100vw',
 		ratio: 3676 / 2462,
@@ -135,10 +185,12 @@ export const raschpetzer: Article = {
 				link('Helmsange', 'raschpetzer-qanat'),
 				t(', in the municipality of '),
 				b('Walferdange'),
-				cite(', Luxembourg.', 'c-raschpetzer-brochure-p4'),
-				t(
-					' It carried spring water roughly 720 metres, dropping about 100 metres in elevation, west toward the Alzette valley to supply a Roman-era settlement.',
+				t(', Luxembourg.'),
+				cite(
+					' It carried spring water roughly 720 metres, dropping about 100 metres in elevation,',
+					'c-raschpetzer-brochure-p4',
 				),
+				t(' west toward the Alzette valley to supply a Roman-era settlement.'),
 			),
 		},
 		{ id: 'h-overview', type: 'heading', level: 2, text: 'Construction and layout' },
@@ -146,12 +198,17 @@ export const raschpetzer: Article = {
 			id: 'p-shafts',
 			type: 'paragraph',
 			runs: p(
-				t(
+				cite(
 					'Thirteen shafts are currently known along the route, ranging from 6 to 36 metres deep and 0.8–1.2 metres in diameter; the connecting gallery itself is only 0.5–2.0 metres wide and 0.5–2.3 metres high above the stone-covered water conduit at its floor.',
+					'c-raschpetzer-brochure-p4',
 				),
-				cite(' Water flowed east to west', 'c-raschpetzer-brochure-p4'),
+				cite(' Water flowed east to west', 'c-raschpetzer-brochure-p9'),
 				t(
-					' — from the springs of the Pëtschend plateau and the Haedchen depression toward the Alzette valley — contrary to the natural dip of the surrounding strata, meaning the gallery had to be surveyed and cut with real precision for an unpowered gravity flow of roughly 180 cubic metres a day.',
+					' — from the springs of the Pëtschend plateau and the Haedchen depression toward the Alzette valley — contrary to the natural dip of the surrounding strata, meaning the gallery had to be surveyed and cut with real precision for',
+				),
+				cite(
+					' an unpowered gravity flow of roughly 180 cubic metres a day.',
+					'c-raschpetzer-brochure-p4',
 				),
 			),
 		},
@@ -163,10 +220,10 @@ export const raschpetzer: Article = {
 			caption:
 				"Catchment map of the Pëtschend plateau and Haedchen depression: springs A–C feed the qanat's shaft line (marked R), overlaid on the local topography and fault lines.",
 			credit: 'Faber, Waringo & Werner, 2018',
-			src: asset('/media/raschpetzer/Fig3-01-fallback.jpg'),
+			src: asset('/img/raschpetzer/Fig3-01-fallback.jpg'),
 			srcset: srcsetOf([
-				['/media/raschpetzer/Fig3-01-480w.webp', '480w'],
-				['/media/raschpetzer/Fig3-01-960w.webp', '960w'],
+				['/img/raschpetzer/Fig3-01-480w.webp', '480w'],
+				['/img/raschpetzer/Fig3-01-960w.webp', '960w'],
 			]),
 			sizes: '(min-width: 768px) 640px, 100vw',
 			ratio: 1461 / 1190,
@@ -176,9 +233,11 @@ export const raschpetzer: Article = {
 			id: 'p-dating',
 			type: 'paragraph',
 			runs: p(
-				t(
-					'An oak beam recovered from shaft P8 gave an outer growth ring dated to AD 114, extrapolated to a felling date around AD 131 — placing construction in the early-to-mid 2nd century.',
+				cite(
+					'An oak beam recovered from shaft P8 gave an outer growth ring dated to AD 114, extrapolated to a felling date around AD 131',
+					'c-raschpetzer-brochure-p29',
 				),
+				t(' — placing construction in the early-to-mid 2nd century.'),
 				cite(
 					' The gallery is thought to have stayed in service until roughly AD 350.',
 					'c-raschpetzer-brochure-p29',
@@ -199,21 +258,36 @@ export const raschpetzer: Article = {
 				),
 			),
 		},
+		{ id: 'h-finds', type: 'heading', level: 2, text: 'Finds' },
+		{
+			id: 'p-finds',
+			type: 'paragraph',
+			runs: p(
+				cite(
+					"At shaft P9, the gallery's easternmost and uppermost point, excavators found a portal niche with a seepage gutter — and, preserved in the surrounding mud, oak shovels likely used to dig the gallery itself.",
+					'c-raschpetzer-brochure-p10',
+				),
+			),
+		},
+		{ id: 'gal-finds', type: 'gallery', items: findsGalleryItems },
 		{ id: 'h-visiting', type: 'heading', level: 2, text: 'Visiting today' },
 		{
 			id: 'p-visiting',
 			type: 'paragraph',
 			runs: p(
-				t(
+				cite(
 					'Ten of the excavated shafts are accessible at the surface, each capped with a modern metal lid; two are fitted with windows — one over the 36-metre-deep shaft P5, the other over the overflow bifurcation at P-4 — so visitors can see down into the gallery without entering it.',
+					'c-visitluxembourg-raschpetzer',
 				),
 			),
 		},
 	],
 	citations: [
 		c.brochureOverview,
-		c.brochureDating,
+		c.brochureFlow,
+		c.brochureFinds,
 		c.brochureExcavation,
+		c.brochureDating,
 		c.geoportail,
 		c.wikipediaEn,
 		c.visitLuxembourg,

@@ -20,6 +20,9 @@ export interface MediaItem {
 	credit?: string
 	tone: number
 	ratio?: number
+	/** Present only for real vendored content (not the mock corpus) — see `isRealImageSrc`. */
+	src?: string
+	srcset?: string
 	articleSlug: string
 	articleTitle: string
 	updatedAt: number
@@ -38,6 +41,8 @@ function toItem(
 		credit: source.credit,
 		tone: source.tone,
 		ratio: source.ratio,
+		src: source.src,
+		srcset: source.srcset,
 		articleSlug: article.slug,
 		articleTitle: article.title,
 		updatedAt,

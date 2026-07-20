@@ -3,7 +3,7 @@
 	import ArticleCard from '$lib/wikipedia/components/ArticleCard.svelte'
 </script>
 
-<svelte:head><title>All Articles — Wikipedia</title></svelte:head>
+<svelte:head><title>All Articles — Raschpëtzer Wiki</title></svelte:head>
 
 <div class="mx-auto w-full max-w-5xl px-4 py-6 lg:px-8">
 	<header class="mb-6">
