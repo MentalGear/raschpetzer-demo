@@ -40,7 +40,7 @@
 	import { tick, untrack, onDestroy } from 'svelte'
 	import type { Editor } from '@tiptap/core'
 	import type { Article } from '$lib/wikipedia/data/types'
-	import { articleToc, editedLabel } from '$lib/wikipedia/data/types'
+	import { articleToc, citedCitationIds, editedLabel } from '$lib/wikipedia/data/types'
 	import { REF_NOW } from '$lib/wikipedia/data/mock'
 	import { wikiStore } from '$lib/wikipedia/state/wikiStore.svelte'
 	import { memberStore, initials } from '$lib/wikipedia/state/memberStore.svelte'
@@ -93,6 +93,7 @@
 	})
 
 	const toc = $derived(articleToc(article))
+	const citedIds = $derived(citedCitationIds(article))
 	const backlinks = $derived(wikiStore.backlinksFor(article.slug))
 	const otherLocales = $derived(wikiStore.localesFor(article.slug))
 	// Simple-Wikipedia-style cross-link (near the title, same weight as History/Translations
@@ -816,14 +817,20 @@
 						     sticky header to clear (the edit affordances float — A.4 no longer needed). -->
 						<li id="ref-{i + 1}" class="flex scroll-mt-24 gap-2">
 							<span class="font-medium text-foreground">[{i + 1}]</span>
-							<a
-								href="#cite-ref-{i + 1}"
-								class="text-primary no-underline hover:underline"
-								aria-label={`Jump back to where reference ${i + 1} is cited in the text`}
-								title="Jump back to citation"
-							>
-								↑
-							</a>
+							<!-- Only when actually cited inline — a "further reading" entry (e.g.
+							     raschpetzer-geology.ts's) has no cite() anywhere in the body, so no
+							     CiteNoteMarker ever mounts a `cite-ref-N` id for it; a backlink there
+							     would jump nowhere. -->
+							{#if citedIds.has(c.id)}
+								<a
+									href="#cite-ref-{i + 1}"
+									class="text-primary no-underline hover:underline"
+									aria-label={`Jump back to where reference ${i + 1} is cited in the text`}
+									title="Jump back to citation"
+								>
+									↑
+								</a>
+							{/if}
 							<span>
 								{#if c.url}
 									<a

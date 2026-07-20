@@ -167,8 +167,12 @@
 	     Wikipedia is plain document flow, so wrap the routed content in a full-height
 	     vertical scroller (otherwise a tall article is clipped and the page can't
 	     scroll). The reader's ToC scroll-spy (viewport-rooted IntersectionObserver) and
-	     `#id` anchors work unchanged inside this scroller. -->
-	<div bind:this={scrollContainer} class="h-full overflow-y-auto">
+	     `#id` anchors work unchanged inside this scroller. `scroll-smooth`: THIS is the
+	     element whose own scroll position actually changes on a citation/footnote/
+	     backlink `#`-jump — `scroll-behavior` only affects the box it's set on, not an
+	     ancestor's (a `<html>` rule here would be silent no-op, since `<html>` itself
+	     never scrolls in this app; found in review after shipping it on `<html>` first). -->
+	<div bind:this={scrollContainer} class="h-full overflow-y-auto scroll-smooth">
 		{@render children()}
 	</div>
 </AppShell>

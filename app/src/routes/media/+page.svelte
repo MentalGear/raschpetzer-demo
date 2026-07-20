@@ -172,6 +172,13 @@
 		background: var(--media-lightbox-overlay-bg, var(--background));
 		color: var(--media-lightbox-overlay-fg, var(--foreground));
 		border-left: 1px solid var(--border);
+		/* MediaLightbox's header is z-index:3 and its nav arrows are z-index:2, both inside
+		   the same stacking context (`.stage` doesn't isolate) — without an explicit z-index
+		   here this panel paints BELOW that chrome wherever they geometrically overlap it
+		   (an explicit z-index always wins over z-index:auto, regardless of DOM order),
+		   defeating the "right-side panel" it's meant to be. Match the filmstrip slot's own
+		   z-index:3. */
+		z-index: 3;
 	}
 	@media (max-width: 640px) {
 		.info-panel {

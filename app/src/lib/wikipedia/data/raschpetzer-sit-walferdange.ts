@@ -167,7 +167,13 @@ export const sitWalferdangeArticle: Article = {
 				t(' as well. '),
 				link('Guy Waringo', 'guy-waringo'),
 				t(
-					' joined that publishing effort as a SIT-credited co-author from around 1990 onward, and remained one through the 2018 brochure — both men’s Raschpëtzer work is inseparable from the association that printed it.',
+					' joined that publishing effort as a SIT-credited co-author from around 1990 onward, and remained one through the 2018 brochure — both men’s Raschpëtzer work is inseparable from the association that printed it. ',
+				),
+				link('Georges Faber', 'georges-faber'),
+				t(' and '),
+				link('Henri Werner', 'henri-werner'),
+				t(
+					" are separately credited (see their own pages) with later SIT presidencies of their own — Faber for twenty years, then Werner for several more — though how those terms line up on the calendar against Kohl's own presidency above isn't established anywhere in this wiki's sources; none of these presidency details carry a citable public source, unlike the rest of this section.",
 				),
 			),
 		},
