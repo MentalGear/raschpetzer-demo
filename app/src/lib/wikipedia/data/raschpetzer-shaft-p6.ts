@@ -11,7 +11,7 @@
  * rather than repeating it at length.
  */
 import { base } from '$app/paths'
-import type { Article, Citation, Inline, TextRun } from './types'
+import type { Article, Citation, GalleryItemRef, Inline, TextRun } from './types'
 
 // Local copies of raschpetzer.ts's/mock.ts's tiny inline-run authoring helpers — kept
 // separate (not imported from either) so this module has no circular dependency on them.
@@ -28,6 +28,9 @@ const p = (...runs: Inline): Inline => runs
  *  raschpetzer.ts's `asset()` for the full rationale (works locally, 404s in prod otherwise
  *  without it). */
 const asset = (path: string): string => `${base}${path}`
+/** Build a `srcset` attribute string from `[path, widthDescriptor]` pairs, base-prefixed. */
+const srcsetOf = (entries: [string, string][]): string =>
+	entries.map(([path, w]) => `${asset(path)} ${w}`).join(', ')
 
 // Page locators per raschpetzer-model-digital-3d's data/shafts.json P6 `_prov.notes.loc`
 // ("p.18-19; p.26-27; fig.5-5") / docs/RASCHPETZER_DATA.md's "Shaft notes" and "Gallery &
@@ -67,9 +70,106 @@ const c = {
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=26`,
 	},
+	directionCorrections: {
+		id: 'c-shaft-p6-directions',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 26, fig. 5-19 — direction corrections between P5 and P6)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=26`,
+	},
+	standingUpright: {
+		id: 'c-shaft-p6-standing',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 27, fig. 5-21 — standing upright near P6)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=27`,
+	},
+	oilLampNiches: {
+		id: 'c-shaft-p6-niches',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 27, fig. 5-22 — oil lamp niches between P6 and P7)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=27`,
+	},
+	ironOxideClod: {
+		id: 'c-shaft-p6-clod',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 29, fig. 5-26 — iron-oxide marl clod near the P6 debris cone)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=29`,
+	},
 } satisfies Record<string, Citation>
 
 export const shaftP6Citations = c
+
+/** Four brochure photographs from inside the gallery at and around P6 (fig. 5-19, 5-21,
+ *  5-22, 5-26). Note on provenance: a folder-wide audit of the source `originals/` folder
+ *  found that its plain `FigN-NN.jpg` scans are shuffled relative to the brochure's own
+ *  figure numbering, unlike the separately-reviewed `Fig_N-NN_*`/`JeKo_*`-prefixed scans
+ *  used here — each pairing below was verified by directly comparing the scan's visual
+ *  content against the brochure's own page text, not inferred from the filename. */
+const galleryPhotosP6: GalleryItemRef[] = [
+	{
+		id: 'p6-direction-corrections',
+		alt: 'Interior view of the gallery near P6, showing protrusions in the rock walls where the tunnellers made continuous directional corrections',
+		caption:
+			'Between P5 and P6, several directional corrections were made "along the way" — the brochure’s own caption for this figure is left untranslated in the English edition; this is a plain translation of the German original.',
+		credit: 'Photo Jérôme Konen (brochure fig. 5-19, p. 26 — matched to this scan by visual content, not filename)',
+		tone: 2,
+		ratio: 4368 / 2912,
+		src: asset('/img/raschpetzer/Fig5-19-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig5-19-480w.webp', '480w'],
+			['/img/raschpetzer/Fig5-19-960w.webp', '960w'],
+			['/img/raschpetzer/Fig5-19-1920w.webp', '1920w'],
+		]),
+	},
+	{
+		id: 'p6-standing-upright',
+		alt: 'A caver in orange coveralls stands fully upright in a tall, narrow gallery passage',
+		caption:
+			'The slope increase of the gallery floor after the breakthrough coming from P5 enables standing upright near P6.',
+		credit: 'Photo G. Waringo (brochure fig. 5-21, p. 27 — matched to this scan by visual content, not filename)',
+		tone: 3,
+		ratio: 664 / 1134,
+		src: asset('/img/raschpetzer/Fig5-21-fallback.jpg'),
+		srcset: srcsetOf([['/img/raschpetzer/Fig5-21-480w.webp', '480w']]),
+	},
+	{
+		id: 'p6-oil-lamp-niches',
+		alt: 'Two cavers examine a gallery wall pocked with small rounded niches carved at regular intervals, one caver pointing directly at a niche',
+		caption:
+			'Between P6 and P7, near the increase in slope of the gallery floor, two superimposed rows of oil-lamp niches are clearly visible.',
+		credit: 'G. Waringo / P. Kayser / H. Werner (brochure fig. 5-22, p. 27 — matched to this scan by visual content, not filename)',
+		tone: 4,
+		ratio: 3600 / 2400,
+		src: asset('/img/raschpetzer/Fig5-22-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig5-22-480w.webp', '480w'],
+			['/img/raschpetzer/Fig5-22-960w.webp', '960w'],
+			['/img/raschpetzer/Fig5-22-1920w.webp', '1920w'],
+		]),
+	},
+	{
+		id: 'p6-iron-oxide-clod',
+		alt: 'Extreme close-up of a rock surface streaked with bright orange iron-oxide staining over grey marl',
+		caption:
+			'A marl clod with a high concentration of iron oxide near the debris cone of P6, exactly above the stepped floor — probably originating from a forgotten iron tool that has since rusted away.',
+		credit: 'Photo G. Waringo (brochure fig. 5-26, p. 29 — matched to this scan by visual content, not filename)',
+		tone: 5,
+		ratio: 1920 / 2560,
+		src: asset('/img/raschpetzer/Fig5-26-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig5-26-480w.webp', '480w'],
+			['/img/raschpetzer/Fig5-26-960w.webp', '960w'],
+			['/img/raschpetzer/Fig5-26-1920w.webp', '1920w'],
+		]),
+	},
+]
 
 export const shaftP6Article: Article = {
 	id: 'a-shaft-p6',
@@ -148,6 +248,17 @@ export const shaftP6Article: Article = {
 				),
 			),
 		},
+		{ id: 'h-gallery-photos', type: 'heading', level: 2, text: 'Inside the gallery at P6' },
+		{
+			id: 'p-gallery-photos',
+			type: 'paragraph',
+			runs: p(
+				t(
+					'Photographs taken inside the gallery around P6 document the directional corrections the tunnellers made, the point where the floor gradient lets a visitor stand fully upright, a row of oil-lamp niches cut into the wall, and the iron-oxide-stained clod found near the debris cone described above.',
+				),
+			),
+		},
+		{ id: 'gal-p6-photos', type: 'gallery', items: galleryPhotosP6 },
 		{ id: 'h-stepped-fall', type: 'heading', level: 2, text: 'The stepped fall beneath P6' },
 		{
 			id: 'p-stepped-fall',
@@ -168,7 +279,16 @@ export const shaftP6Article: Article = {
 			),
 		},
 	],
-	citations: [c.context, c.survey, c.debrisCone, c.steppedFall],
+	citations: [
+		c.context,
+		c.survey,
+		c.debrisCone,
+		c.steppedFall,
+		c.directionCorrections,
+		c.standingUpright,
+		c.oilLampNiches,
+		c.ironOxideClod,
+	],
 	revisions: [
 		{
 			id: 'r1',

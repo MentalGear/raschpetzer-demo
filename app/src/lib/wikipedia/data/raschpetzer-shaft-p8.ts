@@ -30,6 +30,9 @@ const p = (...runs: Inline): Inline => runs
  *  raschpetzer.ts's `asset()` for the full rationale (works locally, 404s in prod otherwise
  *  without it). */
 const asset = (path: string): string => `${base}${path}`
+/** Build a `srcset` attribute string from `[path, widthDescriptor]` pairs, base-prefixed. */
+const srcsetOf = (entries: [string, string][]): string =>
+	entries.map(([path, w]) => `${asset(path)} ${w}`).join(', ')
 
 // Page locators per raschpetzer-model-digital-3d's data/shafts.json `_prov.notes.loc` /
 // docs/RASCHPETZER_DATA.md's "Shaft notes" entry for P8 — cross-checked directly against
@@ -62,6 +65,14 @@ const c = {
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=26`,
+	},
+	counterExcavationPhoto: {
+		id: 'c-shaft-p8-p25',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 25, fig. 5-17 — the P7/P8 counter-excavation meeting point)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=25`,
 	},
 	springInflow: {
 		id: 'c-shaft-p8-p28',
@@ -178,6 +189,22 @@ export const shaftP8Article: Article = {
 				t('.'),
 			),
 		},
+		{
+			id: 'fig-counter-excavation',
+			type: 'figure',
+			alt: 'A caver in a red helmet peers through a narrow, tight rock-cut passage lit by a headlamp, at the point where a gallery excavated from both ends meets in the middle',
+			caption:
+				'The meeting point of the counter-excavated gallery section between P7 and P8, where the two teams driving from opposite ends met with an offset of about half a gallery width.',
+			credit: 'Photo Jérôme Konen (brochure fig. 5-17, p. 25 — matched to this scan by visual content; a folder-wide audit found this corpus’s plain `FigN-NN.jpg` source scans are shuffled relative to the brochure’s own figure numbers, unlike the separately-reviewed `JeKo_*`-prefixed scans such as this one)',
+			tone: 2,
+			ratio: 2400 / 3600,
+			src: asset('/img/raschpetzer/Fig5-17-fallback.jpg'),
+			srcset: srcsetOf([
+				['/img/raschpetzer/Fig5-17-480w.webp', '480w'],
+				['/img/raschpetzer/Fig5-17-960w.webp', '960w'],
+				['/img/raschpetzer/Fig5-17-1920w.webp', '1920w'],
+			]),
+		},
 		{ id: 'h-inflow', type: 'heading', level: 2, text: 'The spring inflow' },
 		{
 			id: 'p-inflow',
@@ -218,6 +245,18 @@ export const shaftP8Article: Article = {
 				),
 				t('.'),
 			),
+		},
+		{
+			id: 'fig-oak-beam',
+			type: 'figure',
+			alt: 'A dark, weathered elongated wooden beam fragment with diagonal surface striations, laid against a white background beside a 40-centimetre scale bar',
+			caption:
+				'The oak beam recovered from the backfill near the bottom of P8, showing rope-rubbing marks along its surface.',
+			credit: 'Photo G. Waringo (brochure fig. 5-27, p. 29 — matched to this scan by visual content, not filename)',
+			tone: 4,
+			ratio: 558 / 1098,
+			src: asset('/img/raschpetzer/Fig5-27-fallback.jpg'),
+			srcset: srcsetOf([['/img/raschpetzer/Fig5-27-480w.webp', '480w']]),
 		},
 		{ id: 'h-method', type: 'heading', level: 3, text: 'How tree-ring dating works' },
 		{
@@ -313,6 +352,7 @@ export const shaftP8Article: Article = {
 		c.discovery,
 		c.cleared,
 		c.counterExcavation,
+		c.counterExcavationPhoto,
 		c.springInflow,
 		c.oakBeam,
 		c.dendroOverview,

@@ -47,6 +47,9 @@ const p = (...runs: Inline): Inline => runs
  *  base prefixed by hand, or it 404s under a non-root `BASE_PATH` deploy (works locally where
  *  `base` is `''`, breaks in prod otherwise). */
 const asset = (path: string): string => `${base}${path}`
+/** Build a `srcset` attribute string from `[path, widthDescriptor]` pairs, base-prefixed. */
+const srcsetOf = (entries: [string, string][]): string =>
+	entries.map(([path, w]) => `${asset(path)} ${w}`).join(', ')
 
 // Every flow figure below comes from the same published figure — data/hydrology.json's
 // `catchment` array, provenanced to "p.6; fig.2-1" (`_catchmentProv`) in
@@ -78,6 +81,14 @@ const c = {
 		year: 2018,
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=6`,
+	},
+	waterAnalysis: {
+		id: 'c-springs-dh-water-analysis',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 30, fig. 6-1 — comparative water analysis)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=30`,
 	},
 } satisfies Record<string, Citation>
 
@@ -149,6 +160,21 @@ export const springsDauveburHeisdorfArticle: Article = {
 				t('.'),
 			),
 		},
+		{
+			id: 'fig-water-analysis',
+			type: 'figure',
+			alt: 'A German-language table comparing the mineral chemistry of water sampled from the Raschpëtzer qanat at shaft P-4 and from the Dauvebur spring on 27 July 2003, covering electrical conductivity, pH, nitrite, ammonium, and total/carbonate hardness',
+			caption:
+				'Comparative water analysis: the Raschpëtzer qanat (sampled at P-4) runs slightly less mineralised and less hard than the adjacent Dauvebur spring, though the two are chemically close.',
+			credit: 'Staatslaboratorium, samples of 27 July 2003, in Faber, Waringo & Werner, 2018 (brochure fig. 6-1, p. 30 — matched to this scan by visual content; a folder-wide audit found this corpus’s plain `FigN-NN.jpg` source scans are shuffled relative to the brochure’s own figure numbers, so the pairing was verified against the brochure page text rather than trusted from the source filename)',
+			tone: 1,
+			ratio: 1027 / 1059,
+			src: asset('/img/raschpetzer/Fig6-01-fallback.jpg'),
+			srcset: srcsetOf([
+				['/img/raschpetzer/Fig6-01-480w.webp', '480w'],
+				['/img/raschpetzer/Fig6-01-960w.webp', '960w'],
+			]),
+		},
 		{ id: 'h-heisdorf', type: 'heading', level: 2, text: 'Heisdorf spring' },
 		{
 			id: 'p-heisdorf',
@@ -183,7 +209,7 @@ export const springsDauveburHeisdorfArticle: Article = {
 			),
 		},
 	],
-	citations: [c.catchmentFig, c.dauveburFig, c.heisdorfFig],
+	citations: [c.catchmentFig, c.dauveburFig, c.heisdorfFig, c.waterAnalysis],
 	revisions: [
 		{
 			id: 'r1',
