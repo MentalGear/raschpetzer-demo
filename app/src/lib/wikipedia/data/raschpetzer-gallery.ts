@@ -95,6 +95,22 @@ const c = {
 		authors: 'raschpetzer-model-digital-3d project',
 		publisher: 'Companion GIS/3D model dataset (data/gallery.json)',
 	},
+	moreGeology: {
+		id: 'c-gallery-more-1',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (ch. 3, hydrogeological and stratigraphic cross-sections along the shaft line)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=7`,
+	},
+	morePhotos: {
+		id: 'c-gallery-more-2',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (ch. 3, excavation photographs of a shaft head and the gallery interior)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=8`,
+	},
 } satisfies Record<string, Citation>
 
 export const galleryCitations = c
@@ -248,6 +264,75 @@ export const galleryArticle: Article = {
 				),
 			),
 		},
+		{ id: 'h-more-views', type: 'heading', level: 2, text: 'Further views' },
+		{
+			id: 'p-more-views',
+			type: 'paragraph',
+			runs: p(
+				cite(
+					'Hydrogeological and stratigraphic cross-sections along the shaft line place the gallery in the same host-rock succession summarized above',
+					'c-gallery-more-1',
+				),
+				cite(
+					', and excavation photographs of an opened shaft head and the gallery interior document the stone-lined channel firsthand.',
+					'c-gallery-more-2',
+				),
+			),
+		},
+		{
+			id: 'gallery-more-views',
+			type: 'gallery',
+			items: [
+				{
+					id: 'gi-shaft-profile',
+					alt: 'Hydrogeological cross-section running west to east through shafts P-1 to P9, showing groundwater flowing through the Luxembourg sandstone above the marl and limestone that the gallery is cut into',
+					caption:
+						'West–east profile along the full shaft line, P-1 to P9: groundwater moving through the sandstone above, the qanat channel carrying the collected water west toward the Alzette valley below.',
+					credit: 'Faber, Waringo & Werner, 2018',
+					tone: 1,
+					ratio: 2365 / 1385,
+					src: asset('/img/raschpetzer/Fig3-02-fallback.jpg'),
+					srcset: srcsetOf([
+						['/img/raschpetzer/Fig3-02-480w.webp', '480w'],
+						['/img/raschpetzer/Fig3-02-960w.webp', '960w'],
+						['/img/raschpetzer/Fig3-02-1920w.webp', '1920w'],
+					]),
+					sizes: '(min-width: 768px) 640px, 100vw',
+				},
+				{
+					id: 'gi-strata-detail',
+					alt: 'Detailed north–south geological cross-section beneath shafts P4 and P5, showing Luxembourg sandstone thinning with depth into marl-and-limestone, over red mudstone and dolomitic marl',
+					caption:
+						'Detailed section through shafts P4 and P5: the sandstone thins with depth into the marl-and-limestone that hosts the gallery here, over red mudstone and dolomitic marl.',
+					credit: 'Faber, Waringo & Werner, 2018',
+					tone: 4,
+					ratio: 1983 / 1524,
+					src: asset('/img/raschpetzer/Fig3-03-fallback.jpg'),
+					srcset: srcsetOf([
+						['/img/raschpetzer/Fig3-03-480w.webp', '480w'],
+						['/img/raschpetzer/Fig3-03-960w.webp', '960w'],
+						['/img/raschpetzer/Fig3-03-1920w.webp', '1920w'],
+					]),
+					sizes: '(min-width: 768px) 640px, 100vw',
+				},
+				{
+					id: 'gi-gallery-photos',
+					alt: 'Two photographs: (a) an excavated pit exposing a shaft head with worked stone at the surface; (b) the interior of the gallery, a narrow rock-cut passage with the stone-lined water channel at the floor',
+					caption:
+						'(a) A shaft head exposed by excavation; (b) inside the gallery, the passage narrows toward the stone-lined channel let into the floor.',
+					credit: 'Faber, Waringo & Werner, 2018',
+					tone: 5,
+					ratio: 2404 / 1663,
+					src: asset('/img/raschpetzer/Fig3-04-fallback.jpg'),
+					srcset: srcsetOf([
+						['/img/raschpetzer/Fig3-04-480w.webp', '480w'],
+						['/img/raschpetzer/Fig3-04-960w.webp', '960w'],
+						['/img/raschpetzer/Fig3-04-1920w.webp', '1920w'],
+					]),
+					sizes: '(min-width: 768px) 640px, 100vw',
+				},
+			],
+		},
 	],
 	citations: [
 		c.gradient,
@@ -257,6 +342,8 @@ export const galleryArticle: Article = {
 		c.hydrology,
 		c.auxiliary,
 		c.surveyOutlet,
+		c.moreGeology,
+		c.morePhotos,
 	],
 	revisions: [
 		{

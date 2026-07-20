@@ -11,7 +11,7 @@
  * fields on that record.
  */
 import { base } from '$app/paths'
-import type { Article, Citation, Entity, Inline, TextRun } from './types'
+import type { Article, Citation, Entity, GalleryItemRef, Inline, TextRun } from './types'
 
 // Local copies of mock.ts's tiny inline-run authoring helpers — kept separate (not
 // imported from ./mock) so this module has no circular dependency on it; mock.ts is the
@@ -26,10 +26,14 @@ const cite = (text: string, id: string): TextRun => ({ text, marks: { cite: id }
 const p = (...runs: Inline): Inline => runs
 
 /** Static-asset paths aren't rewritten by SvelteKit's router the way `href`/`goto`
- *  targets are (see `$lib/paths`'s `href`) — a citation `url` literal needs the GitHub
- *  Pages project-subpath base prefixed by hand, or it 404s under a non-root `BASE_PATH`
- *  deploy (works locally where `base` is `''`, breaks in prod otherwise). */
+ *  targets are (see `$lib/paths`'s `href`) — a citation `url`/`<img src>` literal needs
+ *  the GitHub Pages project-subpath base prefixed by hand, or it 404s under a non-root
+ *  `BASE_PATH` deploy (works locally where `base` is `''`, breaks in prod otherwise). */
 const asset = (path: string): string => `${base}${path}`
+/** Build a `srcset` attribute string from `[path, widthDescriptor]` pairs, base-prefixed
+ *  (mirrors raschpetzer.ts's helper of the same name). */
+const srcsetOf = (entries: [string, string][]): string =>
+	entries.map(([path, w]) => `${asset(path)} ${w}`).join(', ')
 
 // Page locators per data/sources.json's `_prov` map / docs/RASCHPETZER_DATA.md in the
 // raschpetzer-model-digital-3d repo — kept as plain page/#page anchors (not a search/
@@ -70,9 +74,100 @@ const c = {
 		publisher: 'Wikipedia',
 		url: 'https://en.wikipedia.org/wiki/Alzette',
 	},
+	// Sources for the terrain/geography gallery below — reuses the brochure PDF anchor
+	// pattern above for the Fig2-* print figure, and the raschpetzer-model-digital-3d
+	// repo's own basemap provenance (data/lidar/README.md, data/ortho.json,
+	// scripts/bake-basemaps.mjs, index.html's on-screen attribution strings) for the
+	// three geoportail.lu-derived terrain drapes.
+	brochureSiteProfile: {
+		id: 'c-walferdange-more-1',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (p. 6, ch. 2 site profile — shaft line, catchment terrain and excavation periods)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=6`,
+	},
+	actLidar: {
+		id: 'c-walferdange-more-2',
+		title: 'Luxembourg LiDAR 2019 — Modèle numérique de terrain (MNT), 0.5 m bare-earth DTM',
+		authors: 'Administration du cadastre et de la topographie (ACT)',
+		year: 2019,
+		publisher: 'geoportail.lu (Luxembourg open data)',
+		url: 'https://data.public.lu/en/datasets/lidar-2019-modele-numerique-de-terrain-mnt/',
+	},
+	actTopomap: {
+		id: 'c-walferdange-more-3',
+		title: 'Topographic base map (geoportail.lu "topomap" WMS layer)',
+		authors: 'Administration du cadastre et de la topographie (ACT)',
+		publisher: 'geoportail.lu (Luxembourg open data)',
+		url: 'https://map.geoportail.lu/',
+	},
+	actOrtho: {
+		id: 'c-walferdange-more-4',
+		title: 'Orthophoto officielle du Grand-Duché de Luxembourg, édition 2019',
+		authors: 'Administration du cadastre et de la topographie (ACT)',
+		year: 2019,
+		publisher: 'geoportail.lu (Luxembourg open data, CC0 1.0)',
+		url: 'https://data.public.lu/en/datasets/orthophoto-officielle-du-grand-duche-de-luxembourg-edition-2019/',
+	},
 } satisfies Record<string, Citation>
 
 export const walferdangeCitations = c
+
+/** Terrain/geography gallery for the commune context: the brochure's chapter-2 site
+ *  profile plus three geoportail.lu basemap drapes from the companion
+ *  raschpetzer-model-digital-3d repo (assets/hillshade|topomap|ortho-walferdange.jpg) —
+ *  no pre-generated responsive variants exist for those three, so they use a single
+ *  `src` (see raschpetzer.ts's Fig1-01/Fig3-01 for the srcset pattern used for the
+ *  brochure figure below, which DOES have pre-generated `responsive/Fig2-01-*` sizes). */
+const terrainGalleryItems: GalleryItemRef[] = [
+	{
+		id: 'terrain-shaftline-profile',
+		alt: "Terrain profile running west to east from the Alzette hillside across the Pëtschend plateau to the Haedchen depression, with the Raschpëtzer qanat's shaft line (P-7A through P9) marked and the 1913, 1986–1987 and 1992–2000 excavation periods labelled",
+		caption:
+			"A west–east terrain profile of the qanat's route: from the Alzette hillside, up onto the Pëtschend plateau, and down again into the Haedchen depression — the same landscape named throughout this article.",
+		credit: 'Faber, Waringo & Werner, 2018',
+		tone: 1,
+		ratio: 2528 / 853,
+		src: asset('/img/raschpetzer/Fig2-01-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig2-01-480w.webp', '480w'],
+			['/img/raschpetzer/Fig2-01-960w.webp', '960w'],
+			['/img/raschpetzer/Fig2-01-1920w.webp', '1920w'],
+		]),
+		sizes: '(min-width: 768px) 640px, 100vw',
+	},
+	{
+		id: 'terrain-hillshade',
+		alt: 'Colour hillshade rendering of the ACT LiDAR 2019 bare-earth terrain model over Helmsange forest, showing the Pëtschend plateau rising above the Alzette valley floor to its west',
+		caption:
+			'LiDAR hillshade of the Helmsange forest and Pëtschend plateau, the terrain the qanat is cut into.',
+		credit: 'ACT LiDAR 2019 (0.5 m DTM) · geoportail.lu',
+		tone: 2,
+		ratio: 4096 / 2373,
+		src: asset('/img/raschpetzer/hillshade-walferdange.jpg'),
+	},
+	{
+		id: 'terrain-topomap',
+		alt: 'Topographic map of the forest above Helmsange, Walferdange, with contour lines and the Haedchen ponds labelled within the wooded Pëtschend plateau',
+		caption:
+			"Topographic map of the Helmsange forest, with the Haedchen ponds — the qanat's marshy catchment — labelled within the plateau woodland.",
+		credit: 'ACT topographic map · geoportail.lu',
+		tone: 0,
+		ratio: 4096 / 2373,
+		src: asset('/img/raschpetzer/topomap-walferdange.jpg'),
+	},
+	{
+		id: 'terrain-ortho',
+		alt: 'Aerial orthophoto of the forested Pëtschend plateau above Helmsange, Walferdange, with a motorway running along its eastern edge',
+		caption:
+			'2019 aerial orthophoto of the Helmsange forest and Pëtschend plateau, the wooded terrain the Raschpëtzer qanat runs beneath.',
+		credit: 'ACT orthophoto, 2019 edition · geoportail.lu',
+		tone: 3,
+		ratio: 4096 / 2373,
+		src: asset('/img/raschpetzer/ortho-walferdange.jpg'),
+	},
+]
 
 export const walferdangeArticle: Article = {
 	id: 'a-walferdange',
@@ -166,6 +261,8 @@ export const walferdangeArticle: Article = {
 				),
 			),
 		},
+		{ id: 'h-terrain', type: 'heading', level: 2, text: 'Terrain and landscape' },
+		{ id: 'gal-terrain', type: 'gallery', items: terrainGalleryItems },
 	],
 	citations: [
 		c.brochureTopography,
@@ -173,6 +270,10 @@ export const walferdangeArticle: Article = {
 		c.wikipediaWalferdange,
 		c.wikipediaHelmsange,
 		c.wikipediaAlzette,
+		c.brochureSiteProfile,
+		c.actLidar,
+		c.actTopomap,
+		c.actOrtho,
 	],
 	revisions: [
 		{
