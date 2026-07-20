@@ -10,7 +10,8 @@
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
 		"test": "bun run test:unit --run",
-		"test:e2e": "playwright test"
+		"test:e2e": "playwright test",
+		"check:static": "node scripts/check-static-site.mjs"
 	},
 	"dependencies": {
 		"@kit/core": "workspace:*",

@@ -116,11 +116,18 @@ export const qanatArticle: Article = {
 			type: 'paragraph',
 			runs: p(
 				cite(
-					'The technique also reached the Roman world: Roman-era qanats are documented from Jordan (the roughly 94 km Gadara Aqueduct) to Italy (the Tunnels of Claudius) and, more sparsely, at sites in Greece, Sicily, and — as the Raschpëtzer — Luxembourg.',
+					'The technique also reached the Roman world: Roman-era qanats are documented from Jordan (the roughly 94 km Gadara Aqueduct) to Italy (the Tunnels of Claudius) and, more sparsely, as far as Luxembourg — the Raschpëtzer itself.',
 					'c-qanat-wikipedia',
 				),
 				t(
-					' Compared with its heartland in the Middle East and Central Asia, this Roman-period extension of the technology into the northwestern provinces of the Empire is comparatively rare and thinly documented.',
+					' Compared with its heartland in the Middle East and Central Asia, this Roman-period extension of the technology into the northwestern provinces of the Empire is comparatively rare and thinly documented — the technique also appears elsewhere in the Mediterranean at other periods, such as ',
+				),
+				cite(
+					"Samos's pre-Roman 6th-century-BC Tunnel of Eupalinos and Palermo's Arab-period (9th–11th-century) qanat system",
+					'c-qanat-wikipedia',
+				),
+				t(
+					', but those predate or postdate this Roman-era thread rather than belonging to it.',
 				),
 			),
 		},

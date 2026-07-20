@@ -59,7 +59,7 @@ export const mnhaArticle: Article = {
 				t('Nationalmusée um Fëschmaart'),
 				cite(
 					', occupies the former Collart-de Scherff mansion on the Marché-aux-Poissons in the old town (Ville Haute) of Luxembourg City.',
-					'c-mnha-wikipedia',
+					'c-mnha-about',
 				),
 			),
 		},
@@ -74,7 +74,7 @@ export const mnhaArticle: Article = {
 				),
 				cite(
 					' The state acquired the Collart-de Scherff mansion in 1922 to house a museum, and the collections reopened to the public in 1946 as the Musées de l’État ("State Museums") after the wartime occupation.',
-					'c-mnha-wikipedia',
+					'c-mnha-about',
 				),
 			),
 		},

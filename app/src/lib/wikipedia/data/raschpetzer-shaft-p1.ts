@@ -134,7 +134,7 @@ export const shaftP1Article: Article = {
 					'c-shaft-p1-p11',
 				),
 				t(
-					'. Today its head is capped with a metal lid, one of the ten excavated shafts accessible at the surface.',
+					'. Today its head is capped with a metal lid, a modern surface cover shared by several of the excavated shafts along the route.',
 				),
 			),
 		},

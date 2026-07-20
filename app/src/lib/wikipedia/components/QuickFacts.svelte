@@ -66,7 +66,13 @@
 	     Show-more affordances stay at their fixed utility sizes on purpose — chrome, not the
 	     reading content the scale preference is for. -->
 	<dl class="flex flex-col gap-3" style="font-size: calc(0.875rem * var(--wiki-scale, 1))">
-		{#each fields as field, idx (field.label)}
+		<!-- Keyed by position, not `field.label`: an infobox describing more than one entity on
+		     one page (e.g. a companion two-shaft article) can otherwise repeat a label like
+		     "Role", which crashed with a real Svelte each_key_duplicate error once already.
+		     Fields are positionally stable here (no reorder/filter animation relies on label
+		     identity), so index-keying loses nothing and removes the whole bug class instead of
+		     relying on every caller remembering to disambiguate labels by hand. -->
+		{#each fields as field, idx (idx)}
 			<div
 				class={cn(
 					'flex justify-between gap-3',

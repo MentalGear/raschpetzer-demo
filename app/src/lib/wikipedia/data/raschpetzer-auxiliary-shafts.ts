@@ -249,7 +249,7 @@ export const auxiliaryShaftsArticle: Article = {
 					'c-aux-shafts-p7a',
 				),
 				t(
-					' — unlike the ten main-line shafts that remain accessible at the surface under modern metal lids. That makes P-7A, and the auxiliary branch it belongs to, a part of the Raschpëtzer that was documented in detail during excavation but was deliberately left non-visitable afterward, in contrast to the ',
+					' — unlike the main-line shafts that remain accessible at the surface under modern metal lids. That makes P-7A, and the auxiliary branch it belongs to, a part of the Raschpëtzer that was documented in detail during excavation but was deliberately left non-visitable afterward, in contrast to the ',
 				),
 				link('main qanat', 'raschpetzer-qanat'),
 				t("'s surface-accessible shafts."),

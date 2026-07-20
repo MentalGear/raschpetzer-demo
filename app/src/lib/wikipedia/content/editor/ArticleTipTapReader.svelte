@@ -88,7 +88,11 @@
 	lang={article.locale}
 	class={cn(
 		'tiptap-body min-h-[40vh] max-w-none leading-7',
-		'[&_a]:text-primary [&_a]:underline [&_a]:decoration-primary/40 [&_a]:underline-offset-2',
+		// A faint, thin underline still satisfies WCAG 1.4.1 (distinguishable by more than
+		// colour alone) without overwhelming prose dense with wikilinks — reported live as
+		// "unreadable" at decoration-primary/40; dialed back to /25. Redlinks keep their own
+		// dotted-destructive treatment below, which stays visually distinct at any opacity.
+		'[&_a]:text-primary [&_a]:underline [&_a]:decoration-primary/25 [&_a]:underline-offset-2',
 		'[&_blockquote]:my-4 [&_blockquote]:border-l-4 [&_blockquote]:border-primary/40 [&_blockquote]:pl-4 [&_blockquote]:text-lg [&_blockquote]:italic',
 		'[&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:scroll-mt-40 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:tracking-tight',
 		'[&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:scroll-mt-40 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:tracking-tight',

@@ -114,6 +114,14 @@ function figureToGallery(fig: FigureBlock, id: string): PageGalleryBlock {
 		...(fig.caption ? { caption: fig.caption } : {}),
 		...(fig.credit ? { source: fig.credit } : {}),
 	}
+	// `ratio` → synthesized `width`/`height`, same trick as `galleryBlockToGallery` below
+	// (see its doc comment for the full rationale) — closes the gap that comment flagged
+	// as "deferred scope (ADR-001)" and untested-by-fixture, now that a real single-figure
+	// block (raschpetzer.ts's `fig-catchment`) authors a `ratio` and exercises it.
+	if (fig.ratio) {
+		item.height = 1200
+		item.width = Math.round(fig.ratio * 1200)
+	}
 	return { id, type: 'gallery_block', items: [item] }
 }
 

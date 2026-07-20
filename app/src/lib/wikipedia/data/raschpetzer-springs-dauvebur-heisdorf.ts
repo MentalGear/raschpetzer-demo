@@ -143,7 +143,7 @@ export const springsDauveburHeisdorfArticle: Article = {
 				t(' qanat is cut into, and runs at '),
 				cite('roughly 20 cubic metres a day', 'c-springs-dh-dauvebur'),
 				t(
-					' — the smallest flow of any spring named in the catchment figure, and well under a ninth of the qanat’s own average discharge. It is also, hydrologically, a separate outflow rather than a source the qanat taps: groundwater at Dauvebur escapes along one of the fault zones bounding the Pëtschend horst, outside the qanat’s own catchment area, rather than draining toward the shaft line the way water collecting on the sandstone/marl interface does. For the fault geometry behind that, see ',
+					' — the smallest flow of any spring named in the catchment figure, and about a ninth of the qanat’s own average discharge. It is also, hydrologically, a separate outflow rather than a source the qanat taps: groundwater at Dauvebur escapes along one of the fault zones bounding the Pëtschend horst, outside the qanat’s own catchment area, rather than draining toward the shaft line the way water collecting on the sandstone/marl interface does. For the fault geometry behind that, see ',
 				),
 				link('Geology and Hydrology of the Pëtschend', 'raschpetzer-geology'),
 				t('.'),
