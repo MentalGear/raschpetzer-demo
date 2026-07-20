@@ -103,6 +103,22 @@ const c = {
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=8`,
 	},
+	brochureVisitorGallery: {
+		id: 'c-raschpetzer-visitor-gallery',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (pp. 31, 33–34, the visitor route and interpretive gallery)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=31`,
+	},
+	brochureOtherQanats: {
+		id: 'c-raschpetzer-other-qanats',
+		title: 'The Raschpëtzer — A Roman Underground Water Supply System (pp. 35–36, other Luxembourg qanats)',
+		authors: 'Faber, Sonja; Waringo, Guy; Werner, Henri',
+		year: 2018,
+		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
+		url: `${BROCHURE_PDF}#page=35`,
+	},
 } satisfies Record<string, Citation>
 
 export const raschpetzerCitations = c
@@ -130,6 +146,96 @@ const findsGalleryItems: GalleryItemRef[] = [
 		tone: 4,
 		ratio: 1920 / 1280,
 		src: asset('/img/raschpetzer/b-shovel-P9-FOTO-Tom-Lucas-Ben-Muller-MNHA-2022-fallback.jpg'),
+	},
+]
+
+/** Three brochure photographs of the present-day visitor route (fig. 6-5, 6-10, 6-13) — a
+ *  contour-line location plan, the visitor's-gallery entrance, and its interpretive panels.
+ *  Note on provenance: unlike most of this corpus, these three source scans' OWN filenames
+ *  (in the `originals/` source folder) do NOT match their brochure figure numbers — a
+ *  folder-wide audit found the plain `FigN-NN.jpg` scans are shuffled relative to the
+ *  brochure's own numbering, unlike the separately-reviewed `Fig_N-NN_*`/`JeKo_*` scans.
+ *  Each pairing below was verified by directly comparing the scan's visual content against
+ *  the brochure's own page text/captions, not inferred from the filename — see each item's
+ *  `credit` for the specific brochure page. */
+const visitingGalleryItems: GalleryItemRef[] = [
+	{
+		id: 'visiting-location-plan',
+		alt: 'Contour-line location plan of the qanat system across the Pëtschend plateau and Haedchen depression, showing shafts P-1 through P9, the postulated dry-channel shafts P-5A and P-7A, the visitor’s gallery, and the Dauvebur spring',
+		caption:
+			'A contour-line location plan of the qanat system: shafts P-1 to P9 across the Pëtschend plateau and Haedchen depression, plus the postulated dry-channel shafts P-5A and P-7A near the Dauvebur spring.',
+		credit: 'P. Kayser / IST Students / H. Werner, 2018 (brochure fig. 6-5, p. 31 — matched to this scan by visual content; the source folder’s own filename for this scan does not indicate its brochure figure number)',
+		tone: 1,
+		ratio: 2837 / 1176,
+		src: asset('/img/raschpetzer/Fig6-05-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig6-05-480w.webp', '480w'],
+			['/img/raschpetzer/Fig6-05-960w.webp', '960w'],
+			['/img/raschpetzer/Fig6-05-1920w.webp', '1920w'],
+		]),
+	},
+	{
+		id: 'visiting-gallery-entrance',
+		alt: 'A locked steel-gated entrance set into a dry-stone-walled cut in a wooded hillside, marking the entry to the qanat’s 17-metre visitor’s gallery',
+		caption: 'Entry of the horizontal, 17-metre-long visitor’s gallery.',
+		credit: 'Faber, Waringo & Werner, 2018 (brochure fig. 6-10, p. 33 — matched by visual content, not filename)',
+		tone: 2,
+		ratio: 1813 / 2348,
+		src: asset('/img/raschpetzer/Fig6-10-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig6-10-480w.webp', '480w'],
+			['/img/raschpetzer/Fig6-10-960w.webp', '960w'],
+		]),
+	},
+	{
+		id: 'visiting-gallery-panels',
+		alt: 'A visitor reads wall-mounted information panels — including a 3D terrain-model diagram labelled "3 dimensionales Geländemodell" — inside the qanat’s concrete-lined visitor’s gallery',
+		caption:
+			'Drawings and information panels inside the visitor’s gallery, illustrating the qanat system and its exploration.',
+		credit: 'Faber, Waringo & Werner, 2018 (brochure fig. 6-13, p. 34 — matched by visual content, not filename)',
+		tone: 2,
+		ratio: 1974 / 2524,
+		src: asset('/img/raschpetzer/Fig6-13-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig6-13-480w.webp', '480w'],
+			['/img/raschpetzer/Fig6-13-960w.webp', '960w'],
+			['/img/raschpetzer/Fig6-13-1920w.webp', '1920w'],
+		]),
+	},
+]
+
+/** Two brochure photographs of other, largely unexplored Luxembourg qanats (fig. 7-2, 7-3) —
+ *  see `visitingGalleryItems`'s doc comment above for the same filename-vs-brochure-numbering
+ *  caveat; both pairings below were verified by visual content against the brochure text. */
+const otherQanatsGalleryItems: GalleryItemRef[] = [
+	{
+		id: 'noertzange-qanat',
+		alt: 'A yellow excavator dismantles a brick-and-marl shaft structure during motorway earthworks, exposing the horizontally cut qanat of Noertzange',
+		caption:
+			'The qanat of Noertzange, cut horizontally at channel level during 1990 motorway earthworks, shortly before it was unavoidably destroyed by the roadworks.',
+		credit: 'CNRA Luxembourg / André Schoellen / H. Werner, 2018 (brochure fig. 7-2, p. 35 — matched by visual content, not filename)',
+		tone: 3,
+		ratio: 1920 / 2560,
+		src: asset('/img/raschpetzer/Fig7-02-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig7-02-480w.webp', '480w'],
+			['/img/raschpetzer/Fig7-02-960w.webp', '960w'],
+			['/img/raschpetzer/Fig7-02-1920w.webp', '1920w'],
+		]),
+	},
+	{
+		id: 'emerange-qanat',
+		alt: 'A presentation slide showing an aerial photograph of arable fields with faint parallel soil marks tracing a Y-shaped buried structure, alongside a location map labelled "Émerange qanat"',
+		caption:
+			'The Y-shaped qanat of Émerange, discovered in 1995 during planning of motorway A13, visible here as soil marks in an aerial photograph.',
+		credit: 'CNRA Luxembourg / André Schoellen, 2018 (brochure fig. 7-3, p. 36 — matched by visual content, not filename)',
+		tone: 3,
+		ratio: 1590 / 1082,
+		src: asset('/img/raschpetzer/Fig7-03-fallback.jpg'),
+		srcset: srcsetOf([
+			['/img/raschpetzer/Fig7-03-480w.webp', '480w'],
+			['/img/raschpetzer/Fig7-03-960w.webp', '960w'],
+		]),
 	},
 ]
 
@@ -342,6 +448,34 @@ export const raschpetzer: Article = {
 				),
 			),
 		},
+		{ id: 'gal-visiting', type: 'gallery', items: visitingGalleryItems },
+		{ id: 'h-other-qanats', type: 'heading', level: 2, text: 'Other qanats in Luxembourg' },
+		{
+			id: 'p-other-qanats',
+			type: 'paragraph',
+			runs: p(
+				t('Besides the Raschpëtzer, '),
+				cite(
+					'several largely unexplored qanats have been discovered elsewhere in Luxembourg, mostly in the south of the country',
+					'c-raschpetzer-other-qanats',
+				),
+				t('. A section of the '),
+				b('Noertzange'),
+				t(
+					' qanat was exposed and then unavoidably destroyed during 1990 motorway earthworks',
+				),
+				cite(
+					' — a rare opportunity to cut a qanat channel horizontally and document its construction directly',
+					'c-raschpetzer-other-qanats',
+				),
+				t(', and the Y-shaped '),
+				b('Émerange'),
+				t(
+					' qanat was found in 1995 during planning for motorway A13. Neither has been investigated to the extent of the Raschpëtzer.',
+				),
+			),
+		},
+		{ id: 'gal-other-qanats', type: 'gallery', items: otherQanatsGalleryItems },
 		{ id: 'h-more-views', type: 'heading', level: 2, text: 'Additional views' },
 		{
 			id: 'p-more-views',
@@ -364,6 +498,8 @@ export const raschpetzer: Article = {
 		c.wikipediaEn,
 		c.visitLuxembourg,
 		c.brochureMoreViews,
+		c.brochureVisitorGallery,
+		c.brochureOtherQanats,
 	],
 	revisions: [
 		{
