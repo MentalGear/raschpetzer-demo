@@ -1,4 +1,4 @@
-# Raschpëtzer Brochure Images
+# Raschpëtzer Wiki
 
 ## Structure
 
