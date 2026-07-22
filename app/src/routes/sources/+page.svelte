@@ -7,6 +7,12 @@
 	 * reference entry in its source article — a shared source cited by two articles
 	 * deliberately produces two rows (see `data/sources.ts`'s own doc comment for why no
 	 * cross-article dedup is attempted).
+	 *
+	 * Filters as a "Filters" button + collapsible panel of filter ROWS, not always-visible
+	 * checkbox groups — `facetStyle="rows"` + `toolbarInCollapsible`, the same combination
+	 * DataTable's own "Facets as filter rows, in a collapsible" story demonstrates: each
+	 * facet becomes a `[field] [value] [remove]` row (`FilterRows`) inside a `Collapsible`
+	 * triggered by a labelled Button + active-filter-count Badge, collapsed by default.
 	 */
 	import { goto } from '$app/navigation'
 	import { wikiStore } from '$lib/wikipedia/state/wikiStore.svelte'
@@ -49,6 +55,8 @@
 			getRowId={(s) => s.id}
 			ariaLabel="Sources"
 			searchPlaceholder="Search sources by title, author, or publisher…"
+			facetStyle="rows"
+			toolbarInCollapsible
 		>
 			{#snippet row(s: SourceItem)}
 				<div
