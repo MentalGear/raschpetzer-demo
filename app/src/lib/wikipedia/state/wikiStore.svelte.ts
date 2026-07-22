@@ -9,6 +9,7 @@ import { articles as ALL, categories as CATS, entities as ENTITIES } from '../da
 import type { Article, Category, Entity, Locale, Mark } from '../data/types'
 import { collectMedia, type MediaItem } from '../data/media'
 import { groupMedia, type Section } from '../layout/mediaGrouping'
+import { collectSources, type SourceEntry } from '../data/sources'
 
 /**
  * Collect internal-link target slugs referenced anywhere in an article's blocks.
@@ -162,6 +163,10 @@ class WikiStore {
 
 	/** `media` grouped into category sections for the Media page's sticky headers. */
 	mediaSections = $derived.by<Section[]>(() => groupMedia(this.media, this.categories))
+
+	/** Every citation across the source articles, deduped to one row per underlying
+	 *  source — the Sources page's data source. */
+	sources = $derived.by<SourceEntry[]>(() => collectSources(this.sourceArticles))
 
 	/** Token-AND search over title + summary + category labels, in browse order. */
 	search(query: string): Article[] {

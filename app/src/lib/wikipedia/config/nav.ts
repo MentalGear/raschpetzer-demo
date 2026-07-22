@@ -7,7 +7,17 @@
  * the first item (cross-cutting sidebar best practice).
  */
 import type { NavConfig } from '@kit/ui'
-import { Search, BookOpen, LayoutGrid, Shuffle, History, Tag, Image, Info } from '@lucide/svelte'
+import {
+	Search,
+	BookOpen,
+	LayoutGrid,
+	Shuffle,
+	History,
+	Tag,
+	Image,
+	Info,
+	Library,
+} from '@lucide/svelte'
 import type { Category } from '../data/types'
 
 export function wikiNav(categories: Category[]): NavConfig {
@@ -49,6 +59,12 @@ export function wikiNav(categories: Category[]): NavConfig {
 					href: '/media',
 					label: 'Media',
 					icon: Image,
+				},
+				{
+					id: '/sources',
+					href: '/sources',
+					label: 'Sources',
+					icon: Library,
 				},
 				// command item (no href): dispatched via the command registry.
 				{ id: 'app.random', label: 'Random article', icon: Shuffle, command: 'app.random' },

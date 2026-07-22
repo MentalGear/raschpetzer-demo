@@ -48,16 +48,19 @@ import { postulatedShaftsArticle } from './raschpetzer-postulated-shafts'
 import { shaftPMinus5Article } from './raschpetzer-shaft-p-5'
 import { shaftPMinus1P0Article } from './raschpetzer-shaft-p-1-p0'
 import { shaftP4P7Article } from './raschpetzer-shaft-p4-p7'
+import { institutionalInterestArticle } from './raschpetzer-institutional-interest'
 
 /** Fixed "now" so relative dates + buckets are reproducible. Must stay on/after the corpus's
- *  latest `updatedAt` (currently 2026-07-20, uniformly, across every raschpetzer-*.ts article)
- *  — a `REF_NOW` earlier than an article's `updatedAt` makes `editedLabel` (below) compute a
- *  POSITIVE day-diff, and `Intl.RelativeTimeFormat` renders that as a future-tense "in N days"
- *  for something that's already been edited (found live: "Edited in 49 days" on every article,
- *  from a stale `REF_NOW` left behind after this fork's content-authoring rounds moved the
- *  whole corpus's `updatedAt` forward). Set to exactly the corpus's `updatedAt` so every
- *  article/media item genuinely reads "Edited today", not an arbitrary later padding date. */
-export const REF_NOW = Date.UTC(2026, 6, 20)
+ *  latest `updatedAt` (currently 2026-07-22, the institutional-interest placeholder page's
+ *  date — every other raschpetzer-*.ts article is 2026-07-20) — a `REF_NOW` earlier than an
+ *  article's `updatedAt` makes `editedLabel` (below) compute a POSITIVE day-diff, and
+ *  `Intl.RelativeTimeFormat` renders that as a future-tense "in N days" for something that's
+ *  already been edited (found live once already: "Edited in 49 days" on every article, from a
+ *  stale `REF_NOW` left behind after a content-authoring round moved the corpus's `updatedAt`
+ *  forward). Set to exactly the corpus's latest `updatedAt` so every article/media item
+ *  genuinely reads "Edited today"/"Edited N days ago", never an arbitrary later padding date —
+ *  bump this again alongside any future round that adds/touches an article with a newer date. */
+export const REF_NOW = Date.UTC(2026, 6, 22)
 
 // ── categories ──────────────────────────────────────────────────────────────────
 export const categories: Category[] = [
@@ -117,6 +120,7 @@ export const articles: Article[] = [
 	shaftPMinus5Article,
 	shaftPMinus1P0Article,
 	shaftP4P7Article,
+	institutionalInterestArticle,
 ]
 
 /**
