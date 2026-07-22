@@ -16,7 +16,7 @@ import {
 	Tag,
 	Image,
 	Info,
-	Library,
+	BookMarked,
 } from '@lucide/svelte'
 import type { Category } from '../data/types'
 
@@ -64,7 +64,7 @@ export function wikiNav(categories: Category[]): NavConfig {
 					id: '/sources',
 					href: '/sources',
 					label: 'Sources',
-					icon: Library,
+					icon: BookMarked,
 				},
 				// command item (no href): dispatched via the command registry.
 				{ id: 'app.random', label: 'Random article', icon: Shuffle, command: 'app.random' },

@@ -1,104 +1,109 @@
 <script lang="ts">
 	/**
-	 * Sources: every citation across the article corpus, deduped to one row per underlying
-	 * source (`wikiStore.sources` — `data/sources.ts`), rendered through the `@kit/ui`
-	 * `DataTable` composite — the same generic list-with-search/sort/facets composite the
-	 * Notes app's `/table` route showcases; this page is a straightforward, single-facet
-	 * consumer of it (search + sort + a "Type" facet), not the full Notes-style
-	 * clickable-header/toolbarWrapper treatment, since a source list has no need for a
-	 * dense multi-column grid layout — each row is one card of bibliographic detail.
+	 * Sources: every citation across the article corpus in one sortable/filterable list —
+	 * reconciled to match the upstream SupraAppKit wikipedia demo's own Sources page
+	 * (`apps/wikipedia/src/routes/sources/+page.svelte`), itself lifted from Notes' DataTable
+	 * reuse. Each row's action button (not the row itself) navigates to that citation's
+	 * reference entry in its source article — a shared source cited by two articles
+	 * deliberately produces two rows (see `data/sources.ts`'s own doc comment for why no
+	 * cross-article dedup is attempted).
 	 */
-	import { href } from '$lib/paths'
+	import { goto } from '$app/navigation'
 	import { wikiStore } from '$lib/wikipedia/state/wikiStore.svelte'
-	import { DataTable, type ColumnSpec, type FacetSpec } from '@kit/ui'
-	import type { SourceEntry } from '$lib/wikipedia/data/sources'
+	import { href } from '$lib/paths'
+	import { DataTable } from '@kit/ui'
+	import { Button } from '@kit/ui/shadcn-components/ui/button'
+	import * as Tooltip from '@kit/ui/shadcn-components/ui/tooltip'
+	import { ArrowUpRight, SquareArrowOutUpRight } from '@lucide/svelte'
+	import { sourceColumns, sourceFacets } from '$lib/wikipedia/config/sources-table'
+	import type { SourceItem } from '$lib/wikipedia/data/sources'
 
-	const columns: ColumnSpec<SourceEntry>[] = [
-		{ id: 'title', header: 'Title', accessor: (s) => s.title },
-		{ id: 'authors', header: 'Authors', accessor: (s) => s.authors ?? '' },
-		{ id: 'year', header: 'Year', accessor: (s) => s.year ?? '', filterable: false },
-		{ id: 'publisher', header: 'Publisher', accessor: (s) => s.publisher ?? '' },
-	]
-	const facets: FacetSpec<SourceEntry>[] = [
-		{ id: 'kind', label: 'Type', values: (s) => [s.kind] },
-	]
+	// FIXED width for the actions column (not `auto`) — each row snippet renders its own
+	// independent grid container (DataTable calls `row` once per item, not one shared
+	// <table>), so an `auto`-sized last column computes a DIFFERENT width per row
+	// depending on whether that row has one action button or two: the row with both
+	// "Source" and "Reference" got a wider action column than every other row, visibly
+	// misaligning the "Cited in" column between rows. A fixed width is identical for
+	// every row regardless of how many buttons that particular row renders.
+	const GRID_COLS =
+		'grid-cols-[minmax(0,2fr)_minmax(0,1fr)_60px_minmax(0,1fr)_minmax(0,1fr)_76px]'
+
+	function openReference(s: SourceItem) {
+		goto(href(`/${s.articleSlug}#ref-${s.refIndex}`))
+	}
 </script>
 
 <svelte:head><title>Sources — Raschpëtzer</title></svelte:head>
 
-<div class="sources-page">
-	<div class="header">
-		<h1 class="text-2xl font-bold tracking-tight">Sources</h1>
-		<span class="text-sm text-muted-foreground">{wikiStore.sources.length} sources</span>
-	</div>
-	<div class="table-area">
-		{#snippet row(item: SourceEntry)}
-			<div class="border-b border-border px-1 py-3">
-				<p class="flex flex-wrap items-baseline gap-2 font-medium">
-					{#if item.url}
-						<a
-							href={item.url}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="underline underline-offset-2"
-						>
-							{item.title}
-						</a>
-					{:else}
-						<span>{item.title}</span>
-					{/if}
-					<span class="rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground"
-						>{item.kind}</span
-					>
-				</p>
-				<p class="text-sm text-muted-foreground">
-					{[item.authors, item.year, item.publisher].filter(Boolean).join(' · ') || '—'}
-				</p>
-				<p class="mt-1 text-xs text-muted-foreground">
-					Cited in {item.articles.length}
-					{item.articles.length === 1 ? 'article' : 'articles'}:
-					{#each item.articles as a, i (a.slug)}
-						{#if i > 0}<span>, </span>{/if}<a
-							href={href(`/${a.slug}`)}
-							class="underline underline-offset-2">{a.title}</a
-						>
-					{/each}
-				</p>
-			</div>
-		{/snippet}
+<div class="mx-auto w-full max-w-5xl px-4 py-6 lg:px-8">
+	<h1 class="mb-1 text-2xl font-bold tracking-tight">Sources</h1>
+	<p class="mb-6 text-sm text-muted-foreground">
+		{wikiStore.sources.length} citations across {wikiStore.sourceArticles.length} articles
+	</p>
+
+	<Tooltip.Provider>
 		<DataTable
 			items={wikiStore.sources}
-			{columns}
-			{facets}
-			{row}
+			columns={sourceColumns}
+			facets={sourceFacets}
+			getRowId={(s) => s.id}
 			ariaLabel="Sources"
 			searchPlaceholder="Search sources by title, author, or publisher…"
-			emptyTitle="No sources found"
-			emptyDescription="Try a different search term or clear the active filters."
-		/>
-	</div>
+		>
+			{#snippet row(s: SourceItem)}
+				<div
+					class="grid {GRID_COLS} items-center gap-x-3 border-b border-border px-2 py-2.5 text-sm"
+				>
+					<span class="truncate font-medium">{s.title}</span>
+					<span class="truncate text-muted-foreground">{s.authors ?? '—'}</span>
+					<span class="text-muted-foreground">{s.year ?? '—'}</span>
+					<span class="truncate text-muted-foreground">{s.publisher ?? '—'}</span>
+					<span class="truncate text-muted-foreground">{s.articleTitle}</span>
+					<span class="flex items-center gap-1 justify-self-end">
+						{#if s.url}
+							<Tooltip.Root>
+								<Tooltip.Trigger>
+									{#snippet child({ props })}
+										<Button
+											{...props}
+											variant="outline"
+											size="icon-sm"
+											class="size-7"
+											href={s.url}
+											target="_blank"
+											rel="noopener noreferrer"
+											aria-label="Open external source: {s.title}"
+										>
+											<SquareArrowOutUpRight
+												class="size-3.5"
+												aria-hidden="true"
+											/>
+										</Button>
+									{/snippet}
+								</Tooltip.Trigger>
+								<Tooltip.Content>Open source</Tooltip.Content>
+							</Tooltip.Root>
+						{/if}
+						<Tooltip.Root>
+							<Tooltip.Trigger>
+								{#snippet child({ props })}
+									<Button
+										{...props}
+										variant="secondary"
+										size="icon-sm"
+										class="size-7"
+										aria-label="Go to reference in {s.articleTitle}"
+										onclick={() => openReference(s)}
+									>
+										<ArrowUpRight class="size-3.5" aria-hidden="true" />
+									</Button>
+								{/snippet}
+							</Tooltip.Trigger>
+							<Tooltip.Content>Go to reference</Tooltip.Content>
+						</Tooltip.Root>
+					</span>
+				</div>
+			{/snippet}
+		</DataTable>
+	</Tooltip.Provider>
 </div>
-
-<style>
-	.sources-page {
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-		min-height: 0;
-	}
-	.header {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 0.8rem;
-		padding: 0.9rem;
-		border-bottom: 1px solid var(--border);
-	}
-	.table-area {
-		position: relative;
-		overflow-y: auto;
-		padding: 0.5rem 1rem;
-		flex: 1;
-		min-height: 0;
-	}
-</style>

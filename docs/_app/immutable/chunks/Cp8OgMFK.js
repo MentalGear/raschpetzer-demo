@@ -1,1 +1,0 @@
-import{b as n}from"./WHWTwSh2.js";const r=s=>`${n}${s}`,f=s=>s.slice(n.length)||"/";function h(s){return e=>"href"in e?s(f(e.href)):!1}function i(s){return s.map(e=>({...e,items:e.items.map(a=>"href"in a?{...a,href:r(a.href)}:a)}))}export{r as h,h as m,i as n,f as s};
