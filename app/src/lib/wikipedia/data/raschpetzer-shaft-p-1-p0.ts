@@ -48,17 +48,15 @@ const c = {
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=20`,
 	},
-	/** Not the brochure/model — Werner's 2026 re-measurement of a 1997 field survey plan,
-	 *  proposed as a candidate position fix, not yet adopted into the site's 3D model. Kept
-	 *  cited separately from (and distinct in tone from) the brochure citations above. */
-	wernerCoords1997: {
-		id: 'c-shaft-p-1-p0-werner-1997-coords',
-		title: 'LUREF (Gauss-Luxembourg) coordinates for shafts P-7A, P-5A, P-4, P-1, P0, P1, and P2, re-measured from a 1997 plan',
+	/** The companion 3D model's own established citation for this fix — an unpublished
+	 *  working document, not redistributed here, so no `url` (same pattern as
+	 *  `raschpetzer-gallery.ts`'s `c-gallery-survey-outlet`). */
+	wernerSitSurvey: {
+		id: 'c-shaft-p-1-p0-werner-sit-survey',
+		title: 'Coordonnées Raschpëtzer — surveyed shaft coordinates, LUREF/LTM (EPSG:2169)',
 		authors: 'Werner, Henri',
-		year: 2026,
 		publisher:
-			'Proposed by Henri Werner in an email to the Raschpëtzer research group, 21 July 2026',
-		url: asset('/sources/raschpetzer-werner-1997-coordinates.pdf'),
+			'Companion GIS/3D model dataset (data/shafts.json, docs/DATA_CREDIBILITY.md) — provided directly by Henri Werner, who is not necessarily the original surveying party',
 	},
 } satisfies Record<string, Citation>
 
@@ -130,32 +128,26 @@ export const shaftPMinus1P0Article: Article = {
 			id: 'h-position-proposal',
 			type: 'heading',
 			level: 2,
-			text: 'Position: a proposed cross-check',
+			text: 'Position: resolved via field survey (updated 20 July 2026)',
 		},
 		{
 			id: 'p-position-proposal',
 			type: 'paragraph',
 			runs: p(
 				t(
-					'Like most of the route, neither shaft has a position read from a real survey grid in the 2018 brochure — the site’s 3D model instead plots a provisional, OpenStreetMap-derived coordinate for both. On 21 July 2026, ',
+					'Like most of the route, neither shaft originally had a position read from a real survey grid — the 2018 brochure carries no coordinate grid on any figure, so the site’s 3D model plotted a provisional, OpenStreetMap-derived coordinate for both. Since 20 July 2026, ',
 				),
-				b('Henri Werner'),
 				cite(
-					' proposed a candidate fix in an email to the Raschpëtzer research group: LUREF (Gauss-Luxembourg) coordinates for P-1, P0, and five neighbouring western shafts, re-measured directly from a real 1997 contour-survey plan of the site',
-					'c-shaft-p-1-p0-werner-1997-coords',
-				),
-				t('. '),
-				cite(
-					'The re-measured values for P0 and P1 specifically closely matched an independent set of figures Guy Waringo had supplied the day before',
-					'c-shaft-p-1-p0-werner-1997-coords',
+					'a real field-survey coordinate table for the main-line shafts — provided directly to the companion 3D model by Henri Werner, who sent the files but is not necessarily the original surveying party — has superseded that guess for P-1 and P0, moving each by roughly 2–3 metres',
+					'c-shaft-p-1-p0-werner-sit-survey',
 				),
 				t(
-					' — two people, working from separate figures, arriving at compatible positions is a real cross-check, not a single unverified reading. As with P2 (see its own article), this is a promising candidate for the model’s existing OSM-derived positions, but it remains a hand-measured reading from a scanned plan, not a certified survey, and the model has not yet been updated to incorporate it.',
+					'. Both are marked as approximate surface markings rather than centrepoint surveys in that table, consistent with P-1 being sand-filled and P0 never excavated. A separate re-measurement of the same western shafts, supplied independently around the same time, gives P-1 a position within 0.3 metres of the now-adopted survey figure — a real cross-check corroborating it, not a competing claim.',
 				),
 			),
 		},
 	],
-	citations: [c.construction, c.status, c.wernerCoords1997],
+	citations: [c.construction, c.status, c.wernerSitSurvey],
 	revisions: [
 		{
 			id: 'r1',
@@ -170,10 +162,18 @@ export const shaftPMinus1P0Article: Article = {
 			author: 'user-supplied',
 			ts: Date.UTC(2026, 6, 22),
 			summary:
-				'Added Henri Werner’s proposed 1997-plan LUREF re-measurement, cross-checked against Guy Waringo’s figures for P0/P1',
+				'Added Henri Werner’s separately-supplied 1997-plan LUREF re-measurement, cross-checked against Guy Waringo’s figures for P0/P1',
+			blocks: [],
+		},
+		{
+			id: 'r3',
+			author: 'user-supplied',
+			ts: Date.UTC(2026, 6, 23),
+			summary:
+				'Corrected: the companion 3D model had already resolved P-1/P0’s position on 20 July 2026 via a real field-survey table; also fixed a mistaken ~6 m P-1 discrepancy claim in r2, caused by misreading a handwritten table — the actual figures agree within 0.3 m',
 			blocks: [],
 		},
 	],
-	updatedAt: Date.UTC(2026, 6, 22),
+	updatedAt: Date.UTC(2026, 6, 23),
 	contributors: ['raschpetzer-model-digital-3d SSOT', 'user-supplied'],
 }

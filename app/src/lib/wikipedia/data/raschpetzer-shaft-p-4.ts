@@ -76,6 +76,20 @@ const c = {
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=20`,
 	},
+	/** Not the brochure/model — Henri Werner's own separate re-measurement, from a 1997
+	 *  contour-survey plan he shared by email. Like P-5A/P-7A (see
+	 *  `raschpetzer-auxiliary-shafts.ts`), P-4 is not covered by the companion 3D model's real
+	 *  field-survey table, so this is the only non-OSM candidate data for its position —
+	 *  weaker evidence than a proper survey, not yet adopted anywhere. */
+	wernerCoords1997: {
+		id: 'c-shaft-pminus4-werner-1997-coords',
+		title: 'LUREF (Gauss-Luxembourg) coordinates for shafts P-7A, P-5A, P-4, P-1, P0, P1, and P2, re-measured from a 1997 plan',
+		authors: 'Werner, Henri',
+		year: 2026,
+		publisher:
+			'Shared by Henri Werner in an email to the Raschpëtzer research group, 21 July 2026',
+		url: asset('/sources/raschpetzer-werner-1997-coordinates.pdf'),
+	},
 } satisfies Record<string, Citation>
 
 export const raschpetzerShaftPMinus4Citations = c
@@ -173,8 +187,34 @@ export const shaftPMinus4Article: Article = {
 				),
 			),
 		},
+		{ id: 'h-position', type: 'heading', level: 2, text: 'Position: still unresolved' },
+		{
+			id: 'p-position',
+			type: 'paragraph',
+			runs: p(
+				t('Unlike most of the main-line shafts — see '),
+				link('Shaft P2', 'shaft-p2'),
+				t(
+					', where a real field-survey coordinate table now backs the site’s 3D model — P-4 remains plotted from a provisional OpenStreetMap trace. ',
+				),
+				cite(
+					'The survey table behind that main-line fix does not cover the western shafts at all',
+					'c-shaft-pminus4-werner-1997-coords',
+				),
+				t(
+					', consistent with an email from Guy Waringo (20 July 2026) stating plainly that he has no coordinates of his own for P-4a and several other western features. ',
+				),
+				cite(
+					'A separate re-measurement Henri Werner supplied by email gives a LUREF coordinate for P-4',
+					'c-shaft-pminus4-werner-1997-coords',
+				),
+				t(
+					' — converted to WGS84, this shifts P-4 by only about 2.4 metres from its current plotted position, closer than P-5A or P-7A shift by the same re-measurement. It remains a single hand-measured reading from a scanned plan, not a survey, so it is reported here as a candidate worth checking rather than an adopted correction.',
+				),
+			),
+		},
 	],
-	citations: [c.depth, c.lining, c.diameter, c.dating, c.overflowPointer],
+	citations: [c.depth, c.lining, c.diameter, c.dating, c.overflowPointer, c.wernerCoords1997],
 	revisions: [
 		{
 			id: 'r1',
@@ -184,7 +224,15 @@ export const shaftPMinus4Article: Article = {
 				'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
 			blocks: [],
 		},
+		{
+			id: 'r2',
+			author: 'user-supplied',
+			ts: Date.UTC(2026, 6, 23),
+			summary:
+				'Noted P-4 position as still unresolved (unlike the main-line shafts) and added Henri Werner’s separate re-measurement as the only candidate data for it',
+			blocks: [],
+		},
 	],
-	updatedAt: Date.UTC(2026, 6, 20),
-	contributors: ['raschpetzer-model-digital-3d SSOT'],
+	updatedAt: Date.UTC(2026, 6, 23),
+	contributors: ['raschpetzer-model-digital-3d SSOT', 'user-supplied'],
 }

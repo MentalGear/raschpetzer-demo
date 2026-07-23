@@ -12,12 +12,16 @@
  * — the site's own numbering carries that ambiguity, so it's called out explicitly below
  * rather than left for the reader to trip over.
  *
- * `data/shafts.json`'s `P2.geoConfidence` is `"low"`, per paradata entry `pd-osm-georef` in
- * `docs/RASCHPETZER_DATA.md`: the brochure carries no coordinate grid on any figure, so the
- * model's plotted coordinate for P2 is a provisional OpenStreetMap-derived position that
- * conflicts with the brochure's own documented spacing (see the callout below). That
- * uncertainty is a real, documented property of the source data, not an editorial guess —
- * it is reported here rather than presented as a settled position.
+ * `data/shafts.json`'s `P2` position was originally a low-confidence, OpenStreetMap-derived
+ * guess (per paradata entry `pd-osm-georef`) that conflicted with the brochure's own
+ * documented spacing. As of 20 July 2026 that has been resolved: the companion 3D model's
+ * `pd-werner-sit-survey` paradata entry documents a real field-survey coordinate table for
+ * the main-line shafts, provided directly to that project by Henri Werner (who sent the
+ * files but is not necessarily the original surveying party) and converted to WGS84
+ * (pyproj, EPSG:2169→4326) — see the callout below for the resulting correction. This
+ * article previously described that fix as still "proposed" from a separate, less precise
+ * re-measurement Werner supplied by email; that framing was itself corrected here once the
+ * actual companion-repo state was checked directly, rather than left stale.
  */
 import { base } from '$app/paths'
 import type { Article, Citation, Inline, TextRun } from './types'
@@ -85,27 +89,18 @@ const c = {
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=17`,
 	},
-	/** Not the brochure/model — a 1997 field survey plan, and Werner's 2026 re-measurement
-	 *  of it, both proposed as a candidate fix for the low-confidence flag below. Neither has
-	 *  been adopted into the site's 3D model yet, so both are cited separately from (and kept
-	 *  clearly distinct in tone from) the brochure citations above. */
-	wernerPlan1997: {
-		id: 'c-shaft-p2-werner-1997-plan',
-		title: '1997 contour-survey plan of the western Raschpëtzer shafts (P-7A to P2), annotated "WG 2/97"',
-		authors: 'Waringo, Guy (survey, Feb. 1997)',
-		year: 1997,
-		publisher:
-			'Shared by Henri Werner in an email to the Raschpëtzer research group, 21 July 2026',
-		url: asset('/sources/raschpetzer-werner-1997-plan.pdf'),
-	},
-	wernerCoords1997: {
-		id: 'c-shaft-p2-werner-1997-coords',
-		title: 'LUREF (Gauss-Luxembourg) coordinates for shafts P-7A, P-5A, P-4, P-1, P0, P1, and P2, re-measured from the 1997 plan',
+	/** The companion 3D model's own established citation for this fix (its `pd-werner-sit-
+	 *  survey` paradata entry / `data/sources.json`'s `werner-sit-survey` entry) — an
+	 *  unpublished working document, not redistributed here, so (like the Kohl manuscript
+	 *  citation elsewhere in this corpus) this carries no `url`, matching the no-URL pattern
+	 *  already used for other internal-SSOT-only citations (e.g. `raschpetzer-gallery.ts`'s
+	 *  `c-gallery-survey-outlet`). */
+	wernerSitSurvey: {
+		id: 'c-shaft-p2-werner-sit-survey',
+		title: 'Coordonnées Raschpëtzer — surveyed shaft coordinates, LUREF/LTM (EPSG:2169)',
 		authors: 'Werner, Henri',
-		year: 2026,
 		publisher:
-			'Proposed by Henri Werner in an email to the Raschpëtzer research group, 21 July 2026',
-		url: asset('/sources/raschpetzer-werner-1997-coordinates.pdf'),
+			'Companion GIS/3D model dataset (data/shafts.json, docs/DATA_CREDIBILITY.md) — provided directly by Henri Werner, who is not necessarily the original surveying party',
 	},
 } satisfies Record<string, Citation>
 
@@ -117,7 +112,7 @@ export const shaftP2Article: Article = {
 	locale: 'en',
 	title: 'Shaft P2',
 	summary:
-		"Shaft P2 of the Raschpëtzer qanat sits at the western edge of the Pëtschend plateau, in visual contact with shaft P1 to its west and, across the plateau, shaft P5 to its east — a sightline requirement that also explains its unusually tight spacing to P1. It is still backfilled in its original state, and the coordinate plotted for it in the site's 3D model carries a documented low-confidence flag.",
+		'Shaft P2 of the Raschpëtzer qanat sits at the western edge of the Pëtschend plateau, in visual contact with shaft P1 to its west and, across the plateau, shaft P5 to its east — a sightline requirement that also explains its unusually tight spacing to P1. It is still backfilled in its original state; its plotted position, once a low-confidence OpenStreetMap guess, was resolved by a real field survey in July 2026.',
 	categories: ['archaeology'],
 	blocks: [
 		{
@@ -169,33 +164,18 @@ export const shaftP2Article: Article = {
 		{
 			id: 'callout-georef',
 			type: 'callout',
-			variant: 'warning',
-			title: 'Plotted position: low confidence',
-			runs: p(
-				t(
-					"The 2018 brochure's own figures carry no coordinate grid — its only positional plate is an oblique 3D block model with a scale bar, not a survey plan — so no real-world (WGS84) position for any shaft can be read directly from it. The site's 3D model instead plots a provisional coordinate for P2 from an OpenStreetMap trace, and that trace is flagged low confidence specifically for P2: it puts the P1–P2 gap as the longer of the two legs either side of P2, the opposite of what the brochure describes, and its P2–P3 gap falls well short of the documented 28 metres. P2's existence, description, and its unusually close spacing to P1 are firmly documented in the brochure text; only the precise coordinate plotted for it on the map is uncertain, pending a certified survey plan.",
-				),
-			),
-		},
-		{
-			id: 'callout-werner-proposal',
-			type: 'callout',
 			variant: 'info',
-			title: 'A candidate correction has been proposed',
+			title: 'Plotted position: resolved via field survey (updated 20 July 2026)',
 			runs: p(
-				t('On 21 July 2026, '),
-				b('Henri Werner'),
-				cite(
-					' proposed a fix for this uncertainty in an email to the Raschpëtzer research group: LUREF (Gauss-Luxembourg) coordinates for P2 and six neighbouring western shafts — P-7A, P-5A, P-4, P-1, P0, and P1 — re-measured directly from a real 1997 contour-survey plan of the site',
-					'c-shaft-p2-werner-1997-coords',
+				t(
+					"The 2018 brochure's own figures carry no coordinate grid — its only positional plate is an oblique 3D block model with a scale bar, not a survey plan — so no real-world (WGS84) position for any shaft could be read directly from it. The site's 3D model originally plotted a provisional coordinate for P2 from an OpenStreetMap trace, and that trace was flagged low confidence specifically for P2: it put the P1–P2 gap as the longer of the two legs either side of P2, the opposite of what the brochure describes, and its P2–P3 gap fell well short of the documented 28 metres. ",
 				),
-				t(', rather than read off the OpenStreetMap trace described above. '),
 				cite(
-					'The re-measured values for P0 and P1 closely matched an independent set of figures Guy Waringo had supplied the day before',
-					'c-shaft-p2-werner-1997-coords',
+					'Since 20 July 2026, a real field-survey coordinate table for the main-line shafts — provided directly to the companion 3D model by Henri Werner, who sent the files but is not necessarily the original surveying party — has superseded that guess',
+					'c-shaft-p2-werner-sit-survey',
 				),
 				t(
-					" — a real cross-check, not a single unverified reading. This is a strong candidate for resolving the low-confidence flag above, though it remains a hand-measured reading from a scanned plan rather than a certified survey, and the site's 3D model has not yet been updated to incorporate it.",
+					' — the correction moved P2 by 10.9 metres, closely matching this reconciliation’s own suspicion that the OSM node read roughly a third too far east, and the resulting P2–P3 distance (28.75 m) now matches the documented 28 metres almost exactly. P2’s existence, description, and its unusually close spacing to P1 were always firmly documented in the brochure text; only the precise coordinate was ever in question, and that question is now settled by survey rather than left pending.',
 				),
 			),
 		},
@@ -273,7 +253,7 @@ export const shaftP2Article: Article = {
 			),
 		},
 	],
-	citations: [c.position, c.survey, c.state, c.p1, c.p3, c.wernerPlan1997, c.wernerCoords1997],
+	citations: [c.position, c.survey, c.state, c.p1, c.p3, c.wernerSitSurvey],
 	revisions: [
 		{
 			id: 'r1',
@@ -288,10 +268,18 @@ export const shaftP2Article: Article = {
 			author: 'user-supplied',
 			ts: Date.UTC(2026, 6, 22),
 			summary:
-				'Added Henri Werner’s proposed 1997-plan LUREF re-measurement as a candidate fix for the low-confidence P2 position',
+				'Added Henri Werner’s separately-supplied 1997-plan LUREF re-measurement as a candidate fix for the low-confidence P2 position',
+			blocks: [],
+		},
+		{
+			id: 'r3',
+			author: 'user-supplied',
+			ts: Date.UTC(2026, 6, 23),
+			summary:
+				'Corrected: the companion 3D model had already resolved this position on 20 July 2026, via a real field-survey table (not the separate re-measurement r2 described) — rewrote the callout to reflect the actual, already-adopted state',
 			blocks: [],
 		},
 	],
-	updatedAt: Date.UTC(2026, 6, 22),
+	updatedAt: Date.UTC(2026, 6, 23),
 	contributors: ['raschpetzer-model-digital-3d SSOT', 'user-supplied'],
 }
