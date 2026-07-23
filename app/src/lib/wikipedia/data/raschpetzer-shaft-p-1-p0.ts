@@ -48,6 +48,18 @@ const c = {
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=20`,
 	},
+	/** Not the brochure/model — Werner's 2026 re-measurement of a 1997 field survey plan,
+	 *  proposed as a candidate position fix, not yet adopted into the site's 3D model. Kept
+	 *  cited separately from (and distinct in tone from) the brochure citations above. */
+	wernerCoords1997: {
+		id: 'c-shaft-p-1-p0-werner-1997-coords',
+		title: 'LUREF (Gauss-Luxembourg) coordinates for shafts P-7A, P-5A, P-4, P-1, P0, P1, and P2, re-measured from a 1997 plan',
+		authors: 'Werner, Henri',
+		year: 2026,
+		publisher:
+			'Proposed by Henri Werner in an email to the Raschpëtzer research group, 21 July 2026',
+		url: asset('/sources/raschpetzer-werner-1997-coordinates.pdf'),
+	},
 } satisfies Record<string, Citation>
 
 export const shaftPMinus1P0Citations = c
@@ -114,8 +126,36 @@ export const shaftPMinus1P0Article: Article = {
 				),
 			),
 		},
+		{
+			id: 'h-position-proposal',
+			type: 'heading',
+			level: 2,
+			text: 'Position: a proposed cross-check',
+		},
+		{
+			id: 'p-position-proposal',
+			type: 'paragraph',
+			runs: p(
+				t(
+					'Like most of the route, neither shaft has a position read from a real survey grid in the 2018 brochure — the site’s 3D model instead plots a provisional, OpenStreetMap-derived coordinate for both. On 21 July 2026, ',
+				),
+				b('Henri Werner'),
+				cite(
+					' proposed a candidate fix in an email to the Raschpëtzer research group: LUREF (Gauss-Luxembourg) coordinates for P-1, P0, and five neighbouring western shafts, re-measured directly from a real 1997 contour-survey plan of the site',
+					'c-shaft-p-1-p0-werner-1997-coords',
+				),
+				t('. '),
+				cite(
+					'The re-measured values for P0 and P1 specifically closely matched an independent set of figures Guy Waringo had supplied the day before',
+					'c-shaft-p-1-p0-werner-1997-coords',
+				),
+				t(
+					' — two people, working from separate figures, arriving at compatible positions is a real cross-check, not a single unverified reading. As with P2 (see its own article), this is a promising candidate for the model’s existing OSM-derived positions, but it remains a hand-measured reading from a scanned plan, not a certified survey, and the model has not yet been updated to incorporate it.',
+				),
+			),
+		},
 	],
-	citations: [c.construction, c.status],
+	citations: [c.construction, c.status, c.wernerCoords1997],
 	revisions: [
 		{
 			id: 'r1',
@@ -125,7 +165,15 @@ export const shaftPMinus1P0Article: Article = {
 				'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
 			blocks: [],
 		},
+		{
+			id: 'r2',
+			author: 'user-supplied',
+			ts: Date.UTC(2026, 6, 22),
+			summary:
+				'Added Henri Werner’s proposed 1997-plan LUREF re-measurement, cross-checked against Guy Waringo’s figures for P0/P1',
+			blocks: [],
+		},
 	],
-	updatedAt: Date.UTC(2026, 6, 20),
-	contributors: ['raschpetzer-model-digital-3d SSOT'],
+	updatedAt: Date.UTC(2026, 6, 22),
+	contributors: ['raschpetzer-model-digital-3d SSOT', 'user-supplied'],
 }
