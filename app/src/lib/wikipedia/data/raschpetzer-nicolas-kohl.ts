@@ -91,6 +91,15 @@ const c = {
 		publisher: 'Wikipedia (Lëtzebuergesch)',
 		url: 'https://lb.wikipedia.org/wiki/Nicolas_Kohl',
 	},
+	/** Supplied directly by the user, not found independently — no `url`/`publisher` (an
+	 *  unpublished manuscript), and explicitly flagged unconfirmed at the point of use
+	 *  below rather than treated as verified like the brochure/Wikipedia citations above. */
+	sagaManuscript: {
+		id: 'c-nicolas-kohl-saga-1998',
+		title: 'Die Raschpëtzer-Saga — Forschungsstand 1.1.1998',
+		authors: 'Kohl, Nicolas',
+		year: 1998,
+	},
 } satisfies Record<string, Citation>
 
 export const nicolasKohlCitations = c
@@ -225,6 +234,20 @@ export const nicolasKohlArticle: Article = {
 				),
 			),
 		},
+		{
+			id: 'p-saga-manuscript',
+			type: 'paragraph',
+			runs: p(
+				t('A further title attributed to Kohl, '),
+				cite(
+					'an unpublished manuscript, "Die Raschpëtzer-Saga," with a research status dated 1 January 1998',
+					'c-nicolas-kohl-saga-1998',
+				),
+				t(
+					', is also on record (editorial note: unconfirmed — supplied directly, not yet independently verified against the brochure or any other citable public source, unlike the publications above). A margin note against page 53 of that manuscript, quoted here in the original Lëtzebuergesch rather than translated, reads: "op der Säit 53, ënnen am Eck eppes fonnt iwwer Schanken am P1 an 20 m Déift, den 21. März 1992" — apparently pointing to a find at shaft P1, 20 metres deep, dated 21 March 1992; neither the note nor the finding it describes has been cross-checked here.',
+				),
+			),
+		},
 		{ id: 'h-life', type: 'heading', level: 2, text: 'Life' },
 		{
 			id: 'p-life',
@@ -248,6 +271,7 @@ export const nicolasKohlArticle: Article = {
 		c.brochureBibliography,
 		c.sitWalferPublications,
 		c.wikipediaLb,
+		c.sagaManuscript,
 	],
 	revisions: [
 		{
@@ -258,7 +282,15 @@ export const nicolasKohlArticle: Article = {
 				'Initial draft: Nicolas Kohl’s role verified via the vendored brochure PDF and web search',
 			blocks: [],
 		},
+		{
+			id: 'r2',
+			author: 'user-supplied',
+			ts: Date.UTC(2026, 6, 22),
+			summary:
+				'Added an unconfirmed further title, "Die Raschpëtzer-Saga" (1998), supplied directly by the user',
+			blocks: [],
+		},
 	],
-	updatedAt: Date.UTC(2026, 6, 20),
-	contributors: ['raschpetzer-model-digital-3d SSOT'],
+	updatedAt: Date.UTC(2026, 6, 22),
+	contributors: ['raschpetzer-model-digital-3d SSOT', 'user-supplied'],
 }
