@@ -85,6 +85,28 @@ const c = {
 		publisher: "Syndicat d'initiative et de tourisme de la Commune de Walferdange",
 		url: `${BROCHURE_PDF}#page=17`,
 	},
+	/** Not the brochure/model — a 1997 field survey plan, and Werner's 2026 re-measurement
+	 *  of it, both proposed as a candidate fix for the low-confidence flag below. Neither has
+	 *  been adopted into the site's 3D model yet, so both are cited separately from (and kept
+	 *  clearly distinct in tone from) the brochure citations above. */
+	wernerPlan1997: {
+		id: 'c-shaft-p2-werner-1997-plan',
+		title: '1997 contour-survey plan of the western Raschpëtzer shafts (P-7A to P2), annotated "WG 2/97"',
+		authors: 'Waringo, Guy (survey, Feb. 1997)',
+		year: 1997,
+		publisher:
+			'Shared by Henri Werner in an email to the Raschpëtzer research group, 21 July 2026',
+		url: asset('/sources/raschpetzer-werner-1997-plan.pdf'),
+	},
+	wernerCoords1997: {
+		id: 'c-shaft-p2-werner-1997-coords',
+		title: 'LUREF (Gauss-Luxembourg) coordinates for shafts P-7A, P-5A, P-4, P-1, P0, P1, and P2, re-measured from the 1997 plan',
+		authors: 'Werner, Henri',
+		year: 2026,
+		publisher:
+			'Proposed by Henri Werner in an email to the Raschpëtzer research group, 21 July 2026',
+		url: asset('/sources/raschpetzer-werner-1997-coordinates.pdf'),
+	},
 } satisfies Record<string, Citation>
 
 export const shaftP2Citations = c
@@ -152,6 +174,28 @@ export const shaftP2Article: Article = {
 			runs: p(
 				t(
 					"The 2018 brochure's own figures carry no coordinate grid — its only positional plate is an oblique 3D block model with a scale bar, not a survey plan — so no real-world (WGS84) position for any shaft can be read directly from it. The site's 3D model instead plots a provisional coordinate for P2 from an OpenStreetMap trace, and that trace is flagged low confidence specifically for P2: it puts the P1–P2 gap as the longer of the two legs either side of P2, the opposite of what the brochure describes, and its P2–P3 gap falls well short of the documented 28 metres. P2's existence, description, and its unusually close spacing to P1 are firmly documented in the brochure text; only the precise coordinate plotted for it on the map is uncertain, pending a certified survey plan.",
+				),
+			),
+		},
+		{
+			id: 'callout-werner-proposal',
+			type: 'callout',
+			variant: 'info',
+			title: 'A candidate correction has been proposed',
+			runs: p(
+				t('On 21 July 2026, '),
+				b('Henri Werner'),
+				cite(
+					' proposed a fix for this uncertainty in an email to the Raschpëtzer research group: LUREF (Gauss-Luxembourg) coordinates for P2 and six neighbouring western shafts — P-7A, P-5A, P-4, P-1, P0, and P1 — re-measured directly from a real 1997 contour-survey plan of the site',
+					'c-shaft-p2-werner-1997-coords',
+				),
+				t(', rather than read off the OpenStreetMap trace described above. '),
+				cite(
+					'The re-measured values for P0 and P1 closely matched an independent set of figures Guy Waringo had supplied the day before',
+					'c-shaft-p2-werner-1997-coords',
+				),
+				t(
+					" — a real cross-check, not a single unverified reading. This is a strong candidate for resolving the low-confidence flag above, though it remains a hand-measured reading from a scanned plan rather than a certified survey, and the site's 3D model has not yet been updated to incorporate it.",
 				),
 			),
 		},
@@ -229,7 +273,7 @@ export const shaftP2Article: Article = {
 			),
 		},
 	],
-	citations: [c.position, c.survey, c.state, c.p1, c.p3],
+	citations: [c.position, c.survey, c.state, c.p1, c.p3, c.wernerPlan1997, c.wernerCoords1997],
 	revisions: [
 		{
 			id: 'r1',
@@ -239,7 +283,15 @@ export const shaftP2Article: Article = {
 				'Initial draft from the site SSOT dataset (data/shafts.json) and the 2018 brochure',
 			blocks: [],
 		},
+		{
+			id: 'r2',
+			author: 'user-supplied',
+			ts: Date.UTC(2026, 6, 22),
+			summary:
+				'Added Henri Werner’s proposed 1997-plan LUREF re-measurement as a candidate fix for the low-confidence P2 position',
+			blocks: [],
+		},
 	],
-	updatedAt: Date.UTC(2026, 6, 20),
-	contributors: ['raschpetzer-model-digital-3d SSOT'],
+	updatedAt: Date.UTC(2026, 6, 22),
+	contributors: ['raschpetzer-model-digital-3d SSOT', 'user-supplied'],
 }
